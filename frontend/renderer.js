@@ -159,6 +159,7 @@ async function cutRange(s, e) {
   setStatus('Suppression + ré-analyse…');
   try {
     const res = await window.api.cut(state.cleanPath, [[s, e]]);
+    if (res.error) throw new Error(res.error);
     setState(res);
     setStatus(`Mis à jour (${res.duration.toFixed(1)} s).`);
   } catch (err) { setStatus('Erreur coupe : ' + (err.message || err)); }
@@ -208,6 +209,7 @@ drop.addEventListener('drop', async ev => {
   genBtn.disabled = expBtn.disabled = true;
   try {
     const res = await window.api.load(audioPath);
+    if (res.error) throw new Error(res.error);
     if (!res.clean_path) throw new Error(JSON.stringify(res).slice(0, 200));
     setState(res);
     updateTime();
@@ -221,6 +223,7 @@ genBtn.addEventListener('click', async () => {
   setStatus('Génération de l\'aperçu…');
   try {
     const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value, boostChk.checked);
+    if (res.error) throw new Error(res.error);
     preview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
     preview.style.display = 'block';
     preview.currentTime = 0;
@@ -236,6 +239,7 @@ expBtn.addEventListener('click', async () => {
   setStatus('Export…');
   try {
     const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value, boostChk.checked);
+    if (res.error) throw new Error(res.error);
     setStatus('Exporté : ' + res.video_path);
   } catch (e) { setStatus('Erreur export : ' + (e.message || e)); }
 });

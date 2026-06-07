@@ -19,6 +19,8 @@ def _analyze(clean_path):
 
 def load_audio(audio_path):
     """Nettoie les silences puis transcrit + détecte (🟡 reprises / 🔴 mots peu sûrs)."""
+    if not os.path.isfile(audio_path):
+        raise FileNotFoundError(f"Fichier introuvable (déplacé ou renommé ?) : {audio_path}")
     job = os.path.join(WORKDIR, uuid.uuid4().hex)
     os.makedirs(job, exist_ok=True)
     clean = os.path.join(job, "clean.mp3")

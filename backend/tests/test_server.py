@@ -21,6 +21,13 @@ def test_load_and_preview(sample_audio, tmp_path):
                                        "text": data["transcript"], "out_path": out})
     assert os.path.exists(r2.json()["video_path"])
 
+def test_load_missing_file_returns_json_error():
+    safe = TestClient(app, raise_server_exceptions=False)
+    r = safe.post("/load", json={"audio_path": "C:/nope/does_not_exist_123.mp3"})
+    assert r.status_code == 500
+    assert "error" in r.json()
+    assert "introuvable" in r.json()["error"].lower()
+
 def test_preview_boost(sample_audio, tmp_path):
     data = client.post("/load", json={"audio_path": sample_audio}).json()
     out = str(tmp_path / "boost_api.mp4")

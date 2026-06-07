@@ -1,6 +1,7 @@
 import os, uuid
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from backend import service
 from backend.pipeline import subtitles
@@ -11,6 +12,11 @@ app = FastAPI(title="AutoMontage")
 # L'UI Electron (page file://) appelle cette API locale -> autoriser toutes origines.
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],
                    allow_headers=["*"])
+
+@app.exception_handler(Exception)
+def on_error(request: Request, exc: Exception):
+    # Renvoie une erreur JSON propre (sinon le front reçoit du texte = crash parse).
+    return JSONResponse(status_code=500, content={"error": str(exc)})
 
 class LoadReq(BaseModel):
     audio_path: str
