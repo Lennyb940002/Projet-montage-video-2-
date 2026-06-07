@@ -58,13 +58,13 @@ def _pick_clips(ranges, clips):
     return chosen
 
 def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
-           boost=False, sfx_dir=None):
+           boost=False, sfx_events=None, sfx_dir=None):
+    """ranges = plages de clips FINALES (le redécoupage hook est fait par l'appelant).
+    sfx_events = plan SFX [{time,category,gain_dB,fade_in_ms,fade_out_ms}] (catégories
+    résolues ici en fichiers via sfx.pick)."""
     from backend.config import BOOST, SFX_DIR
     from backend.pipeline import sfx as sfxmod
-    if sfx_dir is None:
-        sfx_dir = SFX_DIR
-    if boost:
-        ranges = apply_boost_cuts(ranges, BOOST["hook_dur"], BOOST["hook_cut"])
+    sfx_dir = sfx_dir or SFX_DIR
     clips = list_clips(clips_dir)
     if not clips:
         raise RuntimeError(f"Aucun clip dans {clips_dir}")
@@ -78,18 +78,14 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     cmd += ["-i", audio_path]
     Ncl = len(chosen)
 
-    # évènements SFX (impact au début + whoosh sur chaque changement de clip)
-    events = []
-    if boost:
-        imp = sfxmod.pick("impact", sfx_dir)
-        if imp: events.append((0.0, imp))
-        tcum = 0.0
-        for idx, (s, e) in enumerate(ranges):
-            if idx > 0:
-                wh = sfxmod.pick("whoosh", sfx_dir)
-                if wh: events.append((tcum, wh))
-            tcum += (e - s)
-    for (_t, f) in events:
+    # résout chaque évènement SFX en fichier réel (None si catégorie vide)
+    resolved = []
+    if sfx_events:
+        for e in sfx_events:
+            f = sfxmod.pick(e["category"], sfx_dir)
+            if f:
+                resolved.append((e, f))
+    for (_e, f) in resolved:
         cmd += ["-i", f]
 
     # vidéo
@@ -97,8 +93,8 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     for k in range(Ncl):
         # zoom CONSTANT (pas de zoompan -> aucune image figée + rapide).
         # 1er clip en mode boost = zoom plus serré (punch).
-        f = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
-        cw, ch = int(W * f), int(H * f)
+        zf = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
+        cw, ch = int(W * zf), int(H * zf)
         fc.append(f"[{k}:v]scale={cw}:{ch}:force_original_aspect_ratio=increase,"
                   f"crop={W}:{H},setsar=1,fps={FPS},format=yuv420p[v{k}]")
     fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
@@ -110,16 +106,24 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     else:
         fc.append(f"[cv]ass={ass_name}[vout]")
 
-    # audio
-    if events:
-        vol = BOOST["sfx_volume"]
+    # audio : voix + SFX (volume/fondus par évènement)
+    if resolved:
         fc.append(f"[{Ncl}:a]aformat=sample_fmts=fltp:channel_layouts=stereo[av]")
-        for i, (t, f) in enumerate(events):
-            d = int(round(t * 1000))
-            fc.append(f"[{Ncl + 1 + i}:a]adelay={d}|{d},volume={vol},"
-                      f"aformat=sample_fmts=fltp:channel_layouts=stereo[se{i}]")
-        mix = "[av]" + "".join(f"[se{i}]" for i in range(len(events)))
-        fc.append(f"{mix}amix=inputs={len(events) + 1}:normalize=0:duration=first[aout]")
+        for i, (e, f) in enumerate(resolved):
+            sdur = ffmpeg.probe_duration(f)
+            fin = e.get("fade_in_ms", 0) / 1000.0
+            fout = e.get("fade_out_ms", 0) / 1000.0
+            d = int(round(e["time"] * 1000))
+            parts = [f"volume={e['gain_dB']}dB"]
+            if fin > 0:
+                parts.append(f"afade=t=in:st=0:d={fin:.3f}")
+            if fout > 0 and sdur > fout:
+                parts.append(f"afade=t=out:st={sdur - fout:.3f}:d={fout:.3f}")
+            parts.append(f"adelay={d}|{d}")
+            parts.append("aformat=sample_fmts=fltp:channel_layouts=stereo")
+            fc.append(f"[{Ncl + 1 + i}:a]" + ",".join(parts) + f"[se{i}]")
+        mix = "[av]" + "".join(f"[se{i}]" for i in range(len(resolved)))
+        fc.append(f"{mix}amix=inputs={len(resolved) + 1}:normalize=0:duration=first[aout]")
         amap = "[aout]"
     else:
         amap = f"{Ncl}:a"

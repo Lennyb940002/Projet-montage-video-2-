@@ -60,15 +60,21 @@ def test_render_boost_no_sfx(sample_audio, tmp_path):
     assert "1080,1920" in r.stdout
 
 def test_render_boost_with_sfx(sample_audio, tmp_path):
-    sfxdir = tmp_path / "sfx"; sfxdir.mkdir()
-    for name in ("impact_a.wav", "whoosh_a.wav"):
-        ffmpeg.run([ffmpeg.FFMPEG, "-y", "-f", "lavfi", "-i",
-                    "sine=frequency=300:duration=0.3", str(sfxdir / name)])
+    sfxdir = tmp_path / "sfx"
+    (sfxdir / "Impacts").mkdir(parents=True); (sfxdir / "Whooshs").mkdir()
+    ffmpeg.run([ffmpeg.FFMPEG, "-y", "-f", "lavfi", "-i", "sine=frequency=200:duration=0.3",
+                str(sfxdir / "Impacts" / "boom.wav")])
+    ffmpeg.run([ffmpeg.FFMPEG, "-y", "-f", "lavfi", "-i", "sine=frequency=600:duration=0.3",
+                str(sfxdir / "Whooshs" / "swo.wav")])
     ass = str(tmp_path / "s2.ass"); _mini_ass(ass)
     dur = ffmpeg.probe_duration(sample_audio)
+    events = [
+        {"time": 0.0, "category": "Impacts", "gain_dB": -8, "fade_in_ms": 0, "fade_out_ms": 120, "duck_voice_dB": -1},
+        {"time": dur * 0.5, "category": "Whooshs", "gain_dB": -12, "fade_in_ms": 10, "fade_out_ms": 80, "duck_voice_dB": 0},
+    ]
     out = str(tmp_path / "boost2.mp4")
     render(sample_audio, ass, [(0.0, dur * 0.5), (dur * 0.5, dur)], out,
-           boost=True, sfx_dir=str(sfxdir))
+           boost=True, sfx_events=events, sfx_dir=str(sfxdir))
     assert os.path.exists(out)
     r = ffmpeg.run([ffmpeg.FFPROBE, "-v", "error", "-select_streams", "a",
                     "-show_entries", "stream=codec_type", "-of", "csv=p=0", out])
