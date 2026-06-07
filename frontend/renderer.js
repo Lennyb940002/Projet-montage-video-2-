@@ -6,8 +6,13 @@ const preview = document.getElementById('preview');
 const genBtn = document.getElementById('genBtn');
 const expBtn = document.getElementById('expBtn');
 const menu = document.getElementById('menu');
+const canvas = document.getElementById('wave');
+const player = document.getElementById('player');
+const playBtn = document.getElementById('playBtn');
+const timeLbl = document.getElementById('time');
 
-const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [] };
+const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [], peaks: [] };
+let regions = [];
 function setStatus(m) { status.textContent = m; }
 
 function setState(res) {
@@ -16,9 +21,126 @@ function setState(res) {
   state.words = res.words;
   state.retakes = res.detect.retakes;
   state.lowconf = res.detect.lowconf;
+  state.peaks = res.peaks || [];
+  transcript.value = res.transcript;
+  player.src = 'file://' + res.clean_path.replace(/\\/g, '/') + '?t=' + Date.now();
+  playBtn.disabled = false;
+  buildRegions();
+  drawWave();
 }
 
-// ---- drag & drop ----
+// ---------- détection -> régions temporelles ----------
+function buildRegions() {
+  regions = [];
+  state.retakes.forEach(r => regions.push({ type: 'y', start: r.start, end: r.end, ref: r }));
+  // regroupe les mots peu sûrs consécutifs en une zone
+  const low = [...state.lowconf].sort((a, b) => a - b);
+  let i = 0;
+  while (i < low.length) {
+    let j = i;
+    while (j + 1 < low.length && low[j + 1] === low[j] + 1) j++;
+    const idxs = low.slice(i, j + 1);
+    const s = state.words[idxs[0]].start, e = state.words[idxs[idxs.length - 1]].end;
+    regions.push({ type: 'r', start: s, end: e, idxs });
+    i = j + 1;
+  }
+}
+
+// ---------- dessin ----------
+function drawWave() {
+  const dpr = window.devicePixelRatio || 1;
+  const W = canvas.clientWidth, H = canvas.clientHeight;
+  canvas.width = W * dpr; canvas.height = H * dpr;
+  const ctx = canvas.getContext('2d');
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, W, H);
+  const mid = H / 2;
+  const t2x = t => state.duration ? (t / state.duration) * W : 0;
+
+  // zones colorées (sous la forme d'onde)
+  regions.forEach(r => {
+    const x1 = t2x(r.start), x2 = t2x(r.end);
+    ctx.fillStyle = r.type === 'y' ? 'rgba(255,212,0,.16)' : 'rgba(239,68,68,.16)';
+    ctx.fillRect(x1, 0, Math.max(2, x2 - x1), H);
+    ctx.strokeStyle = r.type === 'y' ? '#ffd400' : '#ef4444';
+    ctx.lineWidth = 2;
+    ctx.strokeRect(x1 + 1, 4, Math.max(2, x2 - x1) - 2, H - 8);
+  });
+
+  // forme d'onde
+  const p = state.peaks; const n = p.length;
+  if (n) {
+    ctx.fillStyle = '#3b9ad9';
+    const bw = Math.max(1, W / n);
+    for (let i = 0; i < n; i++) {
+      const x = (i / n) * W;
+      const h = Math.max(1, p[i] * (H * 0.45));
+      ctx.fillRect(x, mid - h, bw * 0.8, h * 2);
+    }
+  }
+
+  // tête de lecture
+  const px = t2x(player.currentTime || 0);
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(px, 0, 2, H);
+}
+
+window.addEventListener('resize', drawWave);
+
+// ---------- interactions waveform ----------
+canvas.addEventListener('click', e => {
+  if (!state.duration) return;
+  const rect = canvas.getBoundingClientRect();
+  const t = ((e.clientX - rect.left) / rect.width) * state.duration;
+  const reg = regions.find(r => t >= r.start && t <= r.end);
+  if (reg) {
+    showMenuAt(e.clientX, e.clientY, () => keepRegion(reg), () => cutRange(reg.start, reg.end));
+  } else {
+    player.currentTime = t; drawWave();
+  }
+});
+
+function keepRegion(reg) {
+  if (reg.type === 'y') state.retakes = state.retakes.filter(r => r !== reg.ref);
+  else { const s = new Set(reg.idxs); state.lowconf = state.lowconf.filter(i => !s.has(i)); }
+  buildRegions(); drawWave();
+}
+
+async function cutRange(s, e) {
+  hideMenu();
+  setStatus('Suppression + ré-analyse…');
+  try {
+    const res = await window.api.cut(state.cleanPath, [[s, e]]);
+    setState(res);
+    setStatus(`Mis à jour (${res.duration.toFixed(1)} s).`);
+  } catch (err) { setStatus('Erreur coupe : ' + (err.message || err)); }
+}
+
+// ---------- lecture ----------
+playBtn.addEventListener('click', () => { player.paused ? player.play() : player.pause(); });
+player.addEventListener('play', () => { playBtn.textContent = '⏸ Pause'; tick(); });
+player.addEventListener('pause', () => { playBtn.textContent = '▶ Lire'; });
+player.addEventListener('timeupdate', updateTime);
+function tick() { if (player.paused) return; drawWave(); requestAnimationFrame(tick); }
+function fmt(s) { s = Math.max(0, s | 0); return String((s / 60) | 0).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0'); }
+function updateTime() { timeLbl.textContent = `${fmt(player.currentTime)} / ${fmt(state.duration)}`; }
+
+// ---------- menu ----------
+function showMenuAt(x, y, onKeep, onDelete) {
+  menu.innerHTML = '';
+  const k = document.createElement('button'); k.className = 'keep'; k.textContent = '✓ Garder';
+  const d = document.createElement('button'); d.className = 'del'; d.textContent = '🗑 Supprimer';
+  k.onclick = () => { hideMenu(); onKeep(); };
+  d.onclick = () => { hideMenu(); onDelete(); };
+  menu.appendChild(k); menu.appendChild(d);
+  menu.style.display = 'flex';
+  menu.style.left = Math.min(x, window.innerWidth - 190) + 'px';
+  menu.style.top = Math.min(y, window.innerHeight - 50) + 'px';
+}
+function hideMenu() { menu.style.display = 'none'; }
+document.addEventListener('click', e => { if (!menu.contains(e.target) && e.target !== canvas) hideMenu(); });
+
+// ---------- drag & drop ----------
 window.addEventListener('dragover', e => e.preventDefault());
 window.addEventListener('drop', e => e.preventDefault());
 ['dragenter','dragover'].forEach(e => drop.addEventListener(e, ev => { ev.preventDefault(); drop.classList.add('drag'); }));
@@ -37,98 +159,18 @@ drop.addEventListener('drop', async ev => {
     const res = await window.api.load(audioPath);
     if (!res.clean_path) throw new Error(JSON.stringify(res).slice(0, 200));
     setState(res);
-    renderTranscript();
-    setStatus(`Prêt (${res.duration.toFixed(1)} s). Vérifie les passages surlignés puis génère.`);
+    updateTime();
+    const nb = state.retakes.length + regions.filter(r => r.type === 'r').length;
+    setStatus(`Prêt (${res.duration.toFixed(1)} s). ${nb} zone(s) à vérifier sur la forme d'onde.`);
     genBtn.disabled = false;
   } catch (e) { setStatus('Erreur : ' + (e.message || e)); }
 });
 
-// ---- rendu transcription ----
-function renderTranscript() {
-  hideMenu();
-  transcript.innerHTML = '';
-  const retakeOf = {};
-  state.retakes.forEach((r, ri) => { for (let k = r.i1; k < r.i2; k++) retakeOf[k] = ri; });
-  const low = new Set(state.lowconf);
-  state.words.forEach((w, i) => {
-    const s = document.createElement('span');
-    s.className = 'w'; s.dataset.i = i; s.textContent = w.text;
-    if (i in retakeOf) { s.classList.add('yellow'); s.dataset.retake = retakeOf[i]; }
-    else if (low.has(i)) s.classList.add('red');
-    s.addEventListener('click', onWordClick);
-    s.addEventListener('dblclick', onWordEdit);
-    transcript.appendChild(s);
-    transcript.appendChild(document.createTextNode(' '));
-  });
-}
-
-function onWordClick(ev) {
-  const span = ev.currentTarget;
-  if (span.isContentEditable) return;
-  const i = +span.dataset.i;
-  if (span.classList.contains('yellow')) {
-    const r = state.retakes[+span.dataset.retake];
-    showMenu(ev, () => resolveRetake(r), () => cutRange(r.start, r.end));
-  } else if (span.classList.contains('red')) {
-    const w = state.words[i];
-    showMenu(ev, () => resolveLow(i), () => cutRange(w.start, w.end));
-  }
-}
-
-function onWordEdit(ev) {
-  const span = ev.currentTarget;
-  hideMenu();
-  span.contentEditable = 'true';
-  span.focus();
-  document.execCommand('selectAll', false, null);
-  const finish = () => {
-    span.contentEditable = 'false';
-    const i = +span.dataset.i;
-    state.words[i].text = span.textContent.trim();
-    span.removeEventListener('blur', finish);
-  };
-  span.addEventListener('blur', finish);
-  span.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); span.blur(); } });
-}
-
-// ---- menu Garder / Supprimer ----
-function showMenu(ev, onKeep, onDelete) {
-  menu.innerHTML = '';
-  const k = document.createElement('button'); k.className = 'keep'; k.textContent = '✓ Garder';
-  const d = document.createElement('button'); d.className = 'del'; d.textContent = '🗑 Supprimer';
-  k.onclick = () => { hideMenu(); onKeep(); };
-  d.onclick = () => { hideMenu(); onDelete(); };
-  menu.appendChild(k); menu.appendChild(d);
-  menu.style.display = 'flex';
-  const rect = ev.currentTarget.getBoundingClientRect();
-  menu.style.left = Math.min(rect.left, window.innerWidth - 180) + 'px';
-  menu.style.top = (rect.bottom + 4) + 'px';
-}
-function hideMenu() { menu.style.display = 'none'; }
-document.addEventListener('click', e => {
-  if (!menu.contains(e.target) && !e.target.classList.contains('w')) hideMenu();
-});
-
-function resolveRetake(r) { state.retakes = state.retakes.filter(x => x !== r); renderTranscript(); }
-function resolveLow(i) { state.lowconf = state.lowconf.filter(x => x !== i); renderTranscript(); }
-
-async function cutRange(s, e) {
-  setStatus('Suppression + ré-analyse…');
-  try {
-    const res = await window.api.cut(state.cleanPath, [[s, e]]);
-    setState(res);
-    renderTranscript();
-    setStatus(`Mis à jour (${res.duration.toFixed(1)} s).`);
-  } catch (err) { setStatus('Erreur coupe : ' + (err.message || err)); }
-}
-
-function currentText() { return state.words.map(w => w.text).join(' '); }
-
-// ---- aperçu / export ----
+// ---------- aperçu / export ----------
 genBtn.addEventListener('click', async () => {
   setStatus('Génération de l\'aperçu…');
   try {
-    const res = await window.api.preview(state.cleanPath, currentText());
+    const res = await window.api.preview(state.cleanPath, transcript.value);
     preview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
     preview.style.display = 'block';
     setStatus('Aperçu prêt.');
@@ -141,7 +183,7 @@ expBtn.addEventListener('click', async () => {
   if (!out) return;
   setStatus('Export…');
   try {
-    const res = await window.api.export(state.cleanPath, currentText(), out);
+    const res = await window.api.export(state.cleanPath, transcript.value, out);
     setStatus('Exporté : ' + res.video_path);
   } catch (e) { setStatus('Erreur export : ' + (e.message || e)); }
 });
