@@ -37,6 +37,41 @@ copyBtn.addEventListener('click', async () => {
   copyBtn.textContent = '✓ Copié';
   setTimeout(() => { copyBtn.textContent = '📋 Copier'; }, 1200);
 });
+
+// ---- Réglages Instagram + publication ----
+const setBtn = document.getElementById('setBtn');
+const igBtn = document.getElementById('igBtn');
+const setModal = document.getElementById('setModal');
+const setToken = document.getElementById('setToken');
+const setIgId = document.getElementById('setIgId');
+const setSave = document.getElementById('setSave');
+const setClose = document.getElementById('setClose');
+const setMsg = document.getElementById('setMsg');
+let lastExport = null;
+
+setBtn.addEventListener('click', async () => {
+  const s = await window.api.getSettings();
+  setIgId.value = s.ig_user_id || '';
+  setToken.value = '';
+  setToken.placeholder = s.has_token ? '•••• (déjà enregistré)' : 'EAAB...';
+  setMsg.textContent = '';
+  setModal.style.display = 'flex';
+});
+setClose.addEventListener('click', () => { setModal.style.display = 'none'; });
+setSave.addEventListener('click', async () => {
+  await window.api.saveSettings(setToken.value, setIgId.value);
+  setMsg.textContent = 'Enregistré ✓';
+});
+
+igBtn.addEventListener('click', async () => {
+  if (!lastExport) { setStatus('Exporte la vidéo d\'abord.'); return; }
+  setStatus('Publication Instagram… (tunnel → encodage → publication)');
+  try {
+    const r = await window.api.publishInstagram(lastExport, captionBox.value);
+    if (r.error) throw new Error(r.error);
+    setStatus('Publié sur Instagram ✅ (id ' + r.id + ')');
+  } catch (e) { setStatus('Erreur Instagram : ' + (e.message || e)); }
+});
 const menu = document.getElementById('menu');
 const canvas = document.getElementById('wave');
 const player = document.getElementById('player');
@@ -272,5 +307,7 @@ expBtn.addEventListener('click', async () => {
     const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value, boostChk.checked);
     if (res.error) throw new Error(res.error);
     setStatus('Exporté : ' + res.video_path);
+    lastExport = res.video_path;
+    igBtn.disabled = false;
   } catch (e) { setStatus('Erreur export : ' + (e.message || e)); }
 });

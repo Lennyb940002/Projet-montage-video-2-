@@ -19,6 +19,9 @@ contextBridge.exposeInMainWorld('api', {
   load:    (audio_path)                        => post('/load',    { audio_path }),
   cut:     (clean_path, ranges)                => post('/cut',     { clean_path, ranges }),
   caption: (text)                              => post('/caption', { text }),
+  getSettings: ()                              => get('/settings'),
+  saveSettings: (ig_token, ig_user_id)         => post('/settings', { ig_token, ig_user_id }),
+  publishInstagram: (video_path, caption)      => post('/publish/instagram', { video_path, caption }),
   preview: (clean_path, text, style, boost)           => post('/preview', { clean_path, text, style, boost }),
   export:  (clean_path, text, out_path, style, boost) => post('/export',  { clean_path, text, out_path, style, boost })
 });

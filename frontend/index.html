@@ -10,8 +10,10 @@
         <label class="sellbl">Sous-titres</label>
         <select id="style" class="sel"></select>
         <label class="boost"><input type="checkbox" id="boost"> ✨ Boost Hook</label>
+        <button id="setBtn" class="btn">⚙ Réglages</button>
         <button id="genBtn" class="btn green" disabled>🎬 Générer l'aperçu</button>
         <button id="expBtn" class="btn primary" disabled>⬇ Exporter</button>
+        <button id="igBtn" class="btn" disabled>📷 Publier Instagram</button>
       </div>
     </div>
 
@@ -60,6 +62,21 @@
 
   <div id="menu" class="menu" style="display:none"></div>
   <audio id="player"></audio>
+
+  <div id="setModal" class="modal" style="display:none">
+    <div class="modalbox">
+      <h3>Réglages Instagram</h3>
+      <label>Token longue durée</label>
+      <input id="setToken" type="password" placeholder="EAAB...">
+      <label>IG Business Account ID</label>
+      <input id="setIgId" type="text" placeholder="178414...">
+      <div class="modalbtns">
+        <button id="setSave" class="btn primary">Enregistrer</button>
+        <button id="setClose" class="btn">Fermer</button>
+      </div>
+      <p id="setMsg" class="status"></p>
+    </div>
+  </div>
   <script src="renderer.js"></script>
 </body>
 </html>
