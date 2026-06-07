@@ -22,8 +22,20 @@
         <div id="status" class="status"></div>
       </div>
       <div class="panel right">
-        <div class="ttl">Transcription (corrigeable)</div>
-        <textarea id="transcript" placeholder="La transcription apparaîtra ici…"></textarea>
+        <div class="tabs">
+          <button id="tabTr" class="tab active">Transcription</button>
+          <button id="tabDesc" class="tab">Description</button>
+        </div>
+        <div id="paneTr" class="pane">
+          <textarea id="transcript" placeholder="La transcription apparaîtra ici…"></textarea>
+        </div>
+        <div id="paneDesc" class="pane" style="display:none">
+          <textarea id="caption" placeholder="La description apparaîtra ici…"></textarea>
+          <div class="descbtns">
+            <button id="regenBtn" class="tool">↻ Régénérer</button>
+            <button id="copyBtn" class="tool">📋 Copier</button>
+          </div>
+        </div>
       </div>
     </div>
 

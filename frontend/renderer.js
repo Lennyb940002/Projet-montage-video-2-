@@ -7,6 +7,36 @@ const genBtn = document.getElementById('genBtn');
 const expBtn = document.getElementById('expBtn');
 const styleSel = document.getElementById('style');
 const boostChk = document.getElementById('boost');
+const captionBox = document.getElementById('caption');
+const tabTr = document.getElementById('tabTr');
+const tabDesc = document.getElementById('tabDesc');
+const paneTr = document.getElementById('paneTr');
+const paneDesc = document.getElementById('paneDesc');
+const regenBtn = document.getElementById('regenBtn');
+const copyBtn = document.getElementById('copyBtn');
+
+function showTab(which) {
+  const desc = which === 'desc';
+  paneDesc.style.display = desc ? 'flex' : 'none';
+  paneTr.style.display = desc ? 'none' : 'flex';
+  tabDesc.classList.toggle('active', desc);
+  tabTr.classList.toggle('active', !desc);
+}
+tabTr.addEventListener('click', () => showTab('tr'));
+tabDesc.addEventListener('click', () => showTab('desc'));
+
+regenBtn.addEventListener('click', async () => {
+  try {
+    const c = await window.api.caption(transcript.value);
+    if (c.error) throw new Error(c.error);
+    captionBox.value = c.full;
+  } catch (e) { captionBox.value = 'Erreur : ' + (e.message || e); }
+});
+copyBtn.addEventListener('click', async () => {
+  await navigator.clipboard.writeText(captionBox.value);
+  copyBtn.textContent = '✓ Copié';
+  setTimeout(() => { copyBtn.textContent = '📋 Copier'; }, 1200);
+});
 const menu = document.getElementById('menu');
 const canvas = document.getElementById('wave');
 const player = document.getElementById('player');
@@ -43,6 +73,7 @@ function setState(res) {
   player.src = 'file://' + res.clean_path.replace(/\\/g, '/') + '?t=' + Date.now();
   playBtn.disabled = false;
   updateSelButtons();
+  if (res.caption) captionBox.value = res.caption.full;
   buildRegions();
   drawWave();
 }

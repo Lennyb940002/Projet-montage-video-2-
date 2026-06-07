@@ -18,6 +18,7 @@ contextBridge.exposeInMainWorld('api', {
   styles:  ()                                  => get('/styles'),
   load:    (audio_path)                        => post('/load',    { audio_path }),
   cut:     (clean_path, ranges)                => post('/cut',     { clean_path, ranges }),
+  caption: (text)                              => post('/caption', { text }),
   preview: (clean_path, text, style, boost)           => post('/preview', { clean_path, text, style, boost }),
   export:  (clean_path, text, out_path, style, boost) => post('/export',  { clean_path, text, out_path, style, boost })
 });
