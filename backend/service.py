@@ -2,10 +2,10 @@ import os, uuid
 from dataclasses import asdict
 from backend.config import WORKDIR
 from backend.pipeline import transcribe as T
-from backend.pipeline import audio_clean, align, subtitles, montage, detect
+from backend.pipeline import audio_clean, align, subtitles, montage, detect, waveform
 
 def _analyze(clean_path):
-    """Transcrit + détecte sur un audio nettoyé. Brique commune à load et cut."""
+    """Transcrit + détecte + pics. Brique commune à load et cut."""
     words, duration = T.transcribe(clean_path)
     transcript = " ".join(w.text for w in words)
     return {
@@ -14,6 +14,7 @@ def _analyze(clean_path):
         "transcript": transcript,
         "words": [asdict(w) for w in words],
         "detect": detect.detect(words),
+        "peaks": waveform.peaks(clean_path),
     }
 
 def load_audio(audio_path):
