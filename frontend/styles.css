@@ -1,0 +1,20 @@
+* { box-sizing:border-box; margin:0; padding:0; font-family:'Segoe UI',sans-serif; }
+body { background:#0f0f10; color:#e8e8ea; height:100vh; overflow:hidden; }
+.app { display:grid; grid-template-rows:46px 1fr; height:100vh; }
+.top { display:flex; align-items:center; gap:14px; padding:0 14px; background:#181819; border-bottom:1px solid #000; }
+.logo { font-weight:700; color:#4ad7d1; }
+.file { color:#9a9aa0; font-size:13px; }
+.top .right { margin-left:auto; display:flex; gap:10px; }
+.btn { background:#2a2a2d; border:1px solid #3a3a3f; color:#e8e8ea; padding:7px 14px; border-radius:7px; font-size:13px; cursor:pointer; }
+.btn:disabled { opacity:.4; cursor:default; }
+.btn.primary { background:#3b82f6; border-color:#3b82f6; color:#fff; }
+.btn.green { background:#10b981; border-color:#10b981; color:#fff; }
+.mid { display:grid; grid-template-columns:1fr 380px; min-height:0; }
+.center { display:flex; flex-direction:column; align-items:center; justify-content:center; background:#0b0b0c; gap:14px; }
+.dropzone { border:2px dashed #3a3a3f; border-radius:14px; padding:60px 40px; color:#888; }
+.center.drag .dropzone { border-color:#4ad7d1; color:#4ad7d1; }
+#preview { width:240px; aspect-ratio:9/16; background:#000; border-radius:12px; }
+.status { font-size:13px; color:#9a9aa0; min-height:18px; }
+.panel.right { border-left:1px solid #000; background:#161617; padding:12px; display:flex; flex-direction:column; }
+.ttl { font-size:11px; text-transform:uppercase; letter-spacing:1px; color:#7a7a80; margin-bottom:10px; }
+#transcript { flex:1; background:#0f0f10; color:#dcdce0; border:1px solid #2a2a2d; border-radius:8px; padding:12px; font-size:15px; line-height:1.9; resize:none; }

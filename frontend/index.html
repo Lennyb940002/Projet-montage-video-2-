@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head><meta charset="utf-8"><link rel="stylesheet" href="styles.css"></head>
+<body>
+  <div class="app">
+    <div class="top">
+      <span class="logo">⏱ AutoMontage</span>
+      <span id="file" class="file">Dépose un audio…</span>
+      <div class="right">
+        <button id="genBtn" class="btn green" disabled>🎬 Générer l'aperçu</button>
+        <button id="expBtn" class="btn primary" disabled>⬇ Exporter</button>
+      </div>
+    </div>
+    <div class="mid">
+      <div id="drop" class="center">
+        <div class="dropzone">📥 Glisse ton fichier audio ici</div>
+        <video id="preview" controls style="display:none"></video>
+        <div id="status" class="status"></div>
+      </div>
+      <div class="panel right">
+        <div class="ttl">Transcription (corrigeable)</div>
+        <textarea id="transcript" placeholder="La transcription apparaîtra ici…"></textarea>
+      </div>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
