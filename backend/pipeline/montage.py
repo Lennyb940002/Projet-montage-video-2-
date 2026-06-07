@@ -2,6 +2,13 @@ import os, glob, random
 from backend import ffmpeg
 from backend.config import VIDEO, DEFAULT_CLIPS_DIR
 
+# Fenêtres de durée (s) pour choisir un bon son par catégorie (critères de l'expert)
+SFX_DUR = {"Impacts": (0.08, 0.25), "Whooshs": (0.18, 0.45), "Risers": (0.30, 0.80),
+           "Drops": (0.10, 0.35), "Mechanical": (0.10, 0.60), "Electronic": (0.10, 0.50)}
+# EQ (passe-haut, passe-bas en Hz) pour que les SFX passent sous la voix
+SFX_EQ = {"Impacts": (120, 8000), "Whooshs": (250, 10000), "Risers": (300, 9000),
+          "Drops": (60, 8000), "Mechanical": (150, 7000), "Electronic": (200, 9000)}
+
 def list_clips(clips_dir=DEFAULT_CLIPS_DIR):
     """Clips .mp4 dédoublonnés par taille de fichier."""
     seen = {}; clips = []
@@ -78,19 +85,22 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     cmd += ["-i", audio_path]
     Ncl = len(chosen)
 
-    # 1 son cohérent par catégorie (réutilisé) + attaque calée pour impacts/drops
-    cat_file = {}; cat_onset = {}
+    # 1 son cohérent par catégorie (réutilisé), choisi par fenêtre de durée,
+    # + mesures d'alignement (lead-in pour l'attaque, position du pic).
+    cat_file = {}; cat_onset = {}; cat_peak = {}
     resolved = []
     if sfx_events:
         for e in sfx_events:
             c = e["category"]
             if c not in cat_file:
-                cf = sfxmod.choose(c, sfx_dir)
+                lo, hi = SFX_DUR.get(c, (0.05, 1e9))
+                cf = sfxmod.choose(c, sfx_dir, lo, hi)
                 cat_file[c] = cf
-                cat_onset[c] = (sfxmod.onset(cf) if (cf and c in ("Impacts", "Drops")) else 0.0)
+                cat_onset[c] = (sfxmod.onset(cf) if (cf and c in ("Impacts", "Drops", "Mechanical")) else 0.0)
+                cat_peak[c] = sfxmod.peak_time(cf) if cf else 0.0
             if cat_file[c]:
-                resolved.append((e, cat_file[c], cat_onset[c]))
-    for (_e, f, _on) in resolved:
+                resolved.append((e, cat_file[c]))
+    for (_e, f) in resolved:
         cmd += ["-i", f]
 
     # vidéo
@@ -114,17 +124,27 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     # audio : voix + SFX (volume/fondus par évènement)
     if resolved:
         fc.append(f"[{Ncl}:a]aformat=sample_fmts=fltp:channel_layouts=stereo[av]")
-        for i, (e, f, on) in enumerate(resolved):
+        for i, (e, f) in enumerate(resolved):
+            c = e["category"]
             sdur = ffmpeg.probe_duration(f)
-            eff = max(0.1, sdur - on)          # durée après retrait du lead-in
+            on = cat_onset.get(c, 0.0)
+            eff = max(0.1, sdur - on)              # durée après retrait du lead-in
+            hpf, lpf = SFX_EQ.get(c, (150, 10000))
+            # placement (adelay) selon l'alignement demandé
+            align = e.get("align", "attack")
+            if align == "peak":
+                place = max(0.0, e["time"] - cat_peak.get(c, 0.0))
+            elif align == "end":
+                place = max(0.0, e["time"] - eff - 0.03)
+            else:  # attack : le son (lead-in retiré) démarre sur l'évènement
+                place = e["time"]
+            d = int(round(place * 1000))
             fin = e.get("fade_in_ms", 0) / 1000.0
             fout = e.get("fade_out_ms", 0) / 1000.0
-            d = int(round(e["time"] * 1000))
             parts = []
             if on > 0.01:
-                parts.append(f"atrim=start={on:.3f}")
-                parts.append("asetpts=N/SR/TB")
-            parts.append(f"volume={e['gain_dB']}dB")
+                parts += [f"atrim=start={on:.3f}", "asetpts=N/SR/TB"]
+            parts += [f"highpass=f={hpf}", f"lowpass=f={lpf}", f"volume={e['gain_dB']}dB"]
             if fin > 0:
                 parts.append(f"afade=t=in:st=0:d={fin:.3f}")
             if fout > 0 and eff > fout:
