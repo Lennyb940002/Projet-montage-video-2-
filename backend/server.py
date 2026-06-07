@@ -20,6 +20,7 @@ class VideoReq(BaseModel):
     text: str
     out_path: str | None = None
     style: str = "karaoke_yellow"
+    boost: bool = False
 
 class CutReq(BaseModel):
     clean_path: str
@@ -44,8 +45,8 @@ def cut(req: CutReq):
 @app.post("/preview")
 def preview(req: VideoReq):
     out = req.out_path or os.path.join(WORKDIR, uuid.uuid4().hex + ".mp4")
-    return {"video_path": service.make_video(req.clean_path, req.text, out, req.style)}
+    return {"video_path": service.make_video(req.clean_path, req.text, out, req.style, req.boost)}
 
 @app.post("/export")
 def export(req: VideoReq):
-    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path, req.style)}
+    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path, req.style, req.boost)}

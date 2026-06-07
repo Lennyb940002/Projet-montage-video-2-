@@ -36,7 +36,7 @@ def cut(clean_path, ranges):
     res["job"] = job
     return res
 
-def make_video(clean_path, text, out_path, style="karaoke_yellow"):
+def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
     """Aligne le texte (corrigé) sur l'audio nettoyé, génère sous-titres + vidéo."""
     words, duration = T.transcribe(clean_path)
     tokens, n_sent = align.tokenize(text)
@@ -45,5 +45,5 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow"):
     ass = os.path.join(job, "subs.ass")
     subtitles.build_ass(tokens, n_sent, ass, style=style)
     ranges = montage.sentence_ranges(tokens, n_sent, duration)
-    montage.render(clean_path, ass, ranges, out_path)
+    montage.render(clean_path, ass, ranges, out_path, boost=boost)
     return out_path

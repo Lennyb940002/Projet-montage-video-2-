@@ -21,6 +21,13 @@ def test_load_and_preview(sample_audio, tmp_path):
                                        "text": data["transcript"], "out_path": out})
     assert os.path.exists(r2.json()["video_path"])
 
+def test_preview_boost(sample_audio, tmp_path):
+    data = client.post("/load", json={"audio_path": sample_audio}).json()
+    out = str(tmp_path / "boost_api.mp4")
+    r = client.post("/preview", json={"clean_path": data["clean_path"],
+                                      "text": data["transcript"], "out_path": out, "boost": True})
+    assert os.path.exists(r.json()["video_path"])
+
 def test_cut_endpoint_shortens(sample_audio):
     data = client.post("/load", json={"audio_path": sample_audio}).json()
     before = data["duration"]
