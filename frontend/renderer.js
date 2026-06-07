@@ -6,6 +6,7 @@ const preview = document.getElementById('preview');
 const genBtn = document.getElementById('genBtn');
 const expBtn = document.getElementById('expBtn');
 const styleSel = document.getElementById('style');
+const boostChk = document.getElementById('boost');
 const menu = document.getElementById('menu');
 const canvas = document.getElementById('wave');
 const player = document.getElementById('player');
@@ -219,7 +220,7 @@ drop.addEventListener('drop', async ev => {
 genBtn.addEventListener('click', async () => {
   setStatus('Génération de l\'aperçu…');
   try {
-    const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value);
+    const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value, boostChk.checked);
     preview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
     preview.style.display = 'block';
     setStatus('Aperçu prêt.');
@@ -232,7 +233,7 @@ expBtn.addEventListener('click', async () => {
   if (!out) return;
   setStatus('Export…');
   try {
-    const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value);
+    const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value, boostChk.checked);
     setStatus('Exporté : ' + res.video_path);
   } catch (e) { setStatus('Erreur export : ' + (e.message || e)); }
 });
