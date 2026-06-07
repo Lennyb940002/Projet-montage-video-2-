@@ -25,3 +25,14 @@ BOOST = dict(
     flash=0.12,        # durée du flash blanc (s)
     punch_zoom=1.5,    # zoom (constant) plus serré sur le 1er clip = effet punch
 )
+
+DEFAULT_CTA = "Écris-moi en commentaire 👇"
+BASE_HASHTAGS = ["#montre", "#montrehomme", "#seikomod", "#horlogerie", "#watch",
+                 "#watchlover", "#pourtoi", "#fyp", "#luxe", "#style"]
+DEFAULT_BENEFITS = ["✅ Qualité qui en jette", "✅ Prix accessible", "✅ Livraison rapide"]
+BENEFIT_KEYWORDS = ["prix", "qualité", "livraison", "saphir", "acier", "24h", "€",
+                    "euro", "garantie", "automatique", "mouvement", "bracelet", "cadran"]
+BRAND_TAGS = {"rolex": "#rolex", "omega": "#omega", "cartier": "#cartier",
+              "seiko": "#seiko", "patek": "#patek", "audemars": "#audemarspiguet",
+              "tissot": "#tissot", "tag": "#tagheuer", "heuer": "#tagheuer",
+              "daytona": "#daytona", "submariner": "#submariner", "datejust": "#datejust"}
