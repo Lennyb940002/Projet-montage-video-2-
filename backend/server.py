@@ -1,10 +1,15 @@
 import os, uuid
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from backend import service
 from backend.config import WORKDIR
 
 app = FastAPI(title="AutoMontage")
+
+# L'UI Electron (page file://) appelle cette API locale -> autoriser toutes origines.
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"],
+                   allow_headers=["*"])
 
 class LoadReq(BaseModel):
     audio_path: str
