@@ -12,6 +12,14 @@ def test_sentence_ranges_cover_duration():
     assert ranges[0][0] == 0.0
     assert ranges[-1][1] == 3.0
 
+def test_apply_boost_cuts_subdivides_hook():
+    from backend.pipeline.montage import apply_boost_cuts
+    out = apply_boost_cuts([(0.0, 5.0)], hook_dur=3.5, hook_cut=0.8)
+    assert len(out) > 1
+    assert out[0] == (0.0, 0.8)
+    assert abs(out[-1][1] - 5.0) < 1e-6
+    assert out[-1][0] == 3.5
+
 def test_list_clips_dedup():
     clips = list_clips(DEFAULT_CLIPS_DIR)
     assert len(clips) > 0

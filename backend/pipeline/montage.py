@@ -23,6 +23,21 @@ def sentence_ranges(tokens, n_sent, duration):
         ranges.append((s, max(e, s + 0.3)))
     return ranges or [(0.0, duration)]
 
+def apply_boost_cuts(ranges, hook_dur, hook_cut):
+    """Redécoupe la portion [0, hook_dur] en tranches de hook_cut (cuts rapides)."""
+    out = []
+    for s, e in ranges:
+        if s >= hook_dur:
+            out.append((s, e)); continue
+        hook_end = min(e, hook_dur)
+        t = s
+        while t < hook_end - 1e-3:
+            nt = min(t + hook_cut, hook_end)
+            out.append((t, nt)); t = nt
+        if e > hook_dur:
+            out.append((hook_dur, e))
+    return out
+
 def _pick_clips(ranges, clips):
     durs = {c: ffmpeg.probe_duration(c) for c in clips}
     avail = clips[:]; random.shuffle(avail); chosen = []
