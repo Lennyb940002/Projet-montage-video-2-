@@ -3,7 +3,9 @@ from dataclasses import asdict
 from backend.config import WORKDIR
 from backend.pipeline import transcribe as T
 from backend.config import BOOST
+from backend import settings as settings_mod
 from backend.pipeline import audio_clean, align, subtitles, montage, detect, waveform, sfx_plan, caption
+from backend.pipeline import tunnel, publish_ig
 
 def _analyze(clean_path):
     """Transcrit + détecte + pics. Brique commune à load et cut."""
@@ -42,6 +44,22 @@ def cut(clean_path, ranges):
 
 def make_caption(text):
     return caption.generate_caption(text)
+
+def get_settings():
+    s = settings_mod.load()
+    return {"ig_user_id": s.get("ig_user_id", ""), "has_token": bool(s.get("ig_token"))}
+
+def save_settings(ig_token, ig_user_id):
+    settings_mod.save({"ig_token": ig_token, "ig_user_id": ig_user_id})
+    return get_settings()
+
+def publish_instagram(video_path, caption_text):
+    s = settings_mod.load()
+    token, uid = s.get("ig_token"), s.get("ig_user_id")
+    if not token or not uid:
+        raise RuntimeError("Configure ton token et ton IG ID dans Réglages d'abord.")
+    media_id = publish_ig.publish_reel(video_path, caption_text, token, uid, tunnel.public_url)
+    return {"id": media_id}
 
 def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
     """Aligne le texte (corrigé) sur l'audio nettoyé, génère sous-titres + vidéo."""

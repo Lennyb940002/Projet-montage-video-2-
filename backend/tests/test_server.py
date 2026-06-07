@@ -28,6 +28,20 @@ def test_load_missing_file_returns_json_error():
     assert "error" in r.json()
     assert "introuvable" in r.json()["error"].lower()
 
+def test_settings_roundtrip_api(monkeypatch, tmp_path):
+    from backend import settings as sm
+    monkeypatch.setattr(sm, "DEFAULT_PATH", str(tmp_path / "s.json"))
+    r = client.post("/settings", json={"ig_token": "TOK", "ig_user_id": "123"})
+    assert r.json() == {"ig_user_id": "123", "has_token": True}
+    assert client.get("/settings").json()["has_token"] is True
+
+def test_publish_requires_settings(monkeypatch, tmp_path):
+    from backend import settings as sm
+    monkeypatch.setattr(sm, "DEFAULT_PATH", str(tmp_path / "empty.json"))
+    safe = TestClient(app, raise_server_exceptions=False)
+    r = safe.post("/publish/instagram", json={"video_path": "x.mp4", "caption": "c"})
+    assert r.status_code == 500 and "Réglages" in r.json()["error"]
+
 def test_caption_endpoint():
     r = client.post("/caption", json={"text": "Pourquoi une Seiko ? Le prix est top. Écris SEIKO en commentaire."})
     data = r.json()

@@ -35,6 +35,14 @@ class CutReq(BaseModel):
 class CaptionReq(BaseModel):
     text: str
 
+class SettingsReq(BaseModel):
+    ig_token: str
+    ig_user_id: str
+
+class PublishReq(BaseModel):
+    video_path: str
+    caption: str
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -54,6 +62,18 @@ def cut(req: CutReq):
 @app.post("/caption")
 def caption_ep(req: CaptionReq):
     return service.make_caption(req.text)
+
+@app.get("/settings")
+def get_settings_ep():
+    return service.get_settings()
+
+@app.post("/settings")
+def save_settings_ep(req: SettingsReq):
+    return service.save_settings(req.ig_token, req.ig_user_id)
+
+@app.post("/publish/instagram")
+def publish_ig_ep(req: PublishReq):
+    return service.publish_instagram(req.video_path, req.caption)
 
 @app.post("/preview")
 def preview(req: VideoReq):
