@@ -12,7 +12,19 @@ def test_load_and_preview(sample_audio, tmp_path):
     data = r.json()
     assert "montre" in data["transcript"].lower()
     assert data["duration"] > 5
+    # Phase 2 : mots + détection présents
+    assert len(data["words"]) > 5
+    assert "prob" in data["words"][0]
+    assert "retakes" in data["detect"] and "lowconf" in data["detect"]
     out = str(tmp_path / "preview.mp4")
     r2 = client.post("/preview", json={"clean_path": data["clean_path"],
                                        "text": data["transcript"], "out_path": out})
     assert os.path.exists(r2.json()["video_path"])
+
+def test_cut_endpoint_shortens(sample_audio):
+    data = client.post("/load", json={"audio_path": sample_audio}).json()
+    before = data["duration"]
+    r = client.post("/cut", json={"clean_path": data["clean_path"], "ranges": [[1.0, 3.0]]})
+    after = r.json()
+    assert after["duration"] < before
+    assert after["clean_path"] != data["clean_path"]

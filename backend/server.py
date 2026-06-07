@@ -19,6 +19,10 @@ class VideoReq(BaseModel):
     text: str
     out_path: str | None = None
 
+class CutReq(BaseModel):
+    clean_path: str
+    ranges: list[tuple[float, float]]
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -26,6 +30,10 @@ def health():
 @app.post("/load")
 def load(req: LoadReq):
     return service.load_audio(req.audio_path)
+
+@app.post("/cut")
+def cut(req: CutReq):
+    return service.cut(req.clean_path, req.ranges)
 
 @app.post("/preview")
 def preview(req: VideoReq):
