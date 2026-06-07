@@ -57,28 +57,76 @@ def _pick_clips(ranges, clips):
             chosen.append((c, 0.0, L, durs[c] < L + 0.15))
     return chosen
 
-def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR):
+def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
+           boost=False, sfx_dir=None):
+    from backend.config import BOOST, SFX_DIR
+    from backend.pipeline import sfx as sfxmod
+    if sfx_dir is None:
+        sfx_dir = SFX_DIR
+    if boost:
+        ranges = apply_boost_cuts(ranges, BOOST["hook_dur"], BOOST["hook_cut"])
     clips = list_clips(clips_dir)
     if not clips:
         raise RuntimeError(f"Aucun clip dans {clips_dir}")
     chosen = _pick_clips(ranges, clips)
     W, H, FPS, ZOOM = VIDEO["width"], VIDEO["height"], VIDEO["fps"], VIDEO["zoom"]
     zw, zh = int(W * ZOOM), int(H * ZOOM)
+
     cmd = [ffmpeg.FFMPEG, "-y"]
     for (c, off, L, loop) in chosen:
         if loop: cmd += ["-stream_loop", "-1", "-t", f"{L:.3f}", "-i", c]
         else: cmd += ["-ss", f"{off:.3f}", "-t", f"{L:.3f}", "-i", c]
     cmd += ["-i", audio_path]
-    N = len(chosen); fc = []
-    for k in range(N):
-        fc.append(f"[{k}:v]scale={zw}:{zh}:force_original_aspect_ratio=increase,"
-                  f"crop={W}:{H},setsar=1,fps={FPS},format=yuv420p[v{k}]")
-    fc.append("".join(f"[v{k}]" for k in range(N)) + f"concat=n={N}:v=1:a=0[cv]")
-    # chemin .ass relatif (exécution depuis son dossier) pour éviter l'échappement Windows
+    Ncl = len(chosen)
+
+    # évènements SFX (impact au début + whoosh sur chaque changement de clip)
+    events = []
+    if boost:
+        imp = sfxmod.pick("impact", sfx_dir)
+        if imp: events.append((0.0, imp))
+        tcum = 0.0
+        for idx, (s, e) in enumerate(ranges):
+            if idx > 0:
+                wh = sfxmod.pick("whoosh", sfx_dir)
+                if wh: events.append((tcum, wh))
+            tcum += (e - s)
+    for (_t, f) in events:
+        cmd += ["-i", f]
+
+    # vidéo
+    fc = []
+    for k in range(Ncl):
+        s = f"[{k}:v]scale={zw}:{zh}:force_original_aspect_ratio=increase,crop={W}:{H}"
+        if boost:
+            rate = BOOST["punch_rate"] if k == 0 else BOOST["zoom_rate"]
+            s += (f",zoompan=z='min(zoom+{rate},{BOOST['zoom_max']})':d=1:"
+                  f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps={FPS}")
+        s += f",setsar=1,fps={FPS},format=yuv420p[v{k}]"
+        fc.append(s)
+    fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
     ass_dir = os.path.dirname(os.path.abspath(ass_path))
     ass_name = os.path.basename(ass_path)
-    fc.append(f"[cv]ass={ass_name}[vout]")
-    cmd += ["-filter_complex", ";".join(fc), "-map", "[vout]", "-map", f"{N}:a",
+    if boost:
+        fc.append(f"[cv]drawbox=x=0:y=0:w=iw:h=ih:color=white@1:t=fill:"
+                  f"enable='lt(t,{BOOST['flash']})'[cf];[cf]ass={ass_name}[vout]")
+    else:
+        fc.append(f"[cv]ass={ass_name}[vout]")
+
+    # audio
+    if events:
+        vol = BOOST["sfx_volume"]
+        fc.append(f"[{Ncl}:a]aformat=sample_fmts=fltp:channel_layouts=stereo[av]")
+        for i, (t, f) in enumerate(events):
+            d = int(round(t * 1000))
+            fc.append(f"[{Ncl + 1 + i}:a]adelay={d}|{d},volume={vol},"
+                      f"aformat=sample_fmts=fltp:channel_layouts=stereo[se{i}]")
+        mix = "[av]" + "".join(f"[se{i}]" for i in range(len(events)))
+        fc.append(f"{mix}amix=inputs={len(events) + 1}:normalize=0:duration=first[aout]")
+        amap = "[aout]"
+    else:
+        amap = f"{Ncl}:a"
+
+    cmd += ["-filter_complex", ";".join(fc), "-map", "[vout]", "-map", amap,
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "192k", "-r", str(FPS), "-shortest",
             "-movflags", "+faststart", "-map_metadata", "-1", os.path.abspath(out_path)]

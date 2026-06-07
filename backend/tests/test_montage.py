@@ -40,3 +40,36 @@ def test_render_makes_vertical_video(sample_audio, tmp_path):
     r = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
                     "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
     assert "1080,1920" in r.stdout
+
+def _mini_ass(path):
+    open(path, "w", encoding="utf-8").write(
+        "[Script Info]\nScriptType: v4.00+\nPlayResX: 1080\nPlayResY: 1920\n\n"
+        "[V4+ Styles]\nFormat: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding\n"
+        "Style: Default,Arial,80,&H00FFFFFF&,&H00FFFFFF&,&H00000000&,&H00000000&,1,0,0,0,100,100,0,0,1,4,0,5,80,80,80,1\n\n"
+        "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"
+        "Dialogue: 0,0:00:00.00,0:00:03.00,Default,,0,0,0,,TEST\n")
+
+def test_render_boost_no_sfx(sample_audio, tmp_path):
+    ass = str(tmp_path / "s.ass"); _mini_ass(ass)
+    dur = ffmpeg.probe_duration(sample_audio)
+    out = str(tmp_path / "boost.mp4")
+    render(sample_audio, ass, [(0.0, dur)], out, boost=True, sfx_dir=str(tmp_path / "empty"))
+    assert os.path.exists(out)
+    r = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                    "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
+    assert "1080,1920" in r.stdout
+
+def test_render_boost_with_sfx(sample_audio, tmp_path):
+    sfxdir = tmp_path / "sfx"; sfxdir.mkdir()
+    for name in ("impact_a.wav", "whoosh_a.wav"):
+        ffmpeg.run([ffmpeg.FFMPEG, "-y", "-f", "lavfi", "-i",
+                    "sine=frequency=300:duration=0.3", str(sfxdir / name)])
+    ass = str(tmp_path / "s2.ass"); _mini_ass(ass)
+    dur = ffmpeg.probe_duration(sample_audio)
+    out = str(tmp_path / "boost2.mp4")
+    render(sample_audio, ass, [(0.0, dur * 0.5), (dur * 0.5, dur)], out,
+           boost=True, sfx_dir=str(sfxdir))
+    assert os.path.exists(out)
+    r = ffmpeg.run([ffmpeg.FFPROBE, "-v", "error", "-select_streams", "a",
+                    "-show_entries", "stream=codec_type", "-of", "csv=p=0", out])
+    assert "audio" in r.stdout
