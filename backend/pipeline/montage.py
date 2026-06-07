@@ -78,14 +78,19 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     cmd += ["-i", audio_path]
     Ncl = len(chosen)
 
-    # résout chaque évènement SFX en fichier réel (None si catégorie vide)
+    # 1 son cohérent par catégorie (réutilisé) + attaque calée pour impacts/drops
+    cat_file = {}; cat_onset = {}
     resolved = []
     if sfx_events:
         for e in sfx_events:
-            f = sfxmod.pick(e["category"], sfx_dir)
-            if f:
-                resolved.append((e, f))
-    for (_e, f) in resolved:
+            c = e["category"]
+            if c not in cat_file:
+                cf = sfxmod.choose(c, sfx_dir)
+                cat_file[c] = cf
+                cat_onset[c] = (sfxmod.onset(cf) if (cf and c in ("Impacts", "Drops")) else 0.0)
+            if cat_file[c]:
+                resolved.append((e, cat_file[c], cat_onset[c]))
+    for (_e, f, _on) in resolved:
         cmd += ["-i", f]
 
     # vidéo
@@ -109,16 +114,21 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     # audio : voix + SFX (volume/fondus par évènement)
     if resolved:
         fc.append(f"[{Ncl}:a]aformat=sample_fmts=fltp:channel_layouts=stereo[av]")
-        for i, (e, f) in enumerate(resolved):
+        for i, (e, f, on) in enumerate(resolved):
             sdur = ffmpeg.probe_duration(f)
+            eff = max(0.1, sdur - on)          # durée après retrait du lead-in
             fin = e.get("fade_in_ms", 0) / 1000.0
             fout = e.get("fade_out_ms", 0) / 1000.0
             d = int(round(e["time"] * 1000))
-            parts = [f"volume={e['gain_dB']}dB"]
+            parts = []
+            if on > 0.01:
+                parts.append(f"atrim=start={on:.3f}")
+                parts.append("asetpts=N/SR/TB")
+            parts.append(f"volume={e['gain_dB']}dB")
             if fin > 0:
                 parts.append(f"afade=t=in:st=0:d={fin:.3f}")
-            if fout > 0 and sdur > fout:
-                parts.append(f"afade=t=out:st={sdur - fout:.3f}:d={fout:.3f}")
+            if fout > 0 and eff > fout:
+                parts.append(f"afade=t=out:st={eff - fout:.3f}:d={fout:.3f}")
             parts.append(f"adelay={d}|{d}")
             parts.append("aformat=sample_fmts=fltp:channel_layouts=stereo")
             fc.append(f"[{Ncl + 1 + i}:a]" + ",".join(parts) + f"[se{i}]")
