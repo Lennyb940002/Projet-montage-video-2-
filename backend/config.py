@@ -23,7 +23,5 @@ BOOST = dict(
     hook_cut=0.8,      # longueur d'un cut dans le hook (s)
     sfx_volume=0.7,    # volume des SFX dans le mix
     flash=0.12,        # durée du flash blanc (s)
-    zoom_rate=0.0010,  # vitesse du zoom Ken Burns
-    punch_rate=0.0030, # vitesse du zoom sur le 1er clip (punch)
-    zoom_max=1.25,     # zoom maxi
+    punch_zoom=1.5,    # zoom (constant) plus serré sur le 1er clip = effet punch
 )

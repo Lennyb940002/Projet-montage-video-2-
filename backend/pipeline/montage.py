@@ -70,7 +70,6 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
         raise RuntimeError(f"Aucun clip dans {clips_dir}")
     chosen = _pick_clips(ranges, clips)
     W, H, FPS, ZOOM = VIDEO["width"], VIDEO["height"], VIDEO["fps"], VIDEO["zoom"]
-    zw, zh = int(W * ZOOM), int(H * ZOOM)
 
     cmd = [ffmpeg.FFMPEG, "-y"]
     for (c, off, L, loop) in chosen:
@@ -96,13 +95,12 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     # vidéo
     fc = []
     for k in range(Ncl):
-        s = f"[{k}:v]scale={zw}:{zh}:force_original_aspect_ratio=increase,crop={W}:{H}"
-        if boost:
-            rate = BOOST["punch_rate"] if k == 0 else BOOST["zoom_rate"]
-            s += (f",zoompan=z='min(zoom+{rate},{BOOST['zoom_max']})':d=1:"
-                  f"x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':s={W}x{H}:fps={FPS}")
-        s += f",setsar=1,fps={FPS},format=yuv420p[v{k}]"
-        fc.append(s)
+        # zoom CONSTANT (pas de zoompan -> aucune image figée + rapide).
+        # 1er clip en mode boost = zoom plus serré (punch).
+        f = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
+        cw, ch = int(W * f), int(H * f)
+        fc.append(f"[{k}:v]scale={cw}:{ch}:force_original_aspect_ratio=increase,"
+                  f"crop={W}:{H},setsar=1,fps={FPS},format=yuv420p[v{k}]")
     fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
     ass_dir = os.path.dirname(os.path.abspath(ass_path))
     ass_name = os.path.basename(ass_path)
