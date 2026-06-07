@@ -1,4 +1,4 @@
-const { contextBridge } = require('electron');
+const { contextBridge, webUtils } = require('electron');
 const PORT = 8765;
 const base = `http://127.0.0.1:${PORT}`;
 
@@ -11,6 +11,8 @@ function post(path, body) {
 }
 
 contextBridge.exposeInMainWorld('api', {
+  // Electron 32+ : File.path supprimé -> récupérer le chemin via webUtils
+  getPath: (file)                       => webUtils.getPathForFile(file),
   load:    (audio_path)                 => post('/load',    { audio_path }),
   preview: (clean_path, text)           => post('/preview', { clean_path, text }),
   export:  (clean_path, text, out_path) => post('/export',  { clean_path, text, out_path })
