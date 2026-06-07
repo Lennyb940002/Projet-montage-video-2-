@@ -25,6 +25,10 @@ body { background:#0f0f10; color:#e8e8ea; height:100vh; overflow:hidden; }
 .wavebar { display:flex; align-items:center; gap:14px; padding:8px 14px; border-bottom:1px solid #232327; }
 .tool { background:#232327; border:1px solid #33333a; color:#d8d8de; padding:6px 12px; border-radius:6px; font-size:12px; cursor:pointer; }
 .tool:disabled { opacity:.4; cursor:default; }
+.tool.rm { color:#ef4444; border-color:#7a2f2f; }
+.sellbl { font-size:12px; color:#9a9aa0; }
+.sel { background:#2a2a2d; color:#e8e8ea; border:1px solid #3a3a3f; border-radius:6px; padding:6px 8px; font-size:13px; }
+.sep { width:1px; align-self:stretch; background:#33333a; margin:0 4px; }
 .time { font-size:12px; color:#9a9aa0; font-variant-numeric:tabular-nums; }
 .legend { display:flex; gap:14px; font-size:12px; color:#aaa; }
 .dot { display:inline-block; width:10px; height:10px; border-radius:3px; margin-right:5px; vertical-align:middle; }

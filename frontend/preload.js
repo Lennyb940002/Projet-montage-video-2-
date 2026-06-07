@@ -9,12 +9,14 @@ function post(path, body) {
     body: JSON.stringify(body)
   }).then(r => r.json());
 }
+function get(path) { return fetch(base + path).then(r => r.json()); }
 
 contextBridge.exposeInMainWorld('api', {
   // Electron 32+ : File.path supprimé -> récupérer le chemin via webUtils
-  getPath: (file)                       => webUtils.getPathForFile(file),
-  load:    (audio_path)                 => post('/load',    { audio_path }),
-  cut:     (clean_path, ranges)         => post('/cut',     { clean_path, ranges }),
-  preview: (clean_path, text)           => post('/preview', { clean_path, text }),
-  export:  (clean_path, text, out_path) => post('/export',  { clean_path, text, out_path })
+  getPath: (file)                              => webUtils.getPathForFile(file),
+  styles:  ()                                  => get('/styles'),
+  load:    (audio_path)                        => post('/load',    { audio_path }),
+  cut:     (clean_path, ranges)                => post('/cut',     { clean_path, ranges }),
+  preview: (clean_path, text, style)           => post('/preview', { clean_path, text, style }),
+  export:  (clean_path, text, out_path, style) => post('/export',  { clean_path, text, out_path, style })
 });

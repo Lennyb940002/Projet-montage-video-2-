@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from backend import service
+from backend.pipeline import subtitles
 from backend.config import WORKDIR
 
 app = FastAPI(title="AutoMontage")
@@ -18,6 +19,7 @@ class VideoReq(BaseModel):
     clean_path: str
     text: str
     out_path: str | None = None
+    style: str = "karaoke_yellow"
 
 class CutReq(BaseModel):
     clean_path: str
@@ -26,6 +28,10 @@ class CutReq(BaseModel):
 @app.get("/health")
 def health():
     return {"status": "ok"}
+
+@app.get("/styles")
+def styles():
+    return subtitles.list_styles()
 
 @app.post("/load")
 def load(req: LoadReq):
@@ -38,8 +44,8 @@ def cut(req: CutReq):
 @app.post("/preview")
 def preview(req: VideoReq):
     out = req.out_path or os.path.join(WORKDIR, uuid.uuid4().hex + ".mp4")
-    return {"video_path": service.make_video(req.clean_path, req.text, out)}
+    return {"video_path": service.make_video(req.clean_path, req.text, out, req.style)}
 
 @app.post("/export")
 def export(req: VideoReq):
-    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path)}
+    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path, req.style)}
