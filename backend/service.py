@@ -3,7 +3,7 @@ from dataclasses import asdict
 from backend.config import WORKDIR
 from backend.pipeline import transcribe as T
 from backend.config import BOOST
-from backend.pipeline import audio_clean, align, subtitles, montage, detect, waveform, sfx_plan
+from backend.pipeline import audio_clean, align, subtitles, montage, detect, waveform, sfx_plan, caption
 
 def _analyze(clean_path):
     """Transcrit + détecte + pics. Brique commune à load et cut."""
@@ -16,6 +16,7 @@ def _analyze(clean_path):
         "words": [asdict(w) for w in words],
         "detect": detect.detect(words),
         "peaks": waveform.peaks(clean_path),
+        "caption": caption.generate_caption(transcript),
     }
 
 def load_audio(audio_path):
@@ -38,6 +39,9 @@ def cut(clean_path, ranges):
     res = _analyze(new)
     res["job"] = job
     return res
+
+def make_caption(text):
+    return caption.generate_caption(text)
 
 def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
     """Aligne le texte (corrigé) sur l'audio nettoyé, génère sous-titres + vidéo."""

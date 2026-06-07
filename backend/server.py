@@ -32,6 +32,9 @@ class CutReq(BaseModel):
     clean_path: str
     ranges: list[tuple[float, float]]
 
+class CaptionReq(BaseModel):
+    text: str
+
 @app.get("/health")
 def health():
     return {"status": "ok"}
@@ -47,6 +50,10 @@ def load(req: LoadReq):
 @app.post("/cut")
 def cut(req: CutReq):
     return service.cut(req.clean_path, req.ranges)
+
+@app.post("/caption")
+def caption_ep(req: CaptionReq):
+    return service.make_caption(req.text)
 
 @app.post("/preview")
 def preview(req: VideoReq):

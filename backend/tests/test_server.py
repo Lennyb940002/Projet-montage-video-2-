@@ -28,6 +28,12 @@ def test_load_missing_file_returns_json_error():
     assert "error" in r.json()
     assert "introuvable" in r.json()["error"].lower()
 
+def test_caption_endpoint():
+    r = client.post("/caption", json={"text": "Pourquoi une Seiko ? Le prix est top. Écris SEIKO en commentaire."})
+    data = r.json()
+    assert "#seiko" in data["hashtags"]
+    assert "full" in data and data["full"]
+
 def test_preview_boost(sample_audio, tmp_path):
     data = client.post("/load", json={"audio_path": sample_audio}).json()
     out = str(tmp_path / "boost_api.mp4")
