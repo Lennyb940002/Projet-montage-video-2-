@@ -223,7 +223,9 @@ genBtn.addEventListener('click', async () => {
     const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value, boostChk.checked);
     preview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
     preview.style.display = 'block';
-    setStatus('Aperçu prêt.');
+    preview.currentTime = 0;
+    preview.play().catch(() => {});
+    setStatus('Aperçu prêt (lecture auto).');
     expBtn.disabled = false;
   } catch (e) { setStatus('Erreur aperçu : ' + (e.message || e)); }
 });

@@ -29,7 +29,10 @@ async function waitForBackend(retries = 40) {
 function createWindow() {
   const win = new BrowserWindow({
     width: 1400, height: 900, backgroundColor: '#0f0f10',
-    webPreferences: { preload: path.join(__dirname, 'preload.js') }
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js'),
+      autoplayPolicy: 'no-user-gesture-required'
+    }
   });
   win.loadFile('index.html');
 }
