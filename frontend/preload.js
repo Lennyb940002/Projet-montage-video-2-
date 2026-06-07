@@ -1,4 +1,4 @@
-const { contextBridge, webUtils } = require('electron');
+const { contextBridge, webUtils, ipcRenderer } = require('electron');
 const PORT = 8765;
 const base = `http://127.0.0.1:${PORT}`;
 
@@ -14,6 +14,7 @@ function get(path) { return fetch(base + path).then(r => r.json()); }
 contextBridge.exposeInMainWorld('api', {
   // Electron 32+ : File.path supprimé -> récupérer le chemin via webUtils
   getPath: (file)                              => webUtils.getPathForFile(file),
+  savePath: ()                                 => ipcRenderer.invoke('save-dialog'),
   styles:  ()                                  => get('/styles'),
   load:    (audio_path)                        => post('/load',    { audio_path }),
   cut:     (clean_path, ranges)                => post('/cut',     { clean_path, ranges }),

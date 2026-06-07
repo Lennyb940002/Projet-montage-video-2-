@@ -234,7 +234,7 @@ genBtn.addEventListener('click', async () => {
 });
 
 expBtn.addEventListener('click', async () => {
-  const out = prompt('Chemin de sortie (ex: C:\\Users\\User\\Desktop\\video.mp4)');
+  const out = await window.api.savePath();
   if (!out) return;
   setStatus('Export…');
   try {

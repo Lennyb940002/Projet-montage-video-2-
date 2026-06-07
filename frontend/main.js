@@ -1,6 +1,16 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, dialog } = require('electron');
 const { spawn } = require('child_process');
 const path = require('path');
+
+// Boîte "Enregistrer sous" native (window.prompt n'existe pas dans Electron)
+ipcMain.handle('save-dialog', async () => {
+  const r = await dialog.showSaveDialog({
+    title: 'Exporter la vidéo',
+    defaultPath: 'montage.mp4',
+    filters: [{ name: 'Vidéo MP4', extensions: ['mp4'] }]
+  });
+  return r.canceled ? null : r.filePath;
+});
 
 let backend;
 const PORT = 8765;
