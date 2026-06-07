@@ -18,11 +18,17 @@
         <div id="status" class="status"></div>
       </div>
       <div class="panel right">
-        <div class="ttl">Transcription (corrigeable)</div>
-        <textarea id="transcript" placeholder="La transcription apparaîtra ici…"></textarea>
+        <div class="ttl">Transcription</div>
+        <div class="legend">
+          <span><i class="dot y"></i>Reprise (clic → Garder/Supprimer)</span>
+          <span><i class="dot r"></i>À vérifier</span>
+        </div>
+        <div class="hint">Double-clic sur un mot pour le corriger.</div>
+        <div id="transcript" class="transcript"></div>
       </div>
     </div>
   </div>
+  <div id="menu" class="menu" style="display:none"></div>
   <script src="renderer.js"></script>
 </body>
 </html>
