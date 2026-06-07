@@ -1,0 +1,5 @@
+faster-whisper==1.2.1
+fastapi==0.115.*
+uvicorn==0.34.*
+pytest==8.*
+httpx==0.28.*
