@@ -81,7 +81,7 @@ const selPlay = document.getElementById('selPlay');
 const selDel = document.getElementById('selDel');
 const selClear = document.getElementById('selClear');
 
-const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [], peaks: [], sel: null };
+const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [], peaks: [], sel: null, pauses: [] };
 let regions = [];
 let drag = null;
 let playingSel = false;
@@ -102,6 +102,7 @@ function setState(res) {
   state.words = res.words;
   state.retakes = res.detect.retakes;
   state.lowconf = res.detect.lowconf;
+  state.pauses = res.detect.pauses || [];
   state.peaks = res.peaks || [];
   state.sel = null;
   transcript.value = res.transcript;
@@ -125,6 +126,7 @@ function buildRegions() {
     regions.push({ type: 'r', start: state.words[idxs[0]].start, end: state.words[idxs[idxs.length - 1]].end, idxs });
     i = j + 1;
   }
+  (state.pauses || []).forEach(p => regions.push({ type: 'y', kind: 'pause', start: p.start, end: p.end, ref: p }));
 }
 
 // ---- dessin ----
@@ -215,7 +217,8 @@ selPlay.addEventListener('click', () => {
 });
 
 function keepRegion(reg) {
-  if (reg.type === 'y') state.retakes = state.retakes.filter(r => r !== reg.ref);
+  if (reg.kind === 'pause') state.pauses = state.pauses.filter(p => p !== reg.ref);
+  else if (reg.type === 'y') state.retakes = state.retakes.filter(r => r !== reg.ref);
   else { const s = new Set(reg.idxs); state.lowconf = state.lowconf.filter(i => !s.has(i)); }
   buildRegions(); drawWave();
 }
