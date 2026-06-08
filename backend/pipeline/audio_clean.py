@@ -1,5 +1,15 @@
+import re
 from backend import ffmpeg
 from backend.config import SILENCE
+
+def peak_db(audio_path):
+    """Niveau crête (dBFS) du fichier via ffmpeg volumedetect. Fallback -3 dB."""
+    r = ffmpeg.run([ffmpeg.FFMPEG, "-i", audio_path, "-af", "volumedetect", "-f", "null", "-"])
+    m = re.search(r"max_volume:\s*(-?[0-9.]+)\s*dB", r.stderr)
+    try:
+        return float(m.group(1)) if m else -3.0
+    except (ValueError, AttributeError):
+        return -3.0
 
 def cut_audio(audio_path, out_path, remove_ranges):
     """Retire des plages temporelles [(start, end), ...] de l'audio (garde le
@@ -30,9 +40,14 @@ def cut_audio(audio_path, out_path, remove_ranges):
     return out_path
 
 def remove_silences(audio_path, out_path):
-    """Resserre les silences (keep max 0.10 s, seuil -35dB). Réversible côté
-    appelant (on garde l'original)."""
-    keep = SILENCE["keep"]; thr = SILENCE["threshold"]
+    """Resserre les silences avec un seuil ADAPTATIF (plancher de bruit + marge),
+    borné dans une plage sûre, en conservant un souffle. Ne retire que ce qui est
+    sous le seuil -> jamais de parole."""
+    s = SILENCE
+    thr_db = peak_db(audio_path) - s["below_peak"]              # seuil sous le pic réel
+    thr_db = min(s["floor_max"], max(s["floor_min"], thr_db))   # clamp [floor_min, floor_max]
+    thr = f"{thr_db:.0f}dB"
+    keep = s["keep"]
     sr = (f"silenceremove=start_periods=1:start_duration=0:start_threshold={thr}:"
           f"stop_periods=-1:stop_duration={keep}:stop_threshold={thr}:detection=rms")
     r = ffmpeg.run([ffmpeg.FFMPEG, "-y", "-i", audio_path, "-af", sr,
