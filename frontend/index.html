@@ -1,32 +1,48 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head><meta charset="utf-8"><link rel="stylesheet" href="styles.css"></head>
+<head>
+  <meta charset="utf-8">
+  <title>AutoMontage</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
 <body>
   <div class="app">
-    <div class="top">
-      <span class="logo">⏱ AutoMontage</span>
-      <span id="file" class="file">Dépose un audio…</span>
+    <header class="top">
+      <span class="logo">AutoMontage</span>
+      <span id="file" class="file">Aucun audio chargé</span>
       <div class="right">
-        <label class="sellbl">Sous-titres</label>
-        <select id="style" class="sel"></select>
+        <span class="sellbl">Sous-titres</span>
+        <select id="style" class="sel" aria-label="Style de sous-titres"></select>
         <label class="boost"><input type="checkbox" id="boost"> ✨ Boost Hook</label>
-        <button id="setBtn" class="btn">⚙ Réglages</button>
+        <span class="sep" aria-hidden="true"></span>
+        <button id="setBtn" class="btn" aria-label="Réglages Instagram">⚙ Réglages</button>
         <button id="genBtn" class="btn green" disabled>🎬 Générer l'aperçu</button>
         <button id="expBtn" class="btn primary" disabled>⬇ Exporter</button>
-        <button id="igBtn" class="btn" disabled>📷 Publier Instagram</button>
+        <button id="igBtn" class="btn" disabled>📷 Publier</button>
       </div>
-    </div>
+    </header>
 
-    <div class="mid">
-      <div id="drop" class="center">
-        <div class="dropzone">📥 Glisse ton fichier audio ici</div>
+    <main class="mid">
+      <section id="drop" class="center" aria-label="Zone de dépôt et aperçu">
+        <div class="dropzone">
+          <span class="dz-ico" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 15V3"/><path d="m7 8 5-5 5 5"/>
+              <path d="M4 14v3a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-3"/>
+            </svg>
+          </span>
+          <span class="dz-title">Dépose ton audio ici</span>
+          <span class="dz-sub">Transcription, nettoyage, sous-titres et montage vertical, automatiquement.</span>
+          <span class="dz-formats">mp3 · wav · m4a</span>
+        </div>
         <video id="preview" controls style="display:none"></video>
-        <div id="status" class="status"></div>
-      </div>
-      <div class="panel right">
-        <div class="tabs">
-          <button id="tabTr" class="tab active">Transcription</button>
-          <button id="tabDesc" class="tab">Description</button>
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+
+      <aside class="panel right">
+        <div class="tabs" role="tablist">
+          <button id="tabTr" class="tab active" role="tab">Transcription</button>
+          <button id="tabDesc" class="tab" role="tab">Description</button>
         </div>
         <div id="paneTr" class="pane">
           <textarea id="transcript" placeholder="La transcription apparaîtra ici…"></textarea>
@@ -38,10 +54,10 @@
             <button id="copyBtn" class="tool">📋 Copier</button>
           </div>
         </div>
-      </div>
-    </div>
+      </aside>
+    </main>
 
-    <div class="bottom">
+    <footer class="bottom">
       <div class="wavebar">
         <span class="ttl" style="margin:0">Audio</span>
         <button id="playBtn" class="tool" disabled>▶ Lire</button>
@@ -50,14 +66,14 @@
           <span><i class="dot y"></i>Reprise</span>
           <span><i class="dot r"></i>À vérifier</span>
         </span>
-        <span class="sep"></span>
+        <span class="sep" aria-hidden="true"></span>
         <button id="selPlay" class="tool" disabled>🔊 Écouter sélection</button>
         <button id="selDel" class="tool rm" disabled>✂ Supprimer sélection</button>
         <button id="selClear" class="tool" disabled>✖</button>
         <span class="wavehint">Glisse pour sélectionner · clic sur zone colorée → Garder/Supprimer · clic = déplacer lecture</span>
       </div>
       <div class="wavewrap"><canvas id="wave"></canvas></div>
-    </div>
+    </footer>
   </div>
 
   <div id="menu" class="menu" style="display:none"></div>
@@ -66,9 +82,9 @@
   <div id="setModal" class="modal" style="display:none">
     <div class="modalbox">
       <h3>Réglages Instagram</h3>
-      <label>Token longue durée</label>
+      <label for="setToken">Token longue durée</label>
       <input id="setToken" type="password" placeholder="EAAB...">
-      <label>IG Business Account ID</label>
+      <label for="setIgId">IG Business Account ID</label>
       <input id="setIgId" type="text" placeholder="178414...">
       <div class="modalbtns">
         <button id="setSave" class="btn primary">Enregistrer</button>
