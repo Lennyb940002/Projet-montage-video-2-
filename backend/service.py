@@ -4,7 +4,8 @@ from backend.config import WORKDIR
 from backend.pipeline import transcribe as T
 from backend.config import BOOST
 from backend import settings as settings_mod
-from backend.pipeline import audio_clean, align, subtitles, montage, detect, waveform, sfx_plan, caption
+from backend.pipeline import (audio_clean, align, subtitles, montage, detect, waveform,
+                              sfx_plan, caption, keywords, director)
 from backend.pipeline import tunnel, publish_ig
 
 def _analyze(clean_path):
@@ -62,19 +63,25 @@ def publish_instagram(video_path, caption_text):
     return {"id": media_id}
 
 def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
-    """Aligne le texte (corrigé) sur l'audio nettoyé, génère sous-titres + vidéo."""
+    """Pipeline officiel :
+       transcribe -> align -> detect_events -> sentence_ranges (+ boost cuts)
+       -> Director.build_plan -> renderers exécutifs (subtitles + montage).
+    """
     words, duration = T.transcribe(clean_path)
     tokens, n_sent = align.tokenize(text)
     align.align(tokens, words)
-    job = os.path.dirname(clean_path)
-    ass = os.path.join(job, "subs.ass")
-    subtitles.build_ass(tokens, n_sent, ass, style=style)
-    ranges = montage.sentence_ranges(tokens, n_sent, duration)
 
-    sfx_events = None
+    # 1) Détection événements normalisés (source unique)
+    events = keywords.detect_events(tokens)
+
+    # 2) Plages de clips (et redécoupage hook si Boost)
+    ranges = montage.sentence_ranges(tokens, n_sent, duration)
     if boost:
         ranges = montage.apply_boost_cuts(ranges, BOOST["hook_dur"], BOOST["hook_cut"])
-        # détection SFX sur le texte CORRIGÉ (meilleure orthographe -> meilleures marques)
+
+    # 3) SFX events (rester sur le pipeline expert existant, lui aussi event-driven)
+    sfx_events = None
+    if boost:
         sw = [T.Word(t["disp"], t["start"], t["end"], 1.0) for t in tokens]
         phrases = []
         for si in range(n_sent):
@@ -84,5 +91,18 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
         cuts = [r[0] for r in ranges if r[0] > 0.01]
         sfx_events = sfx_plan.generate_sfx(sw, phrases, cuts, duration, BOOST["hook_dur"])
 
-    montage.render(clean_path, ass, ranges, out_path, boost=boost, sfx_events=sfx_events)
+    # 4) Director -> plan unique (subtitles + motion + transitions)
+    plan = director.build_plan(events, tokens, n_sent, ranges, duration)
+
+    # 5) Renderers exécutifs
+    job = os.path.dirname(clean_path)
+    ass = os.path.join(job, "subs.ass")
+    st_mode = subtitles.STYLES.get(style, subtitles.STYLES[subtitles.DEFAULT_STYLE])["mode"]
+    if st_mode == "premium":
+        subtitles.render_plan_subs(plan["subtitles"], ass, style=style)
+    else:
+        subtitles.build_ass(tokens, n_sent, ass, style=style)
+
+    montage.render(clean_path, ass, ranges, out_path,
+                   boost=boost, sfx_events=sfx_events, plan=plan)
     return out_path
