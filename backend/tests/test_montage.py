@@ -49,6 +49,27 @@ def _mini_ass(path):
         "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"
         "Dialogue: 0,0:00:00.00,0:00:03.00,Default,,0,0,0,,TEST\n")
 
+def test_render_executes_plan(sample_audio, tmp_path):
+    """Le renderer applique le plan du Director (zoom + punch + shake + transition)."""
+    ass = str(tmp_path / "s.ass"); _mini_ass(ass)
+    dur = ffmpeg.probe_duration(sample_audio)
+    plan = {
+        "subtitles": [],
+        "motion": [
+            {"kind": "zoom_clip", "clip_index": 0, "zoom": 1.10},
+            {"kind": "zoom_clip", "clip_index": 1, "zoom": 1.15},
+            {"kind": "punch", "clip_index": 1, "at_local": 0.4, "zoom_to": 1.22, "dur": 0.35},
+            {"kind": "shake", "clip_index": 1, "at_local": 0.4, "amp_px": 10, "dur": 0.3},
+        ],
+        "transitions": [{"kind": "fade_in", "clip_index": 1, "dur": 0.12}],
+    }
+    out = str(tmp_path / "plan.mp4")
+    render(sample_audio, ass, [(0.0, dur * 0.5), (dur * 0.5, dur)], out, plan=plan)
+    assert os.path.exists(out)
+    r = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                    "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
+    assert "1080,1920" in r.stdout
+
 def test_render_boost_no_sfx(sample_audio, tmp_path):
     ass = str(tmp_path / "s.ass"); _mini_ass(ass)
     dur = ffmpeg.probe_duration(sample_audio)

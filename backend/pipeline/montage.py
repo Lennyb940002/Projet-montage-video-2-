@@ -2,12 +2,49 @@ import os, glob, random
 from backend import ffmpeg
 from backend.config import VIDEO, DEFAULT_CLIPS_DIR
 
+
+# --- Helpers Motion V1 (exécutif uniquement) ----------------------------------
+
+def _zoom_chain(in_label, out_label, W, H, zf):
+    """Scale + crop pour un zoom CONSTANT donné. Pas d'animation -> aucune image figée."""
+    cw, ch = int(W * zf), int(H * zf)
+    return (f"[{in_label}]scale={cw}:{ch}:force_original_aspect_ratio=increase,"
+            f"crop={W}:{H},setsar=1[{out_label}]")
+
+def _shake_x(amp_px, dur):
+    """Expression pour `crop` x avec oscillation (dans une scène de durée `dur`).
+    Le clip est étendu de `amp_px` de chaque côté (scale) avant ce crop."""
+    return f"{amp_px}+{amp_px}*sin(t*60)"
+
+def _shake_y(amp_px):
+    return f"{amp_px}+{amp_px}*sin(t*47)"
+
+
+def _motion_for_clip(clip_index, plan):
+    """Renvoie (zoom_base, [punches], [shakes]) pour un clip donné."""
+    if not plan:
+        return None, [], []
+    zoom_base = None
+    punches, shakes = [], []
+    for m in plan.get("motion", []):
+        if m.get("clip_index") != clip_index:
+            continue
+        if m["kind"] == "zoom_clip":
+            zoom_base = m["zoom"]
+        elif m["kind"] == "punch":
+            punches.append(m)
+        elif m["kind"] == "shake":
+            shakes.append(m)
+    return zoom_base, punches, shakes
+
+
 # Fenêtres de durée (s) pour choisir un bon son par catégorie (critères de l'expert)
 SFX_DUR = {"Impacts": (0.08, 0.25), "Whooshs": (0.18, 0.45), "Risers": (0.30, 0.80),
            "Drops": (0.10, 0.35), "Mechanical": (0.10, 0.60), "Electronic": (0.10, 0.50)}
 # EQ (passe-haut, passe-bas en Hz) pour que les SFX passent sous la voix
 SFX_EQ = {"Impacts": (120, 8000), "Whooshs": (250, 10000), "Risers": (300, 9000),
           "Drops": (60, 8000), "Mechanical": (150, 7000), "Electronic": (200, 9000)}
+
 
 def list_clips(clips_dir=DEFAULT_CLIPS_DIR):
     """Clips .mp4 dédoublonnés par taille de fichier."""
@@ -65,10 +102,11 @@ def _pick_clips(ranges, clips):
     return chosen
 
 def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
-           boost=False, sfx_events=None, sfx_dir=None):
+           boost=False, sfx_events=None, sfx_dir=None, plan=None):
     """ranges = plages de clips FINALES (le redécoupage hook est fait par l'appelant).
-    sfx_events = plan SFX [{time,category,gain_dB,fade_in_ms,fade_out_ms}] (catégories
-    résolues ici en fichiers via sfx.pick)."""
+    sfx_events = plan SFX (catégories résolues en fichiers via sfx.pick).
+    plan = plan global du Director : utilisé pour appliquer motion + transitions.
+    Le renderer ne décide RIEN : il exécute le plan tel quel."""
     from backend.config import BOOST, SFX_DIR
     from backend.pipeline import sfx as sfxmod
     sfx_dir = sfx_dir or SFX_DIR
@@ -103,15 +141,62 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     for (_e, f) in resolved:
         cmd += ["-i", f]
 
-    # vidéo
+    # vidéo : exécute le plan (motion + transitions) si fourni, sinon zoom constant.
+    # Index des transitions par clip_index pour O(1).
+    tr_by_clip = {t["clip_index"]: t for t in ((plan or {}).get("transitions") or [])}
     fc = []
     for k in range(Ncl):
-        # zoom CONSTANT (pas de zoompan -> aucune image figée + rapide).
-        # 1er clip en mode boost = zoom plus serré (punch).
-        zf = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
-        cw, ch = int(W * zf), int(H * zf)
-        fc.append(f"[{k}:v]scale={cw}:{ch}:force_original_aspect_ratio=increase,"
-                  f"crop={W}:{H},setsar=1,fps={FPS},format=yuv420p[v{k}]")
+        # 1) Choix du zoom de base : (a) plan du Director, (b) boost punch hook,
+        #    (c) zoom par défaut.
+        zoom_base, punches, shakes = _motion_for_clip(k, plan)
+        if zoom_base is None:
+            zoom_base = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
+
+        # 2) Construit la chaîne du clip k. Si pas de punch -> 1 segment ; sinon
+        #    on découpe le clip en sous-segments (avant / punch / après) pour
+        #    appliquer un zoom plus serré + shake pendant la fenêtre du punch.
+        L = ranges[k][1] - ranges[k][0]  # durée du clip (timeline globale)
+
+        if not punches:
+            segments = [(0.0, L, zoom_base, None)]   # (s, e, zoom, shake|None)
+        else:
+            p = punches[0]
+            ps = max(0.0, min(L, p["at_local"]))
+            pe = max(ps, min(L, ps + p["dur"]))
+            sh = next((s for s in shakes if abs(s["at_local"] - p["at_local"]) < 1e-3), None)
+            segments = []
+            if ps > 0.01:
+                segments.append((0.0, ps, zoom_base, None))
+            segments.append((ps, pe, p["zoom_to"], sh))
+            if L - pe > 0.01:
+                segments.append((pe, L, zoom_base, None))
+
+        # 3) Encode chaque segment puis concat
+        seg_labels = []
+        for si, (s, e, zf, sh) in enumerate(segments):
+            cw, ch = int(W * zf), int(H * zf)
+            chain = (f"[{k}:v]trim=start={s:.3f}:end={e:.3f},setpts=PTS-STARTPTS,"
+                     f"scale={cw}:{ch}:force_original_aspect_ratio=increase,crop={W}:{H}")
+            if sh:
+                amp = sh["amp_px"]
+                # étendre l'image puis crop oscillant -> position animée (pas de zoompan)
+                chain += (f",pad=iw+{2*amp}:ih+{2*amp}:{amp}:{amp},"
+                          f"crop={W}:{H}:x='{_shake_x(amp, sh['dur'])}':y='{_shake_y(amp)}':exact=1")
+            chain += f",setsar=1[k{k}s{si}]"
+            fc.append(chain)
+            seg_labels.append(f"[k{k}s{si}]")
+        if len(seg_labels) == 1:
+            fc.append(f"{seg_labels[0]}fps={FPS},format=yuv420p[vraw{k}]")
+        else:
+            fc.append("".join(seg_labels) +
+                      f"concat=n={len(seg_labels)}:v=1:a=0,fps={FPS},format=yuv420p[vraw{k}]")
+
+        # 4) Transition d'entrée éventuelle (length-preserving)
+        tr = tr_by_clip.get(k)
+        if tr and tr["kind"] == "fade_in":
+            fc.append(f"[vraw{k}]fade=t=in:st=0:d={tr['dur']:.3f}[v{k}]")
+        else:
+            fc.append(f"[vraw{k}]null[v{k}]")
     fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
     ass_dir = os.path.dirname(os.path.abspath(ass_path))
     ass_name = os.path.basename(ass_path)
