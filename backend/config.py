@@ -8,7 +8,8 @@ DEFAULT_CLIPS_DIR = r"C:\Users\User\Downloads\Voix off\Clips\Muet"
 WHISPER_MODEL = "small"
 
 VIDEO = dict(width=1080, height=1920, fps=30, zoom=1.30)
-SILENCE = dict(keep=0.10, threshold="-35dB")
+SILENCE = dict(keep=0.12, margin_db=8, floor_min=-55, floor_max=-28)
+DETECT = dict(fuzzy_ratio=0.82, pause_min=0.7)
 SUBS = dict(font="Arial Black", size=84, maxwords=3,
             yellow="&H0000FFFF&", white="&H00FFFFFF&")
 
