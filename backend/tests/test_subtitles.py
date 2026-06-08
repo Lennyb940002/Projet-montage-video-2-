@@ -18,6 +18,15 @@ def test_block_style_has_no_karaoke(tmp_path):
     assert "\\k" not in content
     assert "SALUT" in content
 
+def test_fun_style_multicolor_and_anim(tmp_path):
+    out = str(tmp_path / "f.ass")
+    build_ass(TOKENS, 1, out, style="multicolor_fun")
+    content = open(out, encoding="utf-8").read()
+    assert "&H0000FF00&" in content      # vert
+    assert "&H0000FFFF&" in content      # jaune
+    assert "\\t(" in content             # animation (pop)
+    assert "\\k" not in content          # pas de karaoké
+
 def test_bottom_style_alignment(tmp_path):
     out = str(tmp_path / "bb.ass")
     build_ass(TOKENS, 1, out, style="bottom_white")

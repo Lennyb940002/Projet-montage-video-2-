@@ -27,7 +27,16 @@ STYLES = {
         "primary": "&H00FFFFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H64000000&",
         "back_col": "&H64000000&", "border_style": 3, "outline": 6, "shadow": 0,
         "alignment": 2, "margin_v": 130, "mode": "block"},
+    "multicolor_fun": {"label": "Multicolore animé 🟢🟡 + emojis", "font": "Arial Black", "size": 86,
+        "primary": "&H00FFFFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H00000000&",
+        "back_col": "&H00000000&", "border_style": 1, "outline": 6, "shadow": 2,
+        "alignment": 5, "margin_v": 60, "mode": "fun"},
 }
+
+# Mode "fun" : couleurs alternées + emoji + pop animé
+FUN_GREEN = "&H0000FF00&"
+FUN_YELLOW = "&H0000FFFF&"
+FUN_EMOJIS = ["🔥", "⌚", "💸", "👀", "✅", "🤑"]
 DEFAULT_STYLE = "karaoke_yellow"
 
 HEADER = """[Script Info]
@@ -78,6 +87,14 @@ def build_ass(tokens, n_sent, path, style=DEFAULT_STYLE):
                 if k < 1: k = 1
                 parts.append("{\\k%d}%s" % (k, chunk[j]["disp"].upper()))
             text = " ".join(parts)
+        elif st["mode"] == "fun":
+            parts = []
+            for j, wd in enumerate(chunk):
+                col = FUN_GREEN if j % 2 == 0 else FUN_YELLOW
+                parts.append("{\\c" + col + "}" + wd["disp"].upper())
+            emo = FUN_EMOJIS[ci % len(FUN_EMOJIS)]
+            pop = "{\\fad(40,0)\\fscx55\\fscy55\\t(0,150,\\fscx100\\fscy100)}"
+            text = pop + " ".join(parts) + " " + emo
         else:  # block
             text = "{\\fad(80,0)}" + " ".join(w["disp"].upper() for w in chunk)
         lines.append(f"Dialogue: 0,{ass_time(start)},{ass_time(end)},Default,,0,0,0,, " + text)
