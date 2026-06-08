@@ -41,6 +41,19 @@ def test_transitions_length_preserving_fade_in_per_cut():
     assert all(t["kind"] == "fade_in" for t in plan["transitions"])
     assert [t["clip_index"] for t in plan["transitions"]] == [1, 2]
 
+def test_transitions_zoom_punch_in_on_high_keyword_at_clip_start():
+    """Si un keyword 'high' tombe dans les 0.5s d'entrée d'un clip,
+    le Director choisit zoom_punch_in au lieu de fade_in."""
+    tokens = _toks(["A", "B"])
+    events = [
+        {"type": "keyword", "label": "Rolex", "start": 1.1, "end": 1.4, "importance": "high"},
+    ]
+    ranges = [(0.0, 1.0), (1.0, 2.0), (2.0, 3.0)]
+    plan = build_plan(events, tokens, 1, ranges, 3.0)
+    by_clip = {t["clip_index"]: t for t in plan["transitions"]}
+    assert by_clip[1]["kind"] == "zoom_punch_in"   # keyword à 1.1s = début du clip 1
+    assert by_clip[2]["kind"] == "fade_in"         # pas de keyword au début du clip 2
+
 def test_subtitles_roles_assigned_correctly():
     tokens = _toks(["Cette", "Rolex", "incroyable"])
     events = [

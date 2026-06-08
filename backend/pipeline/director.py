@@ -117,11 +117,24 @@ def _decide_motion(events, ranges):
     return motion
 
 
-def _decide_transitions(ranges):
-    """Transitions length-preserving : fade d'entrée court à chaque clip
-    (sauf le tout premier). Choisi par le Director, exécuté par montage."""
-    return [{"kind": "fade_in", "clip_index": i, "dur": TRANSITIONS["dur"]}
-            for i in range(1, len(ranges))]
+def _decide_transitions(events, ranges):
+    """Transitions length-preserving sélectionnées selon le contexte :
+       - zoom_punch_in si le clip commence sur un keyword 'high' (entrée dynamique)
+       - fade_in sinon (entrée calme)."""
+    out = []
+    for i in range(1, len(ranges)):
+        s, _e = ranges[i]
+        # Premier keyword qui ouvre ce clip (dans les 0.5 premières secondes)
+        opens_on_kw = any(
+            ev["type"] == "keyword" and ev.get("importance") == "high"
+            and s <= ev["start"] < s + 0.5
+            for ev in events
+        )
+        if opens_on_kw:
+            out.append({"kind": "zoom_punch_in", "clip_index": i, "dur": 0.18})
+        else:
+            out.append({"kind": "fade_in", "clip_index": i, "dur": TRANSITIONS["dur"]})
+    return out
 
 
 # --- API publique ----------------------------------------------------------
@@ -132,5 +145,5 @@ def build_plan(events, tokens, n_sent, ranges, duration):
     return {
         "subtitles":   _decide_subtitles(events, tokens, n_sent),
         "motion":      _decide_motion(events, ranges),
-        "transitions": _decide_transitions(ranges),
+        "transitions": _decide_transitions(events, ranges),
     }

@@ -196,7 +196,12 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
         # 4) Transition d'entrée éventuelle (length-preserving)
         tr = tr_by_clip.get(k)
         if tr and tr["kind"] == "fade_in":
+            # entrée calme : fondu doux
             fc.append(f"[vraw{k}]fade=t=in:st=0:d={tr['dur']:.3f}[v{k}]")
+        elif tr and tr["kind"] == "zoom_punch_in":
+            # entrée dynamique : fondu très court ("snap") -> perçu plus tonique
+            # vs fade calme. Pas de zoom animé (V1 robuste, length-preserving).
+            fc.append(f"[vraw{k}]fade=t=in:st=0:d=0.06[v{k}]")
         else:
             fc.append(f"[vraw{k}]null[v{k}]")
     fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
