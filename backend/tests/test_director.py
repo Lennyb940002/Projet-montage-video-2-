@@ -1,10 +1,69 @@
 from backend.pipeline.director import build_plan
 
-def test_plan_shape():
-    tokens = [{"disp": "Rolex", "start": 1.0, "end": 1.4, "sent": 0, "kw": True},
-              {"disp": "belle", "start": 1.4, "end": 1.8, "sent": 0, "kw": False}]
-    ranges = [(0.0, 3.0), (3.0, 6.0)]
-    plan = build_plan(tokens, 2, ranges, 6.0)
-    assert any(m["kind"] == "kenburns" for m in plan["motion"])
-    assert any(m["kind"] == "punch" and abs(m["start"] - 1.0) < 1e-6 for m in plan["motion"])
-    assert len(plan["transitions"]) == 1 and abs(plan["transitions"][0]["at"] - 3.0) < 1e-6
+def _toks(words, sent=None):
+    """Helper : crée des tokens espacés de 0.4s. sent peut être une liste."""
+    out = []
+    for i, w in enumerate(words):
+        out.append({"disp": w, "start": i * 0.4, "end": i * 0.4 + 0.3,
+                    "sent": sent[i] if sent else 0})
+    return out
+
+def test_plan_has_three_keys():
+    tokens = _toks(["A", "B"])
+    plan = build_plan([], tokens, 1, [(0.0, 1.0)], 1.0)
+    assert set(plan.keys()) == {"subtitles", "motion", "transitions"}
+
+def test_motion_v1_one_zoom_clip_per_range():
+    tokens = _toks(["A", "B", "C"])
+    ranges = [(0.0, 1.0), (1.0, 2.0), (2.0, 3.0)]
+    plan = build_plan([], tokens, 1, ranges, 3.0)
+    zooms = [m for m in plan["motion"] if m["kind"] == "zoom_clip"]
+    assert len(zooms) == 3
+    assert [z["clip_index"] for z in zooms] == [0, 1, 2]
+    # rotation
+    assert len({z["zoom"] for z in zooms}) > 1
+
+def test_motion_punch_on_keyword_event():
+    tokens = _toks(["Voici", "Rolex", "incroyable"])
+    events = [{"type": "keyword", "label": "Rolex", "start": 0.4, "end": 0.7, "importance": "high"}]
+    ranges = [(0.0, 1.0), (1.0, 2.0)]
+    plan = build_plan(events, tokens, 1, ranges, 2.0)
+    punches = [m for m in plan["motion"] if m["kind"] == "punch"]
+    shakes = [m for m in plan["motion"] if m["kind"] == "shake"]
+    assert len(punches) == 1 and punches[0]["clip_index"] == 0
+    assert abs(punches[0]["at_local"] - 0.4) < 1e-9
+    assert len(shakes) == 1  # importance=high -> shake
+
+def test_transitions_length_preserving_fade_in_per_cut():
+    tokens = _toks(["A", "B"])
+    ranges = [(0.0, 1.0), (1.0, 2.0), (2.0, 3.0)]
+    plan = build_plan([], tokens, 1, ranges, 3.0)
+    assert all(t["kind"] == "fade_in" for t in plan["transitions"])
+    assert [t["clip_index"] for t in plan["transitions"]] == [1, 2]
+
+def test_subtitles_roles_assigned_correctly():
+    tokens = _toks(["Cette", "Rolex", "incroyable"])
+    events = [
+        {"type": "keyword", "label": "Rolex",      "start": 0.4, "end": 0.7, "importance": "high"},
+        {"type": "keyword", "label": "incroyable", "start": 0.8, "end": 1.1, "importance": "high"},
+    ]
+    plan = build_plan(events, tokens, 1, [(0.0, 2.0)], 2.0)
+    subs = plan["subtitles"]
+    assert len(subs) == 3  # une SubLine par mot actif
+    # Mot 1 actif (Cette) : Rolex en kw_idle, incroyable en kw_idle
+    roles_0 = [w["role"] for w in subs[0]["words"]]
+    assert roles_0 == ["active", "kw_idle", "kw_idle"]
+    # Mot 2 actif (Rolex, kw)
+    roles_1 = [w["role"] for w in subs[1]["words"]]
+    assert roles_1 == ["normal", "kw_active", "kw_idle"]
+    # Mot 3 actif (incroyable, kw)
+    roles_2 = [w["role"] for w in subs[2]["words"]]
+    assert roles_2 == ["normal", "kw_idle", "kw_active"]
+
+def test_plan_is_json_serializable():
+    import json
+    tokens = _toks(["Cette", "Rolex"])
+    events = [{"type": "keyword", "label": "Rolex", "start": 0.4, "end": 0.7, "importance": "high"}]
+    plan = build_plan(events, tokens, 1, [(0.0, 1.0)], 1.0)
+    s = json.dumps(plan)
+    assert "subtitles" in s and "motion" in s and "transitions" in s
