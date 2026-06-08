@@ -69,8 +69,44 @@ def ass_time(sec):
     m = cs // 6000; cs %= 6000; s = cs // 100; c = cs % 100
     return f"{h}:{m:02d}:{s:02d}.{c:02d}"
 
-def build_ass(tokens, n_sent, path, style=DEFAULT_STYLE):
+def _premium_word_tag(role, disp, st):
+    """Traduit un rôle de mot (décidé par le Director) en tags ASS."""
+    acc = EMPHASIS["accent"]
+    if role == "kw_active":
+        s0 = EMPHASIS["kw_active_scale"]
+        return ("{\\fscx%d\\fscy%d\\t(0,90,\\fscx%d\\fscy%d)\\t(90,180,\\fscx100\\fscy100)"
+                "\\1c%s\\3c%s\\bord%d}%s{\\r}"
+                % (s0, s0, s0 + 8, s0 + 8, acc, acc, EMPHASIS["kw_outline"], disp))
+    if role == "active":
+        s0 = EMPHASIS["active_scale"]
+        return "{\\fscx%d\\fscy%d\\t(0,120,\\fscx100\\fscy100)\\1c%s}%s{\\r}" % (s0, s0, acc, disp)
+    if role == "kw_idle":
+        s0 = EMPHASIS["kw_idle_scale"]
+        return "{\\fscx%d\\fscy%d\\1c%s}%s{\\r}" % (s0, s0, acc, disp)
+    return disp
+
+def render_plan_subs(plan_subs, path, style=DEFAULT_STYLE):
+    """Renderer purement exécutif : dessine les lignes décidées par le Director.
+    plan_subs : [{start, end, words:[{disp, role}]}]
+    """
     st = STYLES.get(style, STYLES[DEFAULT_STYLE])
+    if st["mode"] != "premium":
+        raise ValueError(f"render_plan_subs supporte uniquement les styles 'premium' (got mode={st['mode']!r})")
+    lines = [HEADER.format(w=VIDEO["width"], h=VIDEO["height"], **st)]
+    for line in plan_subs:
+        s, e = line["start"], line["end"]
+        if e <= s: e = s + 0.08
+        parts = [_premium_word_tag(w.get("role", "normal"), w["disp"].upper(), st) for w in line["words"]]
+        lines.append(f"Dialogue: 0,{ass_time(s)},{ass_time(e)},Default,,0,0,0,, " + " ".join(parts))
+    open(path, "w", encoding="utf-8").write("\n".join(lines))
+    return path
+
+def build_ass(tokens, n_sent, path, style=DEFAULT_STYLE):
+    """Styles 'execution-only' (karaoke/fun/block...) : pas de logique métier
+    (juste du rendu visuel). Le style 'premium' DOIT passer par render_plan_subs."""
+    st = STYLES.get(style, STYLES[DEFAULT_STYLE])
+    if st["mode"] == "premium":
+        raise ValueError("Le style 'premium' nécessite un plan : utilise render_plan_subs(plan['subtitles'], ...)")
     lines = [HEADER.format(w=VIDEO["width"], h=VIDEO["height"], **st)]
     chunks = []
     for si in range(n_sent):
@@ -81,30 +117,6 @@ def build_ass(tokens, n_sent, path, style=DEFAULT_STYLE):
         start = chunk[0]["start"]
         end = chunks[ci + 1][0]["start"] if ci + 1 < len(chunks) else chunk[-1]["end"] + 0.3
         if end <= start: end = start + 0.1
-        if st["mode"] == "premium":
-            acc = EMPHASIS["accent"]
-            for a in range(len(chunk)):
-                wstart = chunk[a]["start"]
-                wend = chunk[a + 1]["start"] if a + 1 < len(chunk) else chunk[a]["end"]
-                if wend <= wstart: wend = wstart + 0.08
-                parts = []
-                for j, wd in enumerate(chunk):
-                    disp = wd["disp"].upper(); kw = wd.get("kw")
-                    if j == a and kw:
-                        s0 = EMPHASIS["kw_active_scale"]
-                        parts.append(("{\\fscx%d\\fscy%d\\t(0,90,\\fscx%d\\fscy%d)\\t(90,180,\\fscx100\\fscy100)"
-                                      "\\1c%s\\3c%s\\bord%d}%s{\\r}")
-                                     % (s0, s0, s0 + 8, s0 + 8, acc, acc, EMPHASIS["kw_outline"], disp))
-                    elif j == a:
-                        s0 = EMPHASIS["active_scale"]
-                        parts.append("{\\fscx%d\\fscy%d\\t(0,120,\\fscx100\\fscy100)\\1c%s}%s{\\r}" % (s0, s0, acc, disp))
-                    elif kw:
-                        s0 = EMPHASIS["kw_idle_scale"]
-                        parts.append("{\\fscx%d\\fscy%d\\1c%s}%s{\\r}" % (s0, s0, acc, disp))
-                    else:
-                        parts.append(disp)
-                lines.append(f"Dialogue: 0,{ass_time(wstart)},{ass_time(wend)},Default,,0,0,0,, " + " ".join(parts))
-            continue
         if st["mode"] == "karaoke":
             n = len(chunk); parts = []
             for j in range(n):
