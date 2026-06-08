@@ -27,6 +27,11 @@ BOOST = dict(
     punch_zoom=1.5,    # zoom (constant) plus serré sur le 1er clip = effet punch
 )
 
+EMPHASIS = dict(active_scale=130, kw_active_scale=152, kw_idle_scale=116,
+                accent="&H0000FFFF&", kw_outline=6)
+MOTION = dict(kenburns_zoom=1.10, punch_zoom=1.16, shake_px=10, zoom_period=2.5)
+TRANSITIONS = dict(dur=0.12, default_type="fade")
+
 DEFAULT_CTA = "Écris-moi en commentaire 👇"
 BASE_HASHTAGS = ["#montre", "#montrehomme", "#seikomod", "#horlogerie", "#watch",
                  "#watchlover", "#pourtoi", "#fyp", "#luxe", "#style"]
