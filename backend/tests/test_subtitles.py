@@ -27,6 +27,19 @@ def test_fun_style_multicolor_and_anim(tmp_path):
     assert "\\t(" in content             # animation (pop)
     assert "\\k" not in content          # pas de karaoké
 
+def test_premium_emphasis(tmp_path):
+    toks = [
+        {"disp": "Cette", "sent": 0, "start": 0.0, "end": 0.3, "kw": False},
+        {"disp": "Rolex", "sent": 0, "start": 0.3, "end": 0.8, "kw": True},
+    ]
+    out = str(tmp_path / "p.ass")
+    build_ass(toks, 1, out, style="premium_pop")
+    c = open(out, encoding="utf-8").read()
+    assert "\\t(" in c
+    assert "&H0000FFFF&" in c
+    assert "\\fscx152" in c or "\\fscy152" in c
+    assert "\\k" not in c and "\\fad" not in c
+
 def test_bottom_style_alignment(tmp_path):
     out = str(tmp_path / "bb.ass")
     build_ass(TOKENS, 1, out, style="bottom_white")

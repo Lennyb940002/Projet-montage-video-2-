@@ -1,4 +1,4 @@
-from backend.config import VIDEO
+from backend.config import VIDEO, EMPHASIS
 
 # Presets de sous-titres. mode = "karaoke" (mot surligné l'un après l'autre)
 # ou "block" (le bloc s'affiche d'un coup, couleur unie).
@@ -31,6 +31,10 @@ STYLES = {
         "primary": "&H00FFFFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H00000000&",
         "back_col": "&H00000000&", "border_style": 1, "outline": 6, "shadow": 2,
         "alignment": 5, "margin_v": 60, "mode": "fun"},
+    "premium_pop": {"label": "Premium Pop (emphase mots-clés)", "font": "Arial Black", "size": 82,
+        "primary": "&H00FFFFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H00000000&",
+        "back_col": "&H00000000&", "border_style": 1, "outline": 5, "shadow": 2,
+        "alignment": 5, "margin_v": 60, "mode": "premium"},
 }
 
 # Mode "fun" : couleurs alternées + emoji + pop animé
@@ -77,6 +81,30 @@ def build_ass(tokens, n_sent, path, style=DEFAULT_STYLE):
         start = chunk[0]["start"]
         end = chunks[ci + 1][0]["start"] if ci + 1 < len(chunks) else chunk[-1]["end"] + 0.3
         if end <= start: end = start + 0.1
+        if st["mode"] == "premium":
+            acc = EMPHASIS["accent"]
+            for a in range(len(chunk)):
+                wstart = chunk[a]["start"]
+                wend = chunk[a + 1]["start"] if a + 1 < len(chunk) else chunk[a]["end"]
+                if wend <= wstart: wend = wstart + 0.08
+                parts = []
+                for j, wd in enumerate(chunk):
+                    disp = wd["disp"].upper(); kw = wd.get("kw")
+                    if j == a and kw:
+                        s0 = EMPHASIS["kw_active_scale"]
+                        parts.append(("{\\fscx%d\\fscy%d\\t(0,90,\\fscx%d\\fscy%d)\\t(90,180,\\fscx100\\fscy100)"
+                                      "\\1c%s\\3c%s\\bord%d}%s{\\r}")
+                                     % (s0, s0, s0 + 8, s0 + 8, acc, acc, EMPHASIS["kw_outline"], disp))
+                    elif j == a:
+                        s0 = EMPHASIS["active_scale"]
+                        parts.append("{\\fscx%d\\fscy%d\\t(0,120,\\fscx100\\fscy100)\\1c%s}%s{\\r}" % (s0, s0, acc, disp))
+                    elif kw:
+                        s0 = EMPHASIS["kw_idle_scale"]
+                        parts.append("{\\fscx%d\\fscy%d\\1c%s}%s{\\r}" % (s0, s0, acc, disp))
+                    else:
+                        parts.append(disp)
+                lines.append(f"Dialogue: 0,{ass_time(wstart)},{ass_time(wend)},Default,,0,0,0,, " + " ".join(parts))
+            continue
         if st["mode"] == "karaoke":
             n = len(chunk); parts = []
             for j in range(n):
