@@ -82,27 +82,29 @@ def apply_boost_cuts(ranges, hook_dur, hook_cut):
             out.append((hook_dur, e))
     return out
 
-def _pick_clips(ranges, clips):
+def _pick_clips(ranges, clips, rng=None):
+    """Sélection des clips. rng=Random local (seed) -> reproductible ; None = random global."""
+    r = rng if rng is not None else random
     durs = {c: ffmpeg.probe_duration(c) for c in clips}
-    avail = clips[:]; random.shuffle(avail); chosen = []
+    avail = clips[:]; r.shuffle(avail); chosen = []
     for (s, e) in ranges:
         L = e - s; pick = None
         for n, c in enumerate(avail):
             if durs[c] >= L + 0.15:
                 pick = avail.pop(n); break
         if pick is not None:
-            off = random.uniform(0, max(0.0, durs[pick] - L))
+            off = r.uniform(0, max(0.0, durs[pick] - L))
             chosen.append((pick, off, L, False))
         elif avail:
             c = max(avail, key=lambda x: durs[x]); avail.remove(c)
             chosen.append((c, 0.0, L, True))
         else:
-            avail = clips[:]; random.shuffle(avail); c = avail.pop(0)
+            avail = clips[:]; r.shuffle(avail); c = avail.pop(0)
             chosen.append((c, 0.0, L, durs[c] < L + 0.15))
     return chosen
 
 def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
-           boost=False, sfx_events=None, sfx_dir=None, plan=None):
+           boost=False, sfx_events=None, sfx_dir=None, plan=None, seed=None):
     """ranges = plages de clips FINALES (le redécoupage hook est fait par l'appelant).
     sfx_events = plan SFX (catégories résolues en fichiers via sfx.pick).
     plan = plan global du Director : utilisé pour appliquer motion + transitions.
@@ -113,7 +115,7 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     clips = list_clips(clips_dir)
     if not clips:
         raise RuntimeError(f"Aucun clip dans {clips_dir}")
-    chosen = _pick_clips(ranges, clips)
+    chosen = _pick_clips(ranges, clips, rng=random.Random(seed) if seed is not None else None)
     W, H, FPS, ZOOM = VIDEO["width"], VIDEO["height"], VIDEO["fps"], VIDEO["zoom"]
 
     cmd = [ffmpeg.FFMPEG, "-y"]

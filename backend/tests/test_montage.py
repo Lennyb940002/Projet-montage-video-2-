@@ -49,6 +49,20 @@ def _mini_ass(path):
         "[Events]\nFormat: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text\n"
         "Dialogue: 0,0:00:00.00,0:00:03.00,Default,,0,0,0,,TEST\n")
 
+def test_pick_clips_seed_is_reproducible():
+    import random
+    from backend.pipeline.montage import _pick_clips, list_clips
+    clips = list_clips()
+    ranges = [(0.0, 2.0), (2.0, 4.0), (4.0, 6.0), (6.0, 8.0)]
+    a = _pick_clips(ranges, clips, rng=random.Random(42))
+    b = _pick_clips(ranges, clips, rng=random.Random(42))
+    c = _pick_clips(ranges, clips, rng=random.Random(43))
+    # mêmes seeds -> mêmes choix + mêmes offsets
+    assert [(p, off, L, loop) for (p, off, L, loop) in a] == \
+           [(p, off, L, loop) for (p, off, L, loop) in b]
+    # seed différente -> choix différent (au moins un)
+    assert a != c
+
 def test_render_executes_plan(sample_audio, tmp_path):
     """Le renderer applique le plan du Director (zoom + punch + shake + transition)."""
     ass = str(tmp_path / "s.ass"); _mini_ass(ass)
