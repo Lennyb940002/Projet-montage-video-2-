@@ -250,6 +250,25 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     else:
         amap = f"{Ncl}:a"
 
+    # --- Musique (Director-decided, purely executive in music_engine) ---
+    from backend.pipeline import music_engine as _music_engine
+    music = (plan or {}).get("music") if isinstance(plan, dict) else None
+    # Label voix SANS crochets pour music_engine (qui les rajoute)
+    voice_label = amap[1:-1] if amap.startswith("[") else amap
+    # Index du PREMIER input musique = après vidéo (Ncl) + voix (1) + SFX (resolved)
+    music_base_idx = Ncl + 1 + len(resolved)
+    me = _music_engine.build(music, voice_label=voice_label,
+                              base_input_idx=music_base_idx)
+    if me["extra_inputs"]:
+        for track in me["extra_inputs"]:
+            cmd += ["-i", track]
+    if me["filter_str"]:
+        fc.append(me["filter_str"])
+    # Si le moteur a produit un nouveau label de sortie, on l'utilise ; sinon
+    # amap reste inchangé (no-op strict, prouvé par test_montage_music_noop).
+    if me["out_label"] != voice_label:
+        amap = f"[{me['out_label']}]"
+
     cmd += ["-filter_complex", ";".join(fc), "-map", "[vout]", "-map", amap,
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "192k", "-r", str(FPS), "-shortest",
