@@ -8,10 +8,12 @@ def _toks(words, sent=None):
                     "sent": sent[i] if sent else 0})
     return out
 
-def test_plan_has_three_keys():
+def test_plan_has_required_keys():
     tokens = _toks(["A", "B"])
     plan = build_plan([], tokens, 1, [(0.0, 1.0)], 1.0)
-    assert set(plan.keys()) == {"subtitles", "motion", "transitions"}
+    # subtitles/motion/transitions sont toujours présents et structurés ;
+    # music s'ajoute depuis T5 (Music V1) — peut être None si pas de banque.
+    assert {"subtitles", "motion", "transitions", "music"} <= set(plan.keys())
 
 def test_motion_v1_one_zoom_clip_per_range():
     tokens = _toks(["A", "B", "C"])

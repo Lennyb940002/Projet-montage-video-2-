@@ -6,7 +6,9 @@ Sortie  : plan = {subtitles, motion, transitions}
 Les renderers (subtitles.py, montage.py) sont purement exécutifs : ils consomment
 ces structures sans aucune logique métier.
 """
-from backend.config import TRANSITIONS, MOTION, MUSIC as MUSIC_CFG
+import random as _random
+
+from backend.config import TRANSITIONS, MOTION, MUSIC as MUSIC_CFG, MUSIC_DIR
 from backend.pipeline.sfx_plan import (
     is_cta as _is_cta,
     is_price as _is_price,
@@ -15,6 +17,7 @@ from backend.pipeline.sfx_plan import (
     _norm as _norm_word,
 )
 from backend.pipeline.keywords import SUPERLATIVES
+from backend.pipeline import music_bank as _music_bank
 
 
 # --- Helpers ---------------------------------------------------------------
@@ -257,13 +260,147 @@ def _score_music_category(events, duration):
     }
 
 
+def _compute_quality_score(debug):
+    """Score qualité musique (pur). 5 critères × 0.2. CTA absent -> neutralisé.
+
+    Critères :
+      1. dominance voix >= seuil
+      2. ducking depth effectif = depth demandé (pas clampé)
+      3. gap CTA OK : si CTA détecté, un gap est posé ; sinon neutralisé
+      4. LUFS final dans ±1.5 dB du target
+      5. catégorie sans fallback
+    """
+    score = 0.0
+    # 1) Dominance
+    if debug.get("voice_dominance_dB") is not None and \
+            debug["voice_dominance_dB"] >= MUSIC_CFG["voice_dominance_min_dB"]:
+        score += 0.2
+    # 2) Ducking
+    if debug.get("duck_depth_dB_effective") == debug.get("duck_depth_dB_requested"):
+        score += 0.2
+    # 3) CTA gap (neutralisé si pas de CTA)
+    if not debug.get("cta_detected", False):
+        score += 0.2
+    elif debug.get("gaps"):
+        score += 0.2
+    # 4) LUFS
+    t = debug.get("lufs_final_target")
+    a = debug.get("lufs_final_actual")
+    if t is not None and a is not None and abs(a - t) <= 1.5:
+        score += 0.2
+    # 5) Catégorie sans fallback
+    if not debug.get("fallback_used", False):
+        score += 0.2
+    return round(score, 2)
+
+
+def _decide_music(events, tokens, n_sent, ranges, duration,
+                  music_root=None, rng_seed=None):
+    """Construit `plan["music"]` complet (beds + accents + mix + debug).
+
+    Renvoie None si la bibliothèque est vide pour les deux catégories
+    (=> music_engine no-op, garde-fou non-bloquant).
+    """
+    if music_root is None:
+        music_root = MUSIC_DIR
+
+    val = _music_bank.validate_library(music_root)
+    found = val["tracks_found"]
+    if found.get("Luxury", 0) == 0 and found.get("Hype", 0) == 0:
+        return None
+
+    # 1) Scoring catégorie
+    scoring = _score_music_category(events, duration)
+    category = scoring["category"]
+    reasons = list(scoring["reason"])
+
+    # 2) Bascule si la catégorie choisie est vide mais l'autre rempli
+    cat_cap = category.capitalize()
+    if found.get(cat_cap, 0) == 0:
+        other = "luxury" if category == "hype" else "hype"
+        if found.get(other.capitalize(), 0) > 0:
+            reasons.append(f"swap: empty {category} -> {other}")
+            category = other
+
+    # 3) Choix de la track (déterministe si seed fourni)
+    rng = _random.Random(rng_seed) if rng_seed is not None else None
+    track = _music_bank.choose(category.capitalize(), target_dur=duration,
+                                root=music_root, rng=rng)
+    if not track:
+        return None  # garde-fou : aucune track utilisable
+
+    # 4) Clamp base_gain pour garantir contrainte "voix prime"
+    # max_base_gain est plus FORT (vers 0), on borne par le min (= plus faible)
+    base_gain = min(MUSIC_CFG["base_gain_dB"], MUSIC_CFG["max_base_gain_dB"])
+    duck_depth = MUSIC_CFG["duck_depth_dB"]
+
+    # 5) Gap pré-CTA si CTA détecté
+    pre_cta = _pre_cta_gap_event(events, MUSIC_CFG["pre_cta_gap_s"])
+    gaps = []
+    if pre_cta:
+        gaps.append({
+            "start": pre_cta["start"], "end": pre_cta["end"],
+            "fade_out_ms": MUSIC_CFG["pre_cta_fade_out_ms"],
+            "fade_in_ms": MUSIC_CFG["pre_cta_fade_in_ms"],
+        })
+
+    bed = {
+        "track": track, "category": category,
+        "trim_start": 0.0, "start": 0.0, "duration": duration,
+        "base_gain_dB": base_gain,
+        "fade_in_ms": MUSIC_CFG["fade_in_ms"],
+        "fade_out_ms": MUSIC_CFG["fade_out_ms"],
+        "duck": {
+            "mode": "sidechain", "ratio": 6.0, "threshold_dB": -28,
+            "attack_ms": 8, "release_ms": 280,
+            "depth_dB": duck_depth, "side": "voice",
+        },
+        "gaps": gaps,
+    }
+
+    debug = {
+        # Décision
+        "category": category, "confidence": scoring["confidence"],
+        "reason": reasons, "fallback_used": scoring["fallback_used"],
+        "signals": scoring["signals"], "scores": scoring["scores"],
+        # Choix track
+        "track": track,
+        # Loudness (rempli par service.make_video après rendu)
+        "lufs_voice": None, "lufs_music_source": None,
+        "lufs_music_at_base": None,
+        "lufs_final_target": MUSIC_CFG["target_lufs"],
+        "lufs_final_actual": None,
+        # Ducking
+        "duck_depth_dB_requested": duck_depth,
+        "duck_depth_dB_effective": duck_depth,
+        # Dominance (rempli post-rendu)
+        "voice_dominance_dB": None,
+        # Gaps
+        "cta_detected": pre_cta is not None, "gaps": gaps,
+        # Auto-fix non bloquant
+        "auto_fix_applied": False, "warnings": [],
+        # Score qualité (rempli après mesures post-rendu)
+        "music_quality_score": None,
+    }
+
+    return {
+        "beds": [bed],
+        "accents": [],  # contrat figé (futur : impact/riser/sweep/transition/accent)
+        "mix": {"target_lufs": MUSIC_CFG["target_lufs"], "voice_priority": True},
+        "debug": debug,
+    }
+
+
 # --- API publique ----------------------------------------------------------
 
-def build_plan(events, tokens, n_sent, ranges, duration):
+def build_plan(events, tokens, n_sent, ranges, duration,
+               music_root=None, music_rng_seed=None):
     """Construit le plan complet à partir des événements et de la timeline.
     Renvoie : {subtitles, motion, transitions}"""
     return {
         "subtitles":   _decide_subtitles(events, tokens, n_sent),
         "motion":      _decide_motion(events, ranges),
         "transitions": _decide_transitions(events, ranges),
+        "music":       _decide_music(events, tokens, n_sent, ranges, duration,
+                                     music_root=music_root, rng_seed=music_rng_seed),
     }
