@@ -61,6 +61,26 @@ def test_index_caches_lufs(tmp_path):
     assert idx2 == idx1
 
 
+def test_choose_rejects_tracks_too_short(tmp_path):
+    """Garde-fou anti-boucle : track_duration < video_duration + 5s -> non éligible."""
+    (tmp_path / "Luxury").mkdir()
+    _mk(str(tmp_path / "Luxury" / "short.mp3"), dur=20)   # trop courte pour 18s + 5s
+    res = music_bank.choose("Luxury", target_dur=18.0, root=str(tmp_path),
+                            rng=random.Random(0))
+    assert res is None
+
+
+def test_choose_picks_only_eligible_tracks(tmp_path):
+    """Avec un mix court/long, seules les tracks long-enough sont candidates."""
+    (tmp_path / "Luxury").mkdir()
+    _mk(str(tmp_path / "Luxury" / "short.mp3"), dur=15)
+    _mk(str(tmp_path / "Luxury" / "long.mp3"), dur=60)
+    # video 18s -> short (15s) ineligible ; long (60s) eligible
+    chosen = {music_bank.choose("Luxury", 18.0, root=str(tmp_path),
+                                rng=random.Random(s)) for s in range(20)}
+    assert chosen == {str(tmp_path / "Luxury" / "long.mp3")}
+
+
 def test_index_rescans_when_file_modified(tmp_path):
     p = tmp_path / "Luxury"; p.mkdir()
     f = str(p / "a.mp3"); _mk(f)

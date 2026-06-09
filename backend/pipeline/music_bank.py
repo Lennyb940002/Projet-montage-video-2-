@@ -110,14 +110,18 @@ def index_category(category, root):
 def choose(category, target_dur, root, rng=None):
     """Choisit une track d'une catégorie.
 
+    Garde-fou anti-boucle : SEULES les tracks dont la durée >= target_dur + 5s
+    sont éligibles. Aucune piste éligible -> renvoie None (le code aval doit
+    gérer ce cas : warning "no_track_long_enough", plan["music"]=None).
+
     - Déterministe si `rng` est un `random.Random` fourni.
-    - Préfère les tracks de durée >= `target_dur + 5s` (sinon fallback à toutes).
-    - Renvoie None si la catégorie est vide.
+    - Renvoie None si la catégorie est vide ou si aucune track n'est éligible.
     """
     idx = index_category(category, root)
     if not idx:
         return None
+    eligible = [f for f, e in idx.items() if e.get("dur", 0) >= target_dur + 5.0]
+    if not eligible:
+        return None    # garde-fou : refuse la boucle implicite
     rng = rng or _random.Random()
-    candidates = [f for f, e in idx.items() if e.get("dur", 0) >= target_dur + 5.0]
-    pool = sorted(candidates) if candidates else sorted(idx.keys())
-    return rng.choice(pool)
+    return rng.choice(sorted(eligible))

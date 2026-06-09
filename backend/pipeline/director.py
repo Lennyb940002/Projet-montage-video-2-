@@ -323,11 +323,22 @@ def _decide_music(events, tokens, n_sent, ranges, duration,
             category = other
 
     # 3) Choix de la track (déterministe si seed fourni)
+    # Garde-fou anti-boucle : choose() ne renvoie que des tracks éligibles
+    # (dur >= duration + 5s). Si aucune piste éligible -> warning + None.
     rng = _random.Random(rng_seed) if rng_seed is not None else None
     track = _music_bank.choose(category.capitalize(), target_dur=duration,
                                 root=music_root, rng=rng)
     if not track:
-        return None  # garde-fou : aucune track utilisable
+        # essai sur l'autre catégorie au cas où elle aurait des pistes longues
+        other = "luxury" if category == "hype" else "hype"
+        if found.get(other.capitalize(), 0) > 0:
+            track = _music_bank.choose(other.capitalize(), target_dur=duration,
+                                        root=music_root, rng=rng)
+            if track:
+                reasons.append(f"swap: no eligible track in {category} -> {other}")
+                category = other
+        if not track:
+            return None  # warning "no_track_long_enough" : plan["music"] = None
 
     # 4) Clamp base_gain pour garantir contrainte "voix prime"
     # max_base_gain est plus FORT (vers 0), on borne par le min (= plus faible)
