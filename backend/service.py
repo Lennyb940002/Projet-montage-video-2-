@@ -2,11 +2,14 @@ import os, uuid
 from dataclasses import asdict
 from backend.config import WORKDIR
 from backend.pipeline import transcribe as T
-from backend.config import BOOST
+from backend.config import BOOST, MUSIC as MUSIC_CFG
 from backend import settings as settings_mod
 from backend.pipeline import (audio_clean, align, subtitles, montage, detect, waveform,
-                              sfx_plan, caption, keywords, director)
+                              sfx_plan, caption, keywords, director, audio_meta)
 from backend.pipeline import tunnel, publish_ig
+
+# Exposé pour le mode debug / tests (jamais utilisé en logique métier)
+_LAST_MUSIC_DEBUG = None
 
 def _analyze(clean_path):
     """Transcrit + détecte + pics. Brique commune à load et cut."""
@@ -62,6 +65,50 @@ def publish_instagram(video_path, caption_text):
     media_id = publish_ig.publish_reel(video_path, caption_text, token, uid, tunnel.public_url)
     return {"id": media_id}
 
+def _music_dominance_autofix(debug, *, render_callable, current_gain,
+                              voice_path, mix_path, voice_active):
+    """Mesure la dominance voix sur le mix.
+
+    - Si OK : ne fait rien.
+    - Si trop faible : baisse la musique de auto_fix_step_dB, RE-RENDU UNE FOIS,
+      re-mesure. Log un warning explicatif.
+    - Si toujours trop faible après auto-fix : log un warning, mais GARDE la vidéo.
+
+    JAMAIS bloquant : retourne (True, debug) dans TOUS les cas (même si une
+    erreur interne survient pendant la mesure).
+    """
+    try:
+        dom = audio_meta.measure_dominance(mix_path, voice_path, voice_active)
+        debug["voice_dominance_dB"] = dom
+
+        if dom >= MUSIC_CFG["voice_dominance_min_dB"]:
+            return True, debug   # tout va bien
+
+        # Auto-fix : baisse de auto_fix_step_dB et re-rendu unique
+        new_gain = current_gain + MUSIC_CFG["auto_fix_step_dB"]
+        render_callable(new_gain)
+        debug["auto_fix_applied"] = True
+
+        # Re-mesure post-auto-fix
+        dom2 = audio_meta.measure_dominance(mix_path, voice_path, voice_active)
+        debug["voice_dominance_dB"] = dom2
+
+        if dom2 >= MUSIC_CFG["voice_dominance_min_dB"]:
+            debug["warnings"].append(
+                f"voice dominance was {dom:.1f} dB, auto-reduced music by "
+                f"{abs(MUSIC_CFG['auto_fix_step_dB']):.0f} dB (now {dom2:.1f} dB)"
+            )
+        else:
+            debug["warnings"].append(
+                f"voice dominance still below {MUSIC_CFG['voice_dominance_min_dB']} dB "
+                f"after auto-fix (value={dom2:.1f} dB) — video kept"
+            )
+        return True, debug
+    except Exception as e:    # garde-fou absolu : jamais bloquant
+        debug["warnings"].append(f"autofix internal error (kept video): {e}")
+        return True, debug
+
+
 def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
     """Pipeline officiel :
        transcribe -> align -> detect_events -> sentence_ranges (+ boost cuts)
@@ -105,4 +152,49 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
 
     montage.render(clean_path, ass, ranges, out_path,
                    boost=boost, sfx_events=sfx_events, plan=plan)
+
+    # 6) Mesures musique post-rendu + auto-fix non bloquant + quality score.
+    #    Tout est protégé pour ne JAMAIS interrompre la sortie de la vidéo.
+    global _LAST_MUSIC_DEBUG
+    _LAST_MUSIC_DEBUG = None
+    music = plan.get("music")
+    if music and music.get("beds"):
+        debug = music["debug"]
+        bed = music["beds"][0]
+        try:
+            debug["lufs_voice"] = audio_meta.lufs_of(clean_path)
+            debug["lufs_music_source"] = audio_meta.lufs_of(bed["track"])
+            debug["lufs_final_actual"] = audio_meta.lufs_of(out_path)
+            # lufs estimé après application de base_gain (pour traçabilité)
+            debug["lufs_music_at_base"] = round(
+                debug["lufs_music_source"] + bed["base_gain_dB"], 2)
+        except Exception as e:
+            debug.setdefault("warnings", []).append(
+                f"lufs measurement skipped (kept video): {e}")
+
+        voice_active = [(e["start"], e["end"])
+                        for e in director._voice_active_events(tokens)]
+
+        def _re_render(new_gain):
+            bed["base_gain_dB"] = new_gain
+            # depth_dB inchangé : on baisse seulement la base, pas le ducking.
+            montage.render(clean_path, ass, ranges, out_path,
+                           boost=boost, sfx_events=sfx_events, plan=plan)
+            # Met à jour les LUFS post-render
+            try:
+                debug["lufs_final_actual"] = audio_meta.lufs_of(out_path)
+                debug["lufs_music_at_base"] = round(
+                    debug["lufs_music_source"] + new_gain, 2)
+            except Exception:
+                pass
+
+        _music_dominance_autofix(
+            debug, render_callable=_re_render,
+            current_gain=bed["base_gain_dB"],
+            voice_path=clean_path, mix_path=out_path,
+            voice_active=voice_active,
+        )
+        debug["music_quality_score"] = director._compute_quality_score(debug)
+        _LAST_MUSIC_DEBUG = debug
+
     return out_path

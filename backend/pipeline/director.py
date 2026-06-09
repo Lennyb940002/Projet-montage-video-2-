@@ -8,7 +8,8 @@ ces structures sans aucune logique métier.
 """
 import random as _random
 
-from backend.config import TRANSITIONS, MOTION, MUSIC as MUSIC_CFG, MUSIC_DIR
+from backend import config as _cfg
+from backend.config import TRANSITIONS, MOTION, MUSIC as MUSIC_CFG
 from backend.pipeline.sfx_plan import (
     is_cta as _is_cta,
     is_price as _is_price,
@@ -302,7 +303,9 @@ def _decide_music(events, tokens, n_sent, ranges, duration,
     (=> music_engine no-op, garde-fou non-bloquant).
     """
     if music_root is None:
-        music_root = MUSIC_DIR
+        # Lookup tardif : permet le monkeypatch de MUSIC_DIR dans les tests
+        # et le futur réglage utilisateur.
+        music_root = _cfg.MUSIC_DIR
 
     val = _music_bank.validate_library(music_root)
     found = val["tracks_found"]
