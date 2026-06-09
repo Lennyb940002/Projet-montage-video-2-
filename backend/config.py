@@ -32,6 +32,26 @@ EMPHASIS = dict(active_scale=130, kw_active_scale=152, kw_idle_scale=116,
 MOTION = dict(kenburns_zoom=1.10, punch_zoom=1.16, shake_px=10, zoom_period=2.5)
 TRANSITIONS = dict(dur=0.12, default_type="fade")
 
+# --- Musique de fond + Ducking (V1) -----------------------------------------
+MUSIC_DIR = os.path.join(PROJECT_ROOT, "MUSIC")
+MUSIC = dict(
+    base_gain_dB=-22.0,
+    max_base_gain_dB=-16.0,         # plafond dur : musique JAMAIS au-dessus
+    duck_depth_dB=-12.0,            # creux ducking pendant la voix
+    fade_in_ms=800,
+    fade_out_ms=1200,
+    pre_cta_gap_s=1.2,
+    pre_cta_fade_out_ms=250,
+    pre_cta_fade_in_ms=200,
+    target_lufs=-16.0,
+    voice_dominance_min_dB=6.0,
+    voice_floor_below_voice_dB=14.0,   # plancher : musique au moins X dB sous voix
+    category_default="luxury",
+    confidence_threshold=0.60,
+    auto_fix_step_dB=-2.0,           # pas d'auto-fix (1 seule itération)
+    min_track_duration_s=30.0,
+)
+
 DEFAULT_CTA = "Écris-moi en commentaire 👇"
 BASE_HASHTAGS = ["#montre", "#montrehomme", "#seikomod", "#horlogerie", "#watch",
                  "#watchlover", "#pourtoi", "#fyp", "#luxe", "#style"]
