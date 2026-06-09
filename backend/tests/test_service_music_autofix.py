@@ -14,7 +14,8 @@ from backend import service
 def test_autofix_not_triggered_when_dominance_ok(monkeypatch):
     """Dominance déjà >= seuil : pas d'auto-fix, debug propre."""
     from backend.pipeline import audio_meta
-    monkeypatch.setattr(audio_meta, "measure_dominance", lambda *a, **kw: 9.0)
+    monkeypatch.setattr(audio_meta, "measure_dominance_perceptive",
+                        lambda *a, **kw: 9.0)
     debug = {"voice_dominance_dB": None, "auto_fix_applied": False,
              "warnings": [], "duck_depth_dB_effective": -12.0}
     calls = {"n": 0}
@@ -39,7 +40,7 @@ def test_autofix_triggered_and_succeeds(monkeypatch):
     def fake_meas(*a, **kw):
         calls["meas"] += 1
         return 3.0 if calls["meas"] == 1 else 8.0
-    monkeypatch.setattr(audio_meta, "measure_dominance", fake_meas)
+    monkeypatch.setattr(audio_meta, "measure_dominance_perceptive", fake_meas)
     debug = {"voice_dominance_dB": None, "auto_fix_applied": False,
              "warnings": [], "duck_depth_dB_effective": -12.0}
     service._music_dominance_autofix(
@@ -56,7 +57,8 @@ def test_autofix_triggered_and_succeeds(monkeypatch):
 def test_autofix_keeps_warning_when_still_below_threshold(monkeypatch):
     """Dominance < seuil au 1er ET au 2e rendu : on garde la vidéo + warning."""
     from backend.pipeline import audio_meta
-    monkeypatch.setattr(audio_meta, "measure_dominance", lambda *a, **kw: 3.0)
+    monkeypatch.setattr(audio_meta, "measure_dominance_perceptive",
+                        lambda *a, **kw: 3.0)
     debug = {"voice_dominance_dB": None, "auto_fix_applied": False,
              "warnings": [], "duck_depth_dB_effective": -12.0}
     ok, debug = service._music_dominance_autofix(
@@ -75,7 +77,7 @@ def test_autofix_returns_ok_true_no_matter_what(monkeypatch):
     def crash(*a, **kw):
         raise RuntimeError("boom")
     # Le wrapper doit absorber les erreurs internes sans casser le rendu
-    monkeypatch.setattr(audio_meta, "measure_dominance", crash)
+    monkeypatch.setattr(audio_meta, "measure_dominance_perceptive", crash)
     debug = {"voice_dominance_dB": None, "auto_fix_applied": False,
              "warnings": [], "duck_depth_dB_effective": -12.0}
     ok, debug = service._music_dominance_autofix(

@@ -78,7 +78,10 @@ def _music_dominance_autofix(debug, *, render_callable, current_gain,
     erreur interne survient pendant la mesure).
     """
     try:
-        dom = audio_meta.measure_dominance(mix_path, voice_path, voice_active)
+        # Métrique perceptive : RMS(voix isolée) - RMS(musique isolée traitée).
+        # Résiste au biais "voix dans mix" qui faisait tendre la mesure vers 0.
+        dom = audio_meta.measure_dominance_perceptive(
+            mix_path, voice_path, voice_active)
         debug["voice_dominance_dB"] = dom
 
         if dom >= MUSIC_CFG["voice_dominance_min_dB"]:
@@ -90,7 +93,8 @@ def _music_dominance_autofix(debug, *, render_callable, current_gain,
         debug["auto_fix_applied"] = True
 
         # Re-mesure post-auto-fix
-        dom2 = audio_meta.measure_dominance(mix_path, voice_path, voice_active)
+        dom2 = audio_meta.measure_dominance_perceptive(
+            mix_path, voice_path, voice_active)
         debug["voice_dominance_dB"] = dom2
 
         if dom2 >= MUSIC_CFG["voice_dominance_min_dB"]:
