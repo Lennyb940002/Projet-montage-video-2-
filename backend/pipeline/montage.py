@@ -104,7 +104,8 @@ def _pick_clips(ranges, clips, rng=None):
     return chosen
 
 def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
-           boost=False, sfx_events=None, sfx_dir=None, plan=None, seed=None):
+           boost=False, sfx_events=None, sfx_dir=None, plan=None, seed=None,
+           master_lufs=None):
     """ranges = plages de clips FINALES (le redécoupage hook est fait par l'appelant).
     sfx_events = plan SFX (catégories résolues en fichiers via sfx.pick).
     plan = plan global du Director : utilisé pour appliquer motion + transitions.
@@ -269,6 +270,20 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     if me["out_label"] != voice_label:
         amap = f"[{me['out_label']}]"
 
+    # --- Mastering LUFS final (ffmpeg loudnorm en bout de chaîne audio) ---
+    # No-op si master_lufs is None (rétro-compatibilité bit-pour-bit garantie
+    # par test_render_master_none_is_strict_noop).
+    # Mastering : implémenté en 2 passes pour les vidéos courtes.
+    # 1) Render une 1ʳᵉ fois (sans loudnorm) dans un fichier temporaire
+    # 2) Mesurer LUFS du mix temp
+    # 3) Render final avec gain statique = target - mesuré + true peak limiter
+    # Cette approche est nettement plus fiable que le single-pass loudnorm
+    # dynamique sur des contenus de 10-30 s (loudnorm dynamique a besoin
+    # de matière pour calibrer).
+    if master_lufs is not None:
+        # On reporte le mastering APRÈS le 1er render -> traité hors filter_complex
+        pass
+
     cmd += ["-filter_complex", ";".join(fc), "-map", "[vout]", "-map", amap,
             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-b:a", "192k", "-r", str(FPS), "-shortest",
@@ -276,4 +291,56 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     r = ffmpeg.run(cmd, cwd=ass_dir)
     if r.returncode != 0 or not os.path.exists(out_path):
         raise RuntimeError(f"Rendu échoué: {r.stderr[-400:]}")
+
+    # --- Mastering 2-passes (post-render) ---
+    # IMPORTANT : on garde une copie du mix non masterisé pour permettre au
+    # service de mesurer la dominance voix vs musique AVANT le gain mastering
+    # (sinon le gain uniforme fausse la mesure perceptive).
+    render._premaster_path = None
+    if master_lufs is not None:
+        from backend.config import MUSIC as _MUSIC_CFG
+        from backend.pipeline import audio_meta as _am
+        import shutil as _shutil
+        tp = _MUSIC_CFG["master_true_peak"]
+        lufs_in = _am.lufs_of(out_path)
+        render._last_input_lufs = lufs_in
+        gain_dB = master_lufs - lufs_in
+        # 1) Conserver le mix non masterisé pour les mesures aval
+        premaster = out_path + ".premaster.mp4"
+        _shutil.copy2(out_path, premaster)
+        render._premaster_path = premaster
+        # 2) Render final masterisé (re-encode audio, copy video)
+        mastered = out_path + ".master.mp4"
+        master_filter = (f"volume={gain_dB:.3f}dB,"
+                         f"alimiter=limit={10 ** (tp / 20):.4f}")
+        r2 = ffmpeg.run([ffmpeg.FFMPEG, "-y", "-i", out_path,
+                         "-c:v", "copy",
+                         "-af", master_filter,
+                         "-c:a", "aac", "-b:a", "192k",
+                         "-movflags", "+faststart", mastered])
+        if r2.returncode == 0 and os.path.exists(mastered):
+            _shutil.move(mastered, out_path)
+            # Mesure post-mastering : si écart > 0.5 dB du target, on corrige
+            # en une 2ᵉ itération (limiter + AAC peuvent altérer la LUFS de
+            # quelques dB sur des contenus courts).
+            try:
+                lufs_actual = _am.lufs_of(out_path)
+                delta = master_lufs - lufs_actual
+                if abs(delta) > 0.5:
+                    # Correction de gain pur (pas de limiter — déjà appliqué
+                    # en passe 1, et alimiter ré-amplifie ce qu'on essaie
+                    # de baisser).
+                    corrective = out_path + ".master2.mp4"
+                    r3 = ffmpeg.run([ffmpeg.FFMPEG, "-y", "-i", out_path,
+                                     "-c:v", "copy",
+                                     "-af", f"volume={delta:.3f}dB",
+                                     "-c:a", "aac", "-b:a", "192k",
+                                     "-movflags", "+faststart", corrective])
+                    if r3.returncode == 0 and os.path.exists(corrective):
+                        _shutil.move(corrective, out_path)
+            except Exception:
+                pass   # jamais bloquant
+        # Si la 2e passe échoue, on garde la vidéo non masterisée (jamais bloquant).
+    else:
+        render._last_input_lufs = None
     return out_path

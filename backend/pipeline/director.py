@@ -261,6 +261,23 @@ def _score_music_category(events, duration):
     }
 
 
+def _compute_mastering_quality_score(target_lufs, actual_lufs):
+    """Score mastering simple à 3 paliers (pure).
+       1.0 si |actual - target| <= master_tolerance_dB (1.5)
+       0.5 si <= master_warn_dB (3.0)
+       0.0 sinon
+       None si actual_lufs est None (mastering désactivé).
+    """
+    if actual_lufs is None:
+        return None
+    delta = abs(actual_lufs - target_lufs)
+    if delta <= MUSIC_CFG["master_tolerance_dB"]:
+        return 1.0
+    if delta <= MUSIC_CFG["master_warn_dB"]:
+        return 0.5
+    return 0.0
+
+
 def _compute_quality_score(debug):
     """Score qualité musique (pur). 5 critères × 0.2. CTA absent -> neutralisé.
 

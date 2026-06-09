@@ -154,8 +154,13 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
     else:
         subtitles.build_ass(tokens, n_sent, ass, style=style)
 
+    # Mastering : appliqué par défaut (target_lufs lu dans config) sauf si
+    # explicitement désactivé via MUSIC_CFG["master_lufs_target"]=None.
+    master_lufs = MUSIC_CFG.get("master_lufs_target")
+
     montage.render(clean_path, ass, ranges, out_path,
-                   boost=boost, sfx_events=sfx_events, plan=plan)
+                   boost=boost, sfx_events=sfx_events, plan=plan,
+                   master_lufs=master_lufs)
 
     # 6) Mesures musique post-rendu + auto-fix non bloquant + quality score.
     #    Tout est protégé pour ne JAMAIS interrompre la sortie de la vidéo.
@@ -182,8 +187,11 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
         def _re_render(new_gain):
             bed["base_gain_dB"] = new_gain
             # depth_dB inchangé : on baisse seulement la base, pas le ducking.
+            # IMPORTANT : on garde master_lufs sinon l'auto-fix écraserait
+            # le rendu masterisé par un rendu non masterisé.
             montage.render(clean_path, ass, ranges, out_path,
-                           boost=boost, sfx_events=sfx_events, plan=plan)
+                           boost=boost, sfx_events=sfx_events, plan=plan,
+                           master_lufs=master_lufs)
             # Met à jour les LUFS post-render
             try:
                 debug["lufs_final_actual"] = audio_meta.lufs_of(out_path)
@@ -192,13 +200,51 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
             except Exception:
                 pass
 
+        # Mesure dominance sur le mix PRÉ-mastering (sinon le gain mastering
+        # appliqué uniformément fausse la comparaison voix isolée vs musique
+        # isolée). Si pas de mastering, premaster_path est None et on retombe
+        # sur out_path directement.
+        mix_for_dominance = (getattr(montage.render, "_premaster_path", None)
+                              or out_path)
         _music_dominance_autofix(
             debug, render_callable=_re_render,
             current_gain=bed["base_gain_dB"],
-            voice_path=clean_path, mix_path=out_path,
+            voice_path=clean_path, mix_path=mix_for_dominance,
             voice_active=voice_active,
         )
         debug["music_quality_score"] = director._compute_quality_score(debug)
+
+        # --- Mastering debug enrichi ---
+        if master_lufs is not None:
+            try:
+                debug["lufs_pre_master"] = getattr(montage.render,
+                                                   "_last_input_lufs", None)
+                debug["lufs_post_master"] = audio_meta.lufs_of(out_path)
+                debug["mastering_applied"] = True
+                debug["mastering_quality_score"] = \
+                    director._compute_mastering_quality_score(
+                        master_lufs, debug["lufs_post_master"])
+            except Exception as e:
+                debug.setdefault("warnings", []).append(
+                    f"mastering measurement skipped (kept video): {e}")
+                debug["mastering_applied"] = True
+                debug["lufs_pre_master"] = None
+                debug["lufs_post_master"] = None
+                debug["mastering_quality_score"] = None
+        else:
+            debug["mastering_applied"] = False
+            debug["lufs_pre_master"] = None
+            debug["lufs_post_master"] = None
+            debug["mastering_quality_score"] = None
+
         _LAST_MUSIC_DEBUG = debug
+
+    # Nettoyage du fichier pre-master conservé pour les mesures (s'il existe)
+    premaster = getattr(montage.render, "_premaster_path", None)
+    if premaster and os.path.exists(premaster):
+        try:
+            os.remove(premaster)
+        except OSError:
+            pass
 
     return out_path

@@ -50,6 +50,13 @@ MUSIC = dict(
     confidence_threshold=0.60,
     auto_fix_step_dB=-2.0,           # pas d'auto-fix (1 seule itération)
     min_track_duration_s=45.0,
+    # --- Mastering V1 (ffmpeg loudnorm sur le mix final) ---
+    master_lufs_target=-16.0,   # cible TikTok/Reels ; None pour désactiver le mastering
+    master_lra=11.0,
+    master_true_peak=-2.0,        # marge anti-clipping AAC (peaks intersample post-encodage)
+    master_tolerance_dB=1.5,    # ± autour du target = succès (1.0)
+    master_warn_dB=3.0,         # ± = avertissement (0.5)
+    master_dominance_tolerance_dB=2.0,  # delta max acceptable sur dominance
 )
 
 DEFAULT_CTA = "Écris-moi en commentaire 👇"
