@@ -11,10 +11,36 @@ from backend.pipeline import tunnel, publish_ig
 # Exposé pour le mode debug / tests (jamais utilisé en logique métier)
 _LAST_MUSIC_DEBUG = None
 
+def _glue_punct(parts):
+    """Recolle au mot précédent tout morceau commençant par une apostrophe
+    (', ’, ‘) ou étant uniquement de la ponctuation. Whisper sépare ces
+    morceaux dans sa sortie -> un join naïf produit `Aujourd 'hui` ; ce
+    helper rétablit `Aujourd'hui`."""
+    if not parts:
+        return []
+    out = [parts[0]]
+    for p in parts[1:]:
+        if not p:
+            continue
+        first = p[0]
+        # Apostrophes ASCII et typographiques + ponctuation collante
+        if first in "'’‘.,;:!?…)»":
+            out[-1] = out[-1] + p
+        else:
+            out.append(p)
+    return out
+
+
+def _transcript_from_words(words):
+    """Construit la transcription depuis les Word de Whisper en recollant
+    les apostrophes et ponctuations séparées par le découpage de Whisper."""
+    return " ".join(_glue_punct([w.text for w in words]))
+
+
 def _analyze(clean_path):
     """Transcrit + détecte + pics. Brique commune à load et cut."""
     words, duration = T.transcribe(clean_path)
-    transcript = " ".join(w.text for w in words)
+    transcript = _transcript_from_words(words)
     return {
         "clean_path": clean_path,
         "duration": duration,
