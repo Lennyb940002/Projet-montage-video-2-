@@ -8,13 +8,25 @@ def test_validate_empty_lib(tmp_path):
     assert res["tracks_found"] == {"Luxury": 0, "Hype": 0}
 
 
-def test_validate_partial_lib(tmp_path):
+def test_validate_partial_lib_luxury_only_complete(tmp_path):
+    """Luxury complète (≥3), Hype vide -> seul Hype manque."""
+    (tmp_path / "Luxury").mkdir()
+    for n in range(3):
+        (tmp_path / "Luxury" / f"a{n}.mp3").write_bytes(b"x")
+    res = music_bank.validate_library(str(tmp_path))
+    assert res["ok"] is False
+    assert res["missing_categories"] == ["Hype"]
+    assert res["tracks_found"] == {"Luxury": 3, "Hype": 0}
+
+
+def test_validate_partial_lib_under_threshold_counts_as_missing(tmp_path):
+    """Luxury sous le seuil (2 < 3) ET Hype vide -> les DEUX sont manquantes."""
     (tmp_path / "Luxury").mkdir()
     (tmp_path / "Luxury" / "a.mp3").write_bytes(b"x")
     (tmp_path / "Luxury" / "b.mp3").write_bytes(b"x")
     res = music_bank.validate_library(str(tmp_path))
     assert res["ok"] is False
-    assert res["missing_categories"] == ["Hype"]
+    assert set(res["missing_categories"]) == {"Luxury", "Hype"}
     assert res["tracks_found"] == {"Luxury": 2, "Hype": 0}
 
 
