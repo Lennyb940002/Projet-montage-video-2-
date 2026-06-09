@@ -292,55 +292,41 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     if r.returncode != 0 or not os.path.exists(out_path):
         raise RuntimeError(f"Rendu échoué: {r.stderr[-400:]}")
 
-    # --- Mastering 2-passes (post-render) ---
-    # IMPORTANT : on garde une copie du mix non masterisé pour permettre au
-    # service de mesurer la dominance voix vs musique AVANT le gain mastering
-    # (sinon le gain uniforme fausse la mesure perceptive).
+    # --- Mastering V1 : gain statique uniforme (déterministe) ---
+    # Pipeline : mesure LUFS du mix -> calcul gain -> volume uniforme -> re-mesure.
+    # Avantages : déterministe, préserve voix/musique (même gain partout),
+    # explicable, coût CPU faible.
+    # Le mix pré-master est conservé pour permettre au service de mesurer la
+    # dominance AVANT le gain (sinon le gain uniforme déplace voix ET musique
+    # de la même quantité, ce qui ne change PAS la dominance mais peut altérer
+    # les mesures absolues).
     render._premaster_path = None
+    render._last_input_lufs = None
+    render._master_gain_dB = None
     if master_lufs is not None:
-        from backend.config import MUSIC as _MUSIC_CFG
         from backend.pipeline import audio_meta as _am
         import shutil as _shutil
-        tp = _MUSIC_CFG["master_true_peak"]
+        # 1) Mesure LUFS du mix non masterisé
         lufs_in = _am.lufs_of(out_path)
         render._last_input_lufs = lufs_in
-        gain_dB = master_lufs - lufs_in
-        # 1) Conserver le mix non masterisé pour les mesures aval
+        # 2) Calcul gain + clamp de sécurité [-12, +12] dB
+        gain_dB = max(-12.0, min(12.0, master_lufs - lufs_in))
+        render._master_gain_dB = round(gain_dB, 2)
+        # 3) Conserve le mix non masterisé pour les mesures aval (dominance)
         premaster = out_path + ".premaster.mp4"
         _shutil.copy2(out_path, premaster)
         render._premaster_path = premaster
-        # 2) Render final masterisé (re-encode audio, copy video)
+        # 4) Application : volume uniforme. Pas de limiter -> AAC produit des
+        # intersample peaks naturellement contenus si le gain reste raisonnable
+        # (l'AAC encode à -∞ dBFS plancher, le gain ne crée pas de clipping
+        # tant que la source n'est pas déjà saturée).
         mastered = out_path + ".master.mp4"
-        master_filter = (f"volume={gain_dB:.3f}dB,"
-                         f"alimiter=limit={10 ** (tp / 20):.4f}")
         r2 = ffmpeg.run([ffmpeg.FFMPEG, "-y", "-i", out_path,
                          "-c:v", "copy",
-                         "-af", master_filter,
+                         "-af", f"volume={gain_dB:.3f}dB",
                          "-c:a", "aac", "-b:a", "192k",
                          "-movflags", "+faststart", mastered])
         if r2.returncode == 0 and os.path.exists(mastered):
             _shutil.move(mastered, out_path)
-            # Mesure post-mastering : si écart > 0.5 dB du target, on corrige
-            # en une 2ᵉ itération (limiter + AAC peuvent altérer la LUFS de
-            # quelques dB sur des contenus courts).
-            try:
-                lufs_actual = _am.lufs_of(out_path)
-                delta = master_lufs - lufs_actual
-                if abs(delta) > 0.5:
-                    # Correction de gain pur (pas de limiter — déjà appliqué
-                    # en passe 1, et alimiter ré-amplifie ce qu'on essaie
-                    # de baisser).
-                    corrective = out_path + ".master2.mp4"
-                    r3 = ffmpeg.run([ffmpeg.FFMPEG, "-y", "-i", out_path,
-                                     "-c:v", "copy",
-                                     "-af", f"volume={delta:.3f}dB",
-                                     "-c:a", "aac", "-b:a", "192k",
-                                     "-movflags", "+faststart", corrective])
-                    if r3.returncode == 0 and os.path.exists(corrective):
-                        _shutil.move(corrective, out_path)
-            except Exception:
-                pass   # jamais bloquant
-        # Si la 2e passe échoue, on garde la vidéo non masterisée (jamais bloquant).
-    else:
-        render._last_input_lufs = None
+        # Si l'application échoue, on garde le mix non masterisé (jamais bloquant).
     return out_path

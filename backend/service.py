@@ -214,11 +214,14 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
         )
         debug["music_quality_score"] = director._compute_quality_score(debug)
 
-        # --- Mastering debug enrichi ---
+        # --- Mastering debug enrichi (V1 : gain statique uniforme) ---
         if master_lufs is not None:
             try:
+                debug["target_lufs"] = master_lufs
                 debug["lufs_pre_master"] = getattr(montage.render,
                                                    "_last_input_lufs", None)
+                debug["master_gain_dB"] = getattr(montage.render,
+                                                   "_master_gain_dB", None)
                 debug["lufs_post_master"] = audio_meta.lufs_of(out_path)
                 debug["mastering_applied"] = True
                 debug["mastering_quality_score"] = \
@@ -228,12 +231,16 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
                 debug.setdefault("warnings", []).append(
                     f"mastering measurement skipped (kept video): {e}")
                 debug["mastering_applied"] = True
+                debug["target_lufs"] = master_lufs
                 debug["lufs_pre_master"] = None
+                debug["master_gain_dB"] = None
                 debug["lufs_post_master"] = None
                 debug["mastering_quality_score"] = None
         else:
             debug["mastering_applied"] = False
+            debug["target_lufs"] = None
             debug["lufs_pre_master"] = None
+            debug["master_gain_dB"] = None
             debug["lufs_post_master"] = None
             debug["mastering_quality_score"] = None
 

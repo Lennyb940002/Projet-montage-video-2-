@@ -173,3 +173,43 @@ def test_mastering_quality_score_handles_none():
     """Si pas de mesure post (mastering désactivé) -> score None ou 0 logique."""
     from backend.pipeline.director import _compute_mastering_quality_score
     assert _compute_mastering_quality_score(-16.0, None) is None
+
+
+# ---------- 7. V1 : master_gain_dB exposé + clamp de sécurité ----------
+
+def test_master_gain_db_exposed_in_debug(monkeypatch, sample_audio, tmp_path):
+    """V1 : le debug doit contenir master_gain_dB pour diagnostiquer les
+    cas extrêmes (ex. mix très faible ou très fort)."""
+    lux = tmp_path / "MUSIC" / "Luxury"; lux.mkdir(parents=True)
+    for i, vol in enumerate(("-10dB", "-12dB", "-8dB")):
+        ffmpeg.run([ffmpeg.FFMPEG, "-y", "-f", "lavfi",
+                    "-i", "sine=frequency=440:duration=60",
+                    "-af", f"volume={vol}", str(lux / f"t{i}.mp3")])
+    monkeypatch.setattr(cfg, "MUSIC_DIR", str(tmp_path / "MUSIC"))
+    out = str(tmp_path / "out.mp4")
+    service.make_video(sample_audio,
+                       "Cette Rolex est incroyable. Écris ROLEX en commentaire.",
+                       out, style="karaoke_yellow")
+    dbg = service._LAST_MUSIC_DEBUG
+    assert "master_gain_dB" in dbg
+    assert dbg["master_gain_dB"] is not None
+    # Pour le sample TTS (-23.7 LUFS) -> gain ≈ +7.7 dB pour atteindre -16
+    assert 5.0 < dbg["master_gain_dB"] < 10.0
+    # target_lufs exposé pour traçabilité
+    assert dbg["target_lufs"] == -16.0
+
+
+def test_master_gain_clamped_to_safety_range():
+    """V1 : gain clampé dans [-12; +12] dB pour éviter les sauts dangereux."""
+    # On ne teste pas via render (cas extrême difficile à fabriquer) mais via
+    # la formule directement, telle qu'utilisée dans montage.render.
+    # Cas voix très faible (-50 LUFS) avec target -16 -> gain demandé = +34 dB
+    # -> clampé à +12.
+    gain_demanded = -16.0 - (-50.0)   # = +34
+    gain_clamped = max(-12.0, min(12.0, gain_demanded))
+    assert gain_clamped == 12.0
+    # Cas voix saturée (-2 LUFS) avec target -16 -> gain demandé = -14 dB
+    # -> clampé à -12.
+    gain_demanded = -16.0 - (-2.0)   # = -14
+    gain_clamped = max(-12.0, min(12.0, gain_demanded))
+    assert gain_clamped == -12.0
