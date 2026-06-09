@@ -4,6 +4,9 @@
 **Statut :** Design validé
 **Contexte :** Sous-projet suivant le Pack Dynamisme. Objectif produit : faire ressentir « monté par un humain » dès le dépôt d'un audio, via une couche musicale qui respecte la voix.
 
+## Règle produit absolue
+**Le produit doit toujours sortir une vidéo.** Les seuils qualité (dominance voix, LUFS, etc.) déclenchent des AUTO-FIX et des WARNINGS, jamais des erreurs bloquantes. Les `RuntimeError` sont réservées aux corruptions (fichier illisible, ffmpeg crash, etc.).
+
 ## Décisions validées
 - V1 = 5 fonctionnalités : fade in/out · sidechain ducking · pre-CTA gap · normalisation LUFS · sélection catégorie par règles.
 - Reporter : BPM/beat sync · crossfade multi-tracks · analyse sémantique avancée.
@@ -14,9 +17,12 @@
 1. **La voix prime toujours sur la musique** — garde-fou à 3 niveaux :
    - Plafond dur : `base_gain_dB ≤ -16 dB` (clamp avant rendu).
    - Plancher ducking : la musique reste ≥ 14 dB sous la voix pendant la parole.
-   - **Test de discrimination automatique** post-rendu : RMS voix vs RMS musique sur fenêtres de parole → la voix doit dominer de ≥ 6 dB, sinon `RuntimeError` avec message clair (« voice dominance NN.N dB < 6.0 dB requis »).
-2. **Mode debug musique** — `plan["music"]["debug"]` (toujours présent) + `music_debug.json` écrit à côté du rendu en mode démo. Contient : catégorie + raison(s) + score de confiance, track choisie, LUFS source / voix / cible / final, zones de ducking et de gap, paramètres effectifs après clamps.
-3. **Schéma futur-compatible** : `plan["music"] = {"beds": [...], "accents": [...], "mix": ..., "debug": ...}` dès la V1. `accents` reste vide en V1 ; le `music_engine` itère déjà sur `beds` puis `accents` pour que demain (riser/impact/sweep/transition/accent) n'impose aucun refactor.
+   - **Mesure de dominance post-rendu, AUTO-FIX, jamais bloquant** :
+     RMS voix vs RMS musique sur fenêtres de parole.
+     - Si `voice_dominance_dB < 6.0` : **on retire 2 dB sur la musique et on re-rend une seule fois** (auto-fix).
+     - Si après re-render la dominance reste < 6.0 dB : on **logge un warning**, on garde la vidéo, on écrit `auto_fix_applied: true` et `warnings: [...]` dans `debug`. **JAMAIS de `RuntimeError`** pour un choix artistique. Le produit sort toujours une vidéo. Les erreurs bloquantes sont réservées aux corruptions (fichier illisible, ffmpeg crash, etc.).
+2. **Mode debug musique** — `plan["music"]["debug"]` (toujours présent) + `music_debug.json` écrit à côté du rendu en mode démo. Contient : catégorie + raison(s) + score de confiance, track choisie, LUFS source / voix / cible / final, zones de ducking et de gap, paramètres effectifs après clamps, `voice_dominance_dB`, `auto_fix_applied`, `warnings[]`, **et `music_quality_score`** (voir §Score qualité).
+3. **Schéma futur-compatible** : `plan["music"] = {"beds": [...], "accents": [...], "mix": ..., "debug": ...}` dès la V1. `accents` reste vide en V1, MAIS le **contrat des accents est figé maintenant** (voir §Schéma `accents`) pour que demain (riser/impact/sweep/transition/accent) n'impose aucun refactor du schéma — seulement l'ajout du code d'exécution.
 
 ## Architecture (contrat strict — `docs/ARCHITECTURE.md`)
 ```
@@ -80,7 +86,18 @@ plan["music"] = {
       ]
     }
   ],
-  "accents": [],                          # V1 vide ; futur : riser/impact/sweep/transition
+  "accents": [],                          # V1 toujours vide. Contrat des items figé dès maintenant :
+                                          # {
+                                          #   "type": "impact" | "riser" | "sweep" | "transition" | "accent",
+                                          #   "track": "<path>",          # optionnel V1 (résolu par bank en V2)
+                                          #   "start": float,             # impact : instant exact
+                                          #   "end": float,               # riser/sweep : fin de l'effet
+                                          #   "gain_dB": float,           # optionnel
+                                          #   "fade_in_ms": int,          # optionnel
+                                          #   "fade_out_ms": int,         # optionnel
+                                          #   "reason": str               # debug
+                                          # }
+                                          # music_engine itère déjà sur accents en V1 (boucle vide).
   "mix": {
     "target_lufs": -16.0,
     "voice_priority": True
@@ -97,7 +114,10 @@ plan["music"] = {
     "duck_depth_dB_effective": -12.0,
     "voice_dominance_dB": 7.8,            # mesuré post-rendu
     "gaps": [{"start": 11.4, "end": 12.6}],
-    "fallback_used": False
+    "fallback_used": False,
+    "auto_fix_applied": False,            # contrainte 1 : auto-fix non bloquant
+    "warnings": [],
+    "music_quality_score": 0.87           # score interne (voir §Score qualité)
   }
 }
 ```
@@ -162,15 +182,47 @@ V1 = **sidechaincompress** ffmpeg, signal de référence = piste voix (avant ami
 - **Mix** : ne touche pas à la voix. Applique sur la musique un `volume` pour la placer à `base_gain_dB` sous la voix après normalisation, ce qui rend les tracks **interchangeables** sans surprise.
 - Pas de limiter final V1 (mesure du clipping potentiel + log si dépassement).
 
-## Test de discrimination voix/musique (garde-fou contrainte 1)
+## Mesure de dominance voix/musique + AUTO-FIX (garde-fou contrainte 1)
 
-Post-rendu :
-1. Extraire 5 fenêtres aléatoires de 200 ms **dans les zones `voice_active`** (mais en dehors des gaps).
-2. Pour chaque fenêtre : mesurer RMS du mix final (voix+sfx+musique) et RMS de la voix seule (en route séparée).
-3. Voice dominance moyenne = `RMS_voix - RMS_mix_diff_musique`. Si < 6 dB → `RuntimeError` avec contexte (« voice dominance NN dB, expected ≥ 6 dB »).
-4. Valeur écrite dans `debug.voice_dominance_dB`.
+**Règle produit absolue : le rendu doit toujours réussir.** La mesure ne bloque jamais ; elle déclenche un auto-fix puis un warning.
 
-Implémentation : `audio_meta.measure_dominance(mix_path, voice_path, voice_active_ranges)`.
+Post-rendu, pour chaque rendu utilisant de la musique :
+1. Extraire 5 fenêtres aléatoires de 200 ms **dans les zones `voice_active`** (hors gaps).
+2. Pour chaque fenêtre : mesurer RMS du mix final ET RMS de la voix isolée (route séparée).
+3. `voice_dominance_dB = moyenne(RMS_voix - RMS_mix)` sur les 5 fenêtres.
+4. **Auto-fix** :
+   ```
+   if voice_dominance_dB < MUSIC["voice_dominance_min_dB"] (6.0):
+       music_gain -= 2 dB
+       re-render UNE seule fois
+       re-mesurer
+       debug.auto_fix_applied = True
+       debug.warnings.append("voice dominance was X dB, auto-reduced music by 2 dB")
+       if après re-render voice_dominance_dB toujours < 6.0:
+           debug.warnings.append("voice dominance still below 6 dB after auto-fix")
+           # on garde la vidéo telle quelle. JAMAIS de RuntimeError.
+   ```
+5. La valeur finale `voice_dominance_dB` est écrite dans `debug`.
+
+Implémentation : `audio_meta.measure_dominance(mix_path, voice_path, voice_active_ranges) -> float`. L'orchestration auto-fix (re-render) vit dans `service.make_video` (un seul endroit qui sait re-render).
+
+## Score qualité musique (interne, observabilité)
+
+Calculé après rendu, **toujours présent dans `debug.music_quality_score`** (0.0 à 1.0). Sert à diagnostiquer pourquoi certaines vidéos sont meilleures que d'autres une fois qu'on en aura généré beaucoup. **Pas affiché à l'utilisateur final** ; logué et observable.
+
+5 critères, chacun 0.2 :
+
+| Critère | Vert (0.2) | Rouge (0.0) |
+|---|---|---|
+| **Dominance voix OK** | `voice_dominance_dB >= 6.0` après rendu (avant auto-fix) | non |
+| **Ducking OK** | `duck_depth_dB_effective` non clampé (= depth voulu appliqué) | clampé pour respecter plancher |
+| **Gap CTA OK** | CTA détecté ET gap posé ET respecté | CTA présent mais gap absent / mal posé |
+| **LUFS OK** | `|lufs_final - target_lufs| <= 1.5 dB` | écart > 1.5 dB |
+| **Catégorie OK** | `confidence >= 0.60` (pas de fallback) | fallback utilisé |
+
+`music_quality_score = sum(criteria) / 1.0`. Implémentation : `director._compute_quality_score(debug_dict) -> float`. **Pure** (pas d'I/O), donc trivial à tester.
+
+Vidéos sans CTA : le critère « Gap CTA » est neutralisé (compte automatiquement comme vert).
 
 ## Protocole de démo finale (identique au Pack Dynamisme)
 
@@ -187,12 +239,15 @@ Implémentation : `audio_meta.measure_dominance(mix_path, voice_path, voice_acti
 - `director._decide_music` : produit un `plan["music"]` JSON-sérialisable avec `beds[0]`, `accents=[]`, `debug` complet.
 - `music_engine.build` : `plan=None` ou `beds=[]` → no-op (`extra_inputs=[], filter=""`).
 - `music_engine.build` avec bed mock : génère bien sidechain, fade in/out, gaps.
-- `audio_meta.measure_dominance` : sur un mix où la voix est nettement plus forte que la musique → renvoie > 6 dB. Sur un mix inverse → < 6 dB.
+- `audio_meta.measure_dominance` : sur un mix où la voix est nettement plus forte → > 6 dB ; mix inverse → < 6 dB.
+- **Auto-fix non bloquant** : sur un plan où la musique est volontairement trop forte → le rendu réussit, `debug.auto_fix_applied = True`, `warnings` non vide, **aucune exception levée**.
+- `director._compute_quality_score` : tableau de cas debug → score attendu (0.0 / 0.2 / ... / 1.0). Test pur.
 - Tests d'intégration `montage.render` :
   - bed seul (pas de gap, pas de duck) → vidéo valide.
   - bed + duck + gap → vidéo valide, audio dominance OK.
-  - test de **non-régression** : `plan["music"] = None` → bit-pour-bit identique au rendu sans musique (même seed).
+  - test de **non-régression** : `plan["music"] = None` → rendu identique au rendu sans musique (même seed clips).
 - Test serveur `/preview` ne change pas (le câblage musique passe par le pipeline existant).
+- **Schéma `accents`** : test de sérialisation JSON d'un `accents` non vide (item factice impact + riser) → vérifie que le contrat est utilisable, même si V1 ne le génère pas.
 
 ## Banque musique attendue
 
