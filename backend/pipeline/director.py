@@ -6,7 +6,15 @@ Sortie  : plan = {subtitles, motion, transitions}
 Les renderers (subtitles.py, montage.py) sont purement exécutifs : ils consomment
 ces structures sans aucune logique métier.
 """
-from backend.config import TRANSITIONS, MOTION
+from backend.config import TRANSITIONS, MOTION, MUSIC as MUSIC_CFG
+from backend.pipeline.sfx_plan import (
+    is_cta as _is_cta,
+    is_price as _is_price,
+    is_number as _is_number,
+    is_watch_brand as _is_watch_brand,
+    _norm as _norm_word,
+)
+from backend.pipeline.keywords import SUPERLATIVES
 
 
 # --- Helpers ---------------------------------------------------------------
@@ -135,6 +143,118 @@ def _decide_transitions(events, ranges):
         else:
             out.append({"kind": "fade_in", "clip_index": i, "dur": TRANSITIONS["dur"]})
     return out
+
+
+# --- Décisions musique (T4 : signaux + scoring + helpers) ------------------
+
+def _voice_active_events(tokens, gap_threshold=1.0):
+    """Agrège les tokens en plages parlées contiguës.
+    Un trou >= gap_threshold (s) entre deux tokens ouvre une nouvelle plage."""
+    if not tokens:
+        return []
+    out = []
+    cur_s, cur_e = tokens[0]["start"], tokens[0]["end"]
+    for t in tokens[1:]:
+        if t["start"] - cur_e >= gap_threshold:
+            out.append({"type": "voice_active", "start": cur_s, "end": cur_e})
+            cur_s = t["start"]
+        cur_e = max(cur_e, t["end"])
+    out.append({"type": "voice_active", "start": cur_s, "end": cur_e})
+    return out
+
+
+def _pre_cta_gap_event(events, gap_dur=None):
+    """Crée un event pre_cta_gap juste avant le PREMIER keyword CTA détecté.
+    None si aucun CTA dans les events."""
+    g = MUSIC_CFG["pre_cta_gap_s"] if gap_dur is None else gap_dur
+    for ev in events:
+        if ev.get("type") == "keyword" and _is_cta(ev.get("label", "")):
+            return {
+                "type": "pre_cta_gap",
+                "start": max(0.0, ev["start"] - g),
+                "end": ev["start"],
+                "importance": "high",
+            }
+    return None
+
+
+def _score_music_category(events, duration):
+    """Heuristique simple basée sur les events keyword existants.
+
+    Renvoie un dict EXPLICABLE :
+      {
+        "category": "luxury" | "hype",
+        "confidence": float,
+        "reason": [str, ...],
+        "fallback_used": bool,
+        "signals": {n_cta, n_price, n_number, n_brand, n_superlative,
+                    n_high, density_high, duration},
+        "scores": {"luxury": float, "hype": float},
+      }
+
+    Le champ `scores` est TOUJOURS présent (même en fallback) pour qu'on
+    puisse comprendre dans 3 semaines pourquoi telle décision a été prise.
+    """
+    kw = [e for e in events if e.get("type") == "keyword"]
+    n_cta = sum(1 for e in kw if _is_cta(e.get("label", "")))
+    n_price = sum(1 for e in kw if _is_price(e.get("label", "")))
+    n_number = sum(1 for e in kw if _is_number(e.get("label", "")))
+    n_brand = sum(1 for e in kw if _is_watch_brand(e.get("label", "")))
+    n_superlative = sum(1 for e in kw if _norm_word(e.get("label", "")) in SUPERLATIVES)
+    n_high = sum(1 for e in kw if e.get("importance") == "high")
+    density_high = (n_high / len(kw)) if kw else 0.0
+    signals = {
+        "n_cta": n_cta, "n_price": n_price, "n_number": n_number,
+        "n_brand": n_brand, "n_superlative": n_superlative,
+        "n_high": n_high, "density_high": density_high, "duration": duration,
+    }
+
+    # Score Hype
+    hype_score, hype_reasons = 0.0, []
+    if n_cta >= 2:
+        hype_score += 0.30; hype_reasons.append(f"{n_cta} CTA")
+    if n_price + n_number >= 2:
+        hype_score += 0.25; hype_reasons.append(f"{n_price + n_number} chiffres/prix")
+    if duration < 20:
+        hype_score += 0.15; hype_reasons.append("duration < 20s")
+    if density_high >= 0.5 and kw:
+        hype_score += 0.30; hype_reasons.append("densité events high")
+
+    # Score Luxury
+    lux_score, lux_reasons = 0.0, []
+    if n_brand >= 1:
+        lux_score += 0.35; lux_reasons.append("brand detected")
+    if n_superlative >= 1:
+        lux_score += 0.30; lux_reasons.append("superlative detected")
+    if n_cta <= 1:
+        lux_score += 0.15; lux_reasons.append("peu de CTA")
+    if duration >= 20:
+        lux_score += 0.20; lux_reasons.append("duration >= 20s")
+
+    scores = {"luxury": round(lux_score, 2), "hype": round(hype_score, 2)}
+
+    if hype_score >= lux_score:
+        cat, conf, reasons = "hype", hype_score, hype_reasons
+    else:
+        cat, conf, reasons = "luxury", lux_score, lux_reasons
+
+    if conf < MUSIC_CFG["confidence_threshold"]:
+        return {
+            "category": MUSIC_CFG["category_default"],
+            "confidence": round(conf, 2),
+            "reason": ["low confidence fallback"],
+            "fallback_used": True,
+            "signals": signals,
+            "scores": scores,
+        }
+    return {
+        "category": cat,
+        "confidence": round(conf, 2),
+        "reason": reasons,
+        "fallback_used": False,
+        "signals": signals,
+        "scores": scores,
+    }
 
 
 # --- API publique ----------------------------------------------------------

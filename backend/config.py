@@ -49,7 +49,7 @@ MUSIC = dict(
     category_default="luxury",
     confidence_threshold=0.60,
     auto_fix_step_dB=-2.0,           # pas d'auto-fix (1 seule itération)
-    min_track_duration_s=30.0,
+    min_track_duration_s=45.0,
 )
 
 DEFAULT_CTA = "Écris-moi en commentaire 👇"
