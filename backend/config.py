@@ -69,3 +69,21 @@ BRAND_TAGS = {"rolex": "#rolex", "omega": "#omega", "cartier": "#cartier",
               "seiko": "#seiko", "patek": "#patek", "audemars": "#audemarspiguet",
               "tissot": "#tissot", "tag": "#tagheuer", "heuer": "#tagheuer",
               "daytona": "#daytona", "submariner": "#submariner", "datejust": "#datejust"}
+
+# --- Silent Content Engine (V1) --------------------------------------------
+SILENT = dict(
+    width=1080, height=1920, fps=30,
+    min_duration=3.0, max_duration=8.0,
+    window_n=5,                 # sliding history window read by the Policy
+    w_rep=0.30,                 # repetition bias weight
+    w_pat=0.40,                 # ABAB pattern penalty weight
+    temperature=0.7,            # softmax temperature (fixed in V1)
+    base_score=1.0,
+    reveal_blur_sigma=25,       # gblur sigma for the "reveal" layout
+    reveal_at=2.0,              # when the de-blur starts (s)
+    reveal_fade=0.6,            # de-blur fade duration (s)
+    fonts=["Arial Black", "Impact"],
+    accents=["&H0000FFFF&", "&H0000FF00&", "&H00FFFFFF&", "&H009314FF&"],
+    text_anims=["fade", "pop"],
+)
+SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")
