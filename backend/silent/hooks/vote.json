@@ -1,0 +1,6 @@
+[
+  {"text": "Votez A ou B en commentaire", "angle": "vote_ab"},
+  {"text": "Choisis ton camp", "angle": "pick_side"},
+  {"text": "Team 1 ou Team 2 ?", "angle": "team"},
+  {"text": "Commente ton choix", "angle": "comment_choice"}
+]

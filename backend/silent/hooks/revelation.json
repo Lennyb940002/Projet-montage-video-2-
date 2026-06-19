@@ -1,0 +1,6 @@
+[
+  {"text": "Attends la fin", "angle": "wait_end"},
+  {"text": "Regarde bien...", "angle": "watch_close"},
+  {"text": "La voilà", "angle": "here_it_is"},
+  {"text": "Surprise", "angle": "surprise"}
+]

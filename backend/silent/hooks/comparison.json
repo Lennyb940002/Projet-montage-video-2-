@@ -1,0 +1,7 @@
+[
+  {"text": "Laquelle tu choisis ?", "angle": "which_choose"},
+  {"text": "A ou B ?", "angle": "a_or_b"},
+  {"text": "Une seule à garder", "angle": "keep_one"},
+  {"text": "Gauche ou droite ?", "angle": "left_right"},
+  {"text": "Ta préférée ?", "angle": "favorite"}
+]
