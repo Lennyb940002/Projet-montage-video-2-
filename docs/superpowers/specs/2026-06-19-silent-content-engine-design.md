@@ -53,8 +53,15 @@ DB logging           (alimente l'historique relu par le Policy)
 de décision**. Décision interdite dans `renderer`, `recipe`, `hooks`, `store`. Toute violation
 casse la modularité.
 
+**Double rôle du Policy Engine (à nommer explicitement) :**
+1. **Constraint solver + stochastic sampler** — résout les contraintes (goal, registry, validité)
+   et tire une décision pondérée dans l'espace créatif borné.
+2. **Sequence stabilizer** — garantit la **cohérence temporelle de la séquence générée** (la
+   diversité D1-D4 n'a de sens qu'à l'échelle de la séquence, pas d'une vidéo isolée). Ce rôle est
+   formalisé par l'invariant **D0** ci-dessous.
+
 Résumé conceptuel du Policy Engine : *a deterministic probabilistic constraint solver over a
-bounded creative space.*
+bounded creative space, acting as a sequence stabilizer.*
 
 ---
 
@@ -69,10 +76,19 @@ bounded creative space.*
   "assets":   list[str] | None,              # assets imposés (pick manuel UI) ; None => Policy choisit
 }
 ```
-**Provenance des assets :** si `strategy.assets` est fourni (pick manuel dans l'UI), le Policy les
-honore tels quels (I4 : lecture seule, il vérifie juste `len == asset_count[mechanic]`). Si `None`
-(mode batch / 🎲), le Policy sélectionne depuis la banque de clips de façon seedée. Dans les deux
-cas, le **choix final reste la responsabilité unique du Policy** (invariant architectural global).
+**Frontière de sélection des assets (Option C — hybride) :** la responsabilité est découpée en 3
+étages pour garder le Policy purement décisionnel ET permettre un sampling testable/scalable :
+```
+Policy   → émet des CONTRAINTES d'assets   {count, filters}   (décision)
+Sampler  → réalise le SAMPLING effectif depuis la banque (seedé)   (mécanique, dans registry/asset_pool)
+Recipe   → BINDING final immuable des assets choisis   (structure gelée)
+```
+- Si `strategy.assets` est fourni (pick manuel UI) → c'est une contrainte forte : le Sampler le
+  renvoie tel quel après vérif `len == asset_count[mechanic]` (I4 : lecture seule).
+- Si `None` → le Policy émet `{count: asset_count[mechanic], filters: {}}` (V1 : pas de filtre
+  tags ; V2 ajoutera les filtres) et le Sampler tire `count` assets seedés depuis la banque.
+- Dans tous les cas le **Policy reste seul décideur** (il fixe les contraintes), le Sampler
+  n'invente rien, et la Recipe fige le binding (I1).
 
 ### VideoRecipe (sortie immuable — IR de production vidéo)
 ```python
@@ -139,6 +155,9 @@ seul responsable du choix final.
   la satisfait, la traduit ; jamais la compléter/réinterpréter hors scope.
 
 ### 4.2 Invariants de diversité (anti-répétition)
+- **D0 — Cohérence temporelle de séquence (sequence stabilizer).** Le Policy garantit la cohérence
+  de la **séquence** générée, pas seulement de chaque vidéo isolée. Les biais D1-D4 opèrent sur la
+  fenêtre glissante d'historique, jamais sur un seul point. C'est le second rôle nommé du Policy.
 - **D1 — Pas de répétition immédiate forte.** `mecanique(t) ≠ mecanique(t-1)` avec proba ≈ 1
   (soft constraint via `repetition_bias`, PAS d'exclusion dure).
 - **D2 — Anti-pattern ABAB.** Interdiction des cycles de longueur ≤ 2 : si le choix de `m`
@@ -195,8 +214,9 @@ mechanic = weighted_random(candidates, weights, rng)          # S1, S3 (seedé)
 
 layout       = pick(registry[mechanic].layouts, rng)          # I3
 hook, angle  = pick_hook(mechanic, rng)                       # D4 orthogonal
-# assets : imposés par strategy.assets (manuel, vérif len) sinon sélection seedée depuis la banque
-assets       = strategy.assets or select_assets(registry[mechanic].asset_count, rng)
+# Assets — Option C : Policy émet la contrainte, le Sampler réalise le tirage, Recipe fige.
+constraint   = {"count": registry[mechanic].asset_count, "filters": {}}  # V1: pas de filtre tags
+assets       = strategy.assets or sampler.sample(constraint, rng)        # mécanique, pas décision
 assert len(assets) == registry[mechanic].asset_count          # I2
 variation    = pick_variation(rng)                            # font/accent/anim
 duration     = clamp(registry[mechanic].default_duration, MIN, MAX)
@@ -243,6 +263,15 @@ CREATE TABLE generated_videos (
 ```
 `store.py` expose `insert(recipe, status)` et `query_recent(n)` (la fenêtre glissante lue par le
 Policy — T1/T2). Aucun champ de performance en V1.
+
+**Granularité de `history` (figée) :** chaque entrée d'historique lue par le Policy est un triplet
+```python
+HistoryEntry = {"mechanic": str, "content_angle": str, "layout": str}
+```
+(= `{mechanic, hook_type, layout_type}`). Ni `mechanic`-only (diversité trop faible), ni
+`VideoRecipe` complet (trop bruité). Les 3 dimensions alimentent la fatigue : D1-D3 sur `mechanic`,
+D4 sur `content_angle` (orthogonal), et la diversité de `layout` suit `mechanic` en V1 (1 layout par
+mécanique). `query_recent(n)` projette exactement ces 3 colonnes de `generated_videos`.
 
 ---
 
