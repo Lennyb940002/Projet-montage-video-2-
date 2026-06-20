@@ -21,3 +21,27 @@ def test_render_split_2_produces_vertical_mp4(tmp_path):
                         "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
     assert "1080,1920" in probe.stdout
     assert abs(ffmpeg.probe_duration(out) - 5.0) < 0.5
+
+
+def test_end_to_end_comparison_strategy_to_mp4(tmp_path, monkeypatch):
+    """ContentStrategy -> Policy -> Recipe -> Renderer -> Store, sur vrais assets."""
+    import random
+    from backend.silent.strategy import ContentStrategy, validate_strategy
+    from backend.silent import policy
+    from backend.silent.store import Store
+
+    strat = ContentStrategy(goal="engagement", count=1, mechanic="comparison",
+                            assets=(IMG, VID))
+    validate_strategy(strat)
+    recipe = policy.decide(strat, history=[], seed=7)
+    assert recipe.mechanic == "comparison" and recipe.layout == "split_2"
+
+    out = str(tmp_path / "e2e.mp4")
+    render_recipe(recipe, out)
+    assert os.path.exists(out)
+
+    store = Store(str(tmp_path / "e2e.db"))
+    store.insert(recipe, status="preview")
+    recent = store.query_recent(1)
+    assert recent[0]["mechanic"] == "comparison"
+    assert recent[0]["content_angle"] == recipe.content_angle
