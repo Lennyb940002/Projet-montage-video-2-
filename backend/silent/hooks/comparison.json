@@ -3,5 +3,8 @@
   {"text": "A ou B ?", "angle": "a_or_b"},
   {"text": "Une seule à garder", "angle": "keep_one"},
   {"text": "Gauche ou droite ?", "angle": "left_right"},
-  {"text": "Ta préférée ?", "angle": "favorite"}
+  {"text": "Ta préférée ?", "angle": "favorite"},
+  {"text": "Laquelle pour cet été ?", "angle": "which_summer"},
+  {"text": "Tu pars en vacances avec laquelle ?", "angle": "vacation_pick"},
+  {"text": "Celle de gauche ou celle de droite ?", "angle": "left_or_right"}
 ]

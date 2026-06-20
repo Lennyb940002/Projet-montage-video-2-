@@ -2,5 +2,8 @@
   {"text": "Attends la fin", "angle": "wait_end"},
   {"text": "Regarde bien...", "angle": "watch_close"},
   {"text": "La voilà", "angle": "here_it_is"},
-  {"text": "Surprise", "angle": "surprise"}
+  {"text": "Surprise", "angle": "surprise"},
+  {"text": "POV : ta nouvelle montre d'été", "angle": "pov_summer"},
+  {"text": "La collection été arrive bientôt", "angle": "collection_teaser"},
+  {"text": "Celle que tout le monde attend", "angle": "most_awaited"}
 ]
