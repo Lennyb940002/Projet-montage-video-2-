@@ -81,7 +81,7 @@ const selPlay = document.getElementById('selPlay');
 const selDel = document.getElementById('selDel');
 const selClear = document.getElementById('selClear');
 
-const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [], peaks: [], sel: null, pauses: [] };
+const state = { cleanPath: null, duration: 0, words: [], retakes: [], lowconf: [], peaks: [], sel: null, pauses: [], inserts: [] };
 let regions = [];
 let drag = null;
 let playingSel = false;
@@ -105,6 +105,9 @@ function setState(res) {
   state.pauses = res.detect.pauses || [];
   state.peaks = res.peaks || [];
   state.sel = null;
+  // Les inserts manuels sont liés au timecode de l'audio courant ; on les remet
+  // à zéro à chaque rechargement/coupe pour éviter les positions incohérentes.
+  state.inserts = [];
   transcript.value = res.transcript;
   player.src = 'file://' + res.clean_path.replace(/\\/g, '/') + '?t=' + Date.now();
   playBtn.disabled = false;
@@ -171,8 +174,154 @@ function drawWave() {
   const px = t2x(player.currentTime || 0);
   ctx.fillStyle = '#fff';
   ctx.fillRect(px, 0, 2, H);
+
+  // Track visuelle alignée temporellement avec le waveform
+  drawVisualTrack();
 }
-window.addEventListener('resize', drawWave);
+window.addEventListener('resize', () => { drawWave(); });
+
+// ====== Track visuelle (B-roll manuel : images + vidéos) ======
+const visualTrack = document.getElementById('visualTrack');
+const visualInsertsEl = document.getElementById('visualInserts');
+const visualEmpty = document.getElementById('visualEmpty');
+const visualCursor = document.getElementById('visualCursor');
+
+const IMG_EXT = ['.png', '.jpg', '.jpeg', '.webp', '.gif', '.bmp'];
+const VID_EXT = ['.mp4', '.mov', '.webm', '.mkv'];
+const INSERT_DEFAULT_DUR = 2.5;
+const INSERT_MIN_DUR = 0.5;
+
+function _ext(p) {
+  const i = (p || '').lastIndexOf('.');
+  return i >= 0 ? p.slice(i).toLowerCase() : '';
+}
+function _kindFromPath(p) {
+  const e = _ext(p);
+  if (IMG_EXT.includes(e)) return 'image';
+  if (VID_EXT.includes(e)) return 'clip';
+  return null;
+}
+function _fileUrl(p) { return 'file://' + p.replace(/\\/g, '/') + '?t=' + Date.now(); }
+function _basename(p) { return (p || '').replace(/\\/g, '/').split('/').pop(); }
+
+function drawVisualTrack() {
+  visualInsertsEl.innerHTML = '';
+  visualEmpty.style.display = state.inserts.length ? 'none' : 'grid';
+  const W = visualTrack.clientWidth || 1;
+  const dur = state.duration || 1;
+  state.inserts.forEach((ins, i) => {
+    const left = (ins.start / dur) * W;
+    const width = Math.max(8, ((ins.end - ins.start) / dur) * W);
+    const el = document.createElement('div');
+    el.className = 'insert';
+    el.style.left = left + 'px';
+    el.style.width = width + 'px';
+    if (ins.kind === 'image') el.style.backgroundImage = `url('${_fileUrl(ins.path)}')`;
+    el.dataset.idx = i;
+    el.title = `${ins.kind === 'image' ? '📷' : '🎬'} ${_basename(ins.path)} · ${(ins.end - ins.start).toFixed(1)}s`;
+    const ico = document.createElement('div'); ico.className = 'ins-icon'; ico.textContent = ins.kind === 'image' ? '📷' : '🎬';
+    const name = document.createElement('div'); name.className = 'ins-name'; name.textContent = _basename(ins.path);
+    const hL = document.createElement('div'); hL.className = 'ins-handle left';  hL.dataset.handle = 'L'; hL.dataset.idx = i;
+    const hR = document.createElement('div'); hR.className = 'ins-handle right'; hR.dataset.handle = 'R'; hR.dataset.idx = i;
+    el.appendChild(ico); el.appendChild(name); el.appendChild(hL); el.appendChild(hR);
+    visualInsertsEl.appendChild(el);
+  });
+  // Curseur de lecture aligné
+  const t = player.currentTime || 0;
+  visualCursor.style.left = ((t / dur) * W) + 'px';
+}
+
+function _trackXToTime(clientX) {
+  const r = visualTrack.getBoundingClientRect();
+  const t = ((clientX - r.left) / r.width) * (state.duration || 1);
+  return Math.max(0, Math.min(state.duration || 0, t));
+}
+
+// --- Drag&drop fichier sur la track : ajoute un insert au timestamp visé ---
+['dragenter','dragover'].forEach(e => visualTrack.addEventListener(e, ev => {
+  ev.preventDefault(); ev.stopPropagation();
+  visualTrack.classList.add('drag');
+}));
+['dragleave','drop'].forEach(e => visualTrack.addEventListener(e, ev => {
+  ev.preventDefault(); ev.stopPropagation();
+  visualTrack.classList.remove('drag');
+}));
+visualTrack.addEventListener('drop', ev => {
+  ev.preventDefault(); ev.stopPropagation();
+  if (!state.duration) { setStatus('Charge un audio d\'abord avant d\'ajouter un visuel.'); return; }
+  const t = _trackXToTime(ev.clientX);
+  const files = Array.from(ev.dataTransfer.files || []);
+  let added = 0;
+  files.forEach(f => {
+    const p = window.api.getPath(f);
+    const kind = _kindFromPath(p);
+    if (!kind) return;
+    const start = Math.max(0, Math.min(state.duration - INSERT_MIN_DUR, t + added * INSERT_DEFAULT_DUR));
+    const end = Math.min(state.duration, start + INSERT_DEFAULT_DUR);
+    state.inserts.push({ kind, path: p, start, end });
+    added++;
+  });
+  if (added) {
+    state.inserts.sort((a, b) => a.start - b.start);
+    drawVisualTrack();
+    setStatus(`${added} insert${added > 1 ? 's' : ''} ajouté${added > 1 ? 's' : ''}.`);
+  } else {
+    setStatus('Format non supporté (utilise PNG/JPG/WEBP ou MP4/MOV/WEBM).');
+  }
+});
+
+// --- Move / Resize : mousedown sur un .insert ---
+let insertDrag = null;
+visualInsertsEl.addEventListener('mousedown', ev => {
+  const handle = ev.target.closest('.ins-handle');
+  const block = ev.target.closest('.insert');
+  if (!block) return;
+  ev.preventDefault();
+  const idx = parseInt(block.dataset.idx, 10);
+  const ins = state.inserts[idx];
+  insertDrag = {
+    idx, t0: _trackXToTime(ev.clientX),
+    startOrig: ins.start, endOrig: ins.end,
+    mode: handle ? (handle.dataset.handle === 'L' ? 'resizeL' : 'resizeR') : 'move',
+  };
+  block.classList.add('dragging');
+});
+window.addEventListener('mousemove', ev => {
+  if (!insertDrag) return;
+  const t = _trackXToTime(ev.clientX);
+  const dt = t - insertDrag.t0;
+  const ins = state.inserts[insertDrag.idx];
+  const dur = state.duration;
+  if (insertDrag.mode === 'move') {
+    const len = insertDrag.endOrig - insertDrag.startOrig;
+    let s = Math.max(0, Math.min(dur - len, insertDrag.startOrig + dt));
+    ins.start = s; ins.end = s + len;
+  } else if (insertDrag.mode === 'resizeL') {
+    let s = Math.max(0, Math.min(insertDrag.endOrig - INSERT_MIN_DUR, insertDrag.startOrig + dt));
+    ins.start = s;
+  } else if (insertDrag.mode === 'resizeR') {
+    let e = Math.max(insertDrag.startOrig + INSERT_MIN_DUR, Math.min(dur, insertDrag.endOrig + dt));
+    ins.end = e;
+  }
+  drawVisualTrack();
+});
+window.addEventListener('mouseup', () => {
+  if (!insertDrag) return;
+  state.inserts.sort((a, b) => a.start - b.start);
+  insertDrag = null;
+  drawVisualTrack();
+});
+
+// --- Clic droit sur insert -> supprimer ---
+visualInsertsEl.addEventListener('contextmenu', ev => {
+  const block = ev.target.closest('.insert');
+  if (!block) return;
+  ev.preventDefault();
+  const idx = parseInt(block.dataset.idx, 10);
+  state.inserts.splice(idx, 1);
+  drawVisualTrack();
+  setStatus('Insert supprimé.');
+});
 
 // ---- sélection (drag) / clic ----
 function xToTime(clientX) {
@@ -288,10 +437,15 @@ drop.addEventListener('drop', async ev => {
 });
 
 // ---- aperçu / export ----
+function _insertsForBackend() {
+  // Sérialise les inserts pour le backend (kind/path/start/end uniquement)
+  return state.inserts.map(i => ({ kind: i.kind, path: i.path, start: i.start, end: i.end }));
+}
+
 genBtn.addEventListener('click', async () => {
   setStatus('Génération de l\'aperçu…');
   try {
-    const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value, boostChk.checked);
+    const res = await window.api.preview(state.cleanPath, transcript.value, styleSel.value, boostChk.checked, _insertsForBackend());
     if (res.error) throw new Error(res.error);
     preview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
     preview.style.display = 'block';
@@ -307,7 +461,7 @@ expBtn.addEventListener('click', async () => {
   if (!out) return;
   setStatus('Export…');
   try {
-    const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value, boostChk.checked);
+    const res = await window.api.export(state.cleanPath, transcript.value, out, styleSel.value, boostChk.checked, _insertsForBackend());
     if (res.error) throw new Error(res.error);
     setStatus('Exporté : ' + res.video_path);
     lastExport = res.video_path;

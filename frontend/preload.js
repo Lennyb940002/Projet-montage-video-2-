@@ -22,6 +22,6 @@ contextBridge.exposeInMainWorld('api', {
   getSettings: ()                              => get('/settings'),
   saveSettings: (ig_token, ig_user_id)         => post('/settings', { ig_token, ig_user_id }),
   publishInstagram: (video_path, caption)      => post('/publish/instagram', { video_path, caption }),
-  preview: (clean_path, text, style, boost)           => post('/preview', { clean_path, text, style, boost }),
-  export:  (clean_path, text, out_path, style, boost) => post('/export',  { clean_path, text, out_path, style, boost })
+  preview: (clean_path, text, style, boost, manual_inserts)           => post('/preview', { clean_path, text, style, boost, manual_inserts }),
+  export:  (clean_path, text, out_path, style, boost, manual_inserts) => post('/export',  { clean_path, text, out_path, style, boost, manual_inserts })
 });

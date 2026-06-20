@@ -82,6 +82,60 @@ def apply_boost_cuts(ranges, hook_dur, hook_cut):
             out.append((hook_dur, e))
     return out
 
+def _merge_timeline(ranges, manual_inserts):
+    """Fusionne les ranges auto + les inserts manuels en une timeline séquentielle.
+
+    Args:
+      ranges: [(s, e), ...] plages auto-clip décidées par sentence_ranges
+      manual_inserts: [{kind:"image"|"clip", path, start, end}, ...] ou None
+
+    Returns:
+      segments en ordre temporel : liste de dicts avec :
+        - kind = "auto" | "image" | "clip"
+        - start, end (en secondes sur la timeline globale)
+        - auto_idx (seulement pour 'auto') : index du range d'origine, pour
+          retrouver motion/transitions du Director par clip_index
+        - path (seulement pour 'image'/'clip') : fichier source
+
+    Contrat : les segments couvrent EXACTEMENT l'union des ranges (jamais de
+    trou, jamais d'overlap). Les inserts priment sur les autos durant leur
+    fenêtre. Inserts de durée 0 ignorés. Un insert qui chevauche 2 ranges
+    consécutifs produit 2 segments insert contigus (concat ffmpeg les
+    rejouera comme un bloc continu pour l'utilisateur)."""
+    if not manual_inserts:
+        return [{"kind": "auto", "start": s, "end": e, "auto_idx": i}
+                for i, (s, e) in enumerate(ranges)]
+
+    # Sanitize + trie
+    ins = [{"kind": x["kind"], "path": x["path"],
+            "start": float(x["start"]), "end": float(x["end"])}
+           for x in manual_inserts if float(x["end"]) > float(x["start"])]
+    ins.sort(key=lambda x: x["start"])
+
+    EPS = 1e-3
+    segments = []
+    for auto_idx, (rs, re) in enumerate(ranges):
+        overlapping = [x for x in ins if x["end"] > rs and x["start"] < re]
+        if not overlapping:
+            segments.append({"kind": "auto", "start": rs, "end": re,
+                             "auto_idx": auto_idx})
+            continue
+        cursor = rs
+        for x in overlapping:
+            xs = max(rs, x["start"])
+            xe = min(re, x["end"])
+            if cursor < xs - EPS:
+                segments.append({"kind": "auto", "start": cursor, "end": xs,
+                                 "auto_idx": auto_idx})
+            segments.append({"kind": x["kind"], "path": x["path"],
+                             "start": xs, "end": xe})
+            cursor = xe
+        if cursor < re - EPS:
+            segments.append({"kind": "auto", "start": cursor, "end": re,
+                             "auto_idx": auto_idx})
+    return segments
+
+
 def _pick_clips(ranges, clips, rng=None):
     """Sélection des clips. rng=Random local (seed) -> reproductible ; None = random global."""
     r = rng if rng is not None else random
@@ -105,10 +159,13 @@ def _pick_clips(ranges, clips, rng=None):
 
 def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
            boost=False, sfx_events=None, sfx_dir=None, plan=None, seed=None,
-           master_lufs=None):
+           master_lufs=None, manual_inserts=None):
     """ranges = plages de clips FINALES (le redécoupage hook est fait par l'appelant).
     sfx_events = plan SFX (catégories résolues en fichiers via sfx.pick).
     plan = plan global du Director : utilisé pour appliquer motion + transitions.
+    manual_inserts = [{kind:"image"|"clip", path, start, end}] : médias manuels
+      qui priment sur les clips auto durant leur fenêtre. Si None/empty,
+      comportement strictement identique au pipeline d'origine.
     Le renderer ne décide RIEN : il exécute le plan tel quel."""
     from backend.config import BOOST, SFX_DIR
     from backend.pipeline import sfx as sfxmod
@@ -116,15 +173,37 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
     clips = list_clips(clips_dir)
     if not clips:
         raise RuntimeError(f"Aucun clip dans {clips_dir}")
-    chosen = _pick_clips(ranges, clips, rng=random.Random(seed) if seed is not None else None)
+
+    # --- Construction de la timeline unifiée (auto + inserts manuels) ---
+    segments = _merge_timeline(ranges, manual_inserts)
+    # On ne pick des clips auto QUE pour les segments 'auto', en conservant
+    # leur ordre temporel pour rester compatible avec _pick_clips.
+    auto_seg_indices = [i for i, s in enumerate(segments) if s["kind"] == "auto"]
+    auto_ranges = [(segments[i]["start"], segments[i]["end"]) for i in auto_seg_indices]
+    auto_chosen = _pick_clips(auto_ranges, clips,
+                              rng=random.Random(seed) if seed is not None else None)
+    # Map segment index global -> (clip_path, off, L, loop) si auto
+    auto_chosen_by_seg = {seg_i: auto_chosen[k]
+                          for k, seg_i in enumerate(auto_seg_indices)}
+
     W, H, FPS, ZOOM = VIDEO["width"], VIDEO["height"], VIDEO["fps"], VIDEO["zoom"]
 
     cmd = [ffmpeg.FFMPEG, "-y"]
-    for (c, off, L, loop) in chosen:
-        if loop: cmd += ["-stream_loop", "-1", "-t", f"{L:.3f}", "-i", c]
-        else: cmd += ["-ss", f"{off:.3f}", "-t", f"{L:.3f}", "-i", c]
+    for k, seg in enumerate(segments):
+        L = seg["end"] - seg["start"]
+        if seg["kind"] == "auto":
+            (c, off, _L, loop) = auto_chosen_by_seg[k]
+            if loop:
+                cmd += ["-stream_loop", "-1", "-t", f"{L:.3f}", "-i", c]
+            else:
+                cmd += ["-ss", f"{off:.3f}", "-t", f"{L:.3f}", "-i", c]
+        elif seg["kind"] == "image":
+            # Boucle l'image pendant la durée du segment
+            cmd += ["-loop", "1", "-t", f"{L:.3f}", "-i", seg["path"]]
+        else:  # "clip" : vidéo manuelle, audio ignoré côté mapping
+            cmd += ["-t", f"{L:.3f}", "-i", seg["path"]]
     cmd += ["-i", audio_path]
-    Ncl = len(chosen)
+    Ncl = len(segments)
 
     # 1 son cohérent par catégorie (réutilisé), choisi par fenêtre de durée,
     # + mesures d'alignement (lead-in pour l'attaque, position du pic).
@@ -145,66 +224,97 @@ def render(audio_path, ass_path, ranges, out_path, clips_dir=DEFAULT_CLIPS_DIR,
         cmd += ["-i", f]
 
     # vidéo : exécute le plan (motion + transitions) si fourni, sinon zoom constant.
-    # Index des transitions par clip_index pour O(1).
+    # Index des transitions par clip_index original pour O(1).
     tr_by_clip = {t["clip_index"]: t for t in ((plan or {}).get("transitions") or [])}
+    # Auto-segment qui commence un NOUVEAU range original -> transition éligible.
+    # On la pose UNIQUEMENT sur le 1er segment auto d'un range donné.
+    seen_auto_idx = set()
     fc = []
-    for k in range(Ncl):
-        # 1) Choix du zoom de base : (a) plan du Director, (b) boost punch hook,
-        #    (c) zoom par défaut.
-        zoom_base, punches, shakes = _motion_for_clip(k, plan)
-        if zoom_base is None:
-            zoom_base = BOOST["punch_zoom"] if (boost and k == 0) else ZOOM
+    for k, seg in enumerate(segments):
+        L = seg["end"] - seg["start"]
 
-        # 2) Construit la chaîne du clip k. Si pas de punch -> 1 segment ; sinon
-        #    on découpe le clip en sous-segments (avant / punch / après) pour
-        #    appliquer un zoom plus serré + shake pendant la fenêtre du punch.
-        L = ranges[k][1] - ranges[k][0]  # durée du clip (timeline globale)
+        if seg["kind"] == "auto":
+            # 1) Choix du zoom + motion : seulement si le segment auto recouvre
+            #    INTÉGRALEMENT le range original (sinon le punch at_local serait
+            #    en dehors du segment réel). Si split par un insert -> zoom basal.
+            auto_idx = seg["auto_idx"]
+            orig_rs, orig_re = ranges[auto_idx]
+            full_range = (abs(seg["start"] - orig_rs) < 1e-3
+                          and abs(seg["end"] - orig_re) < 1e-3)
+            if full_range:
+                zoom_base, punches, shakes = _motion_for_clip(auto_idx, plan)
+            else:
+                zoom_base, punches, shakes = None, [], []
+            if zoom_base is None:
+                zoom_base = BOOST["punch_zoom"] if (boost and auto_idx == 0) else ZOOM
 
-        if not punches:
-            segments = [(0.0, L, zoom_base, None)]   # (s, e, zoom, shake|None)
-        else:
-            p = punches[0]
-            ps = max(0.0, min(L, p["at_local"]))
-            pe = max(ps, min(L, ps + p["dur"]))
-            sh = next((s for s in shakes if abs(s["at_local"] - p["at_local"]) < 1e-3), None)
-            segments = []
-            if ps > 0.01:
-                segments.append((0.0, ps, zoom_base, None))
-            segments.append((ps, pe, p["zoom_to"], sh))
-            if L - pe > 0.01:
-                segments.append((pe, L, zoom_base, None))
+            if not punches:
+                subsegs = [(0.0, L, zoom_base, None)]
+            else:
+                p = punches[0]
+                ps = max(0.0, min(L, p["at_local"]))
+                pe = max(ps, min(L, ps + p["dur"]))
+                sh = next((s for s in shakes if abs(s["at_local"] - p["at_local"]) < 1e-3), None)
+                subsegs = []
+                if ps > 0.01:
+                    subsegs.append((0.0, ps, zoom_base, None))
+                subsegs.append((ps, pe, p["zoom_to"], sh))
+                if L - pe > 0.01:
+                    subsegs.append((pe, L, zoom_base, None))
 
-        # 3) Encode chaque segment puis concat
-        seg_labels = []
-        for si, (s, e, zf, sh) in enumerate(segments):
-            cw, ch = int(W * zf), int(H * zf)
-            chain = (f"[{k}:v]trim=start={s:.3f}:end={e:.3f},setpts=PTS-STARTPTS,"
-                     f"scale={cw}:{ch}:force_original_aspect_ratio=increase,crop={W}:{H}")
-            if sh:
-                amp = sh["amp_px"]
-                # étendre l'image puis crop oscillant -> position animée (pas de zoompan)
-                chain += (f",pad=iw+{2*amp}:ih+{2*amp}:{amp}:{amp},"
-                          f"crop={W}:{H}:x='{_shake_x(amp, sh['dur'])}':y='{_shake_y(amp)}':exact=1")
-            chain += f",setsar=1[k{k}s{si}]"
+            seg_labels = []
+            for si, (s, e, zf, sh) in enumerate(subsegs):
+                cw, ch = int(W * zf), int(H * zf)
+                chain = (f"[{k}:v]trim=start={s:.3f}:end={e:.3f},setpts=PTS-STARTPTS,"
+                         f"scale={cw}:{ch}:force_original_aspect_ratio=increase,crop={W}:{H}")
+                if sh:
+                    amp = sh["amp_px"]
+                    chain += (f",pad=iw+{2*amp}:ih+{2*amp}:{amp}:{amp},"
+                              f"crop={W}:{H}:x='{_shake_x(amp, sh['dur'])}':y='{_shake_y(amp)}':exact=1")
+                chain += f",setsar=1[k{k}s{si}]"
+                fc.append(chain)
+                seg_labels.append(f"[k{k}s{si}]")
+            if len(seg_labels) == 1:
+                fc.append(f"{seg_labels[0]}fps={FPS},format=yuv420p[vraw{k}]")
+            else:
+                fc.append("".join(seg_labels) +
+                          f"concat=n={len(seg_labels)}:v=1:a=0,fps={FPS},format=yuv420p[vraw{k}]")
+
+            # 4) Transition d'entrée : seulement sur le 1er segment auto du range
+            #    original (et seulement si on tombe pile sur le début du range).
+            apply_tr = (auto_idx not in seen_auto_idx
+                        and abs(seg["start"] - orig_rs) < 1e-3)
+            seen_auto_idx.add(auto_idx)
+            tr = tr_by_clip.get(auto_idx) if apply_tr else None
+            if tr and tr["kind"] == "fade_in":
+                fc.append(f"[vraw{k}]fade=t=in:st=0:d={tr['dur']:.3f}[v{k}]")
+            elif tr and tr["kind"] == "zoom_punch_in":
+                fc.append(f"[vraw{k}]fade=t=in:st=0:d=0.06[v{k}]")
+            else:
+                fc.append(f"[vraw{k}]null[v{k}]")
+
+        elif seg["kind"] == "image":
+            # Image fixe avec Ken Burns subtil : zoom progressif 1.0 -> 1.05
+            # via scale+crop animé. Format 1080x1920 cover.
+            # zoompan classique pour images statiques : déterministe et fluide.
+            d_frames = max(1, int(round(L * FPS)))
+            # zoompan : zoom de 1.0 à 1.05 linéaire sur la durée
+            chain = (f"[{k}:v]scale={W*2}:{H*2}:force_original_aspect_ratio=increase,"
+                     f"crop={W*2}:{H*2},"
+                     f"zoompan=z='min(zoom+0.0005,1.05)':d={d_frames}:s={W}x{H}:fps={FPS},"
+                     f"trim=duration={L:.3f},setpts=PTS-STARTPTS,"
+                     f"setsar=1,format=yuv420p[vraw{k}]")
             fc.append(chain)
-            seg_labels.append(f"[k{k}s{si}]")
-        if len(seg_labels) == 1:
-            fc.append(f"{seg_labels[0]}fps={FPS},format=yuv420p[vraw{k}]")
-        else:
-            fc.append("".join(seg_labels) +
-                      f"concat=n={len(seg_labels)}:v=1:a=0,fps={FPS},format=yuv420p[vraw{k}]")
+            # Petit fade-in pour annoncer l'insert (anti-flash brutal)
+            fc.append(f"[vraw{k}]fade=t=in:st=0:d=0.12[v{k}]")
 
-        # 4) Transition d'entrée éventuelle (length-preserving)
-        tr = tr_by_clip.get(k)
-        if tr and tr["kind"] == "fade_in":
-            # entrée calme : fondu doux
-            fc.append(f"[vraw{k}]fade=t=in:st=0:d={tr['dur']:.3f}[v{k}]")
-        elif tr and tr["kind"] == "zoom_punch_in":
-            # entrée dynamique : fondu très court ("snap") -> perçu plus tonique
-            # vs fade calme. Pas de zoom animé (V1 robuste, length-preserving).
-            fc.append(f"[vraw{k}]fade=t=in:st=0:d=0.06[v{k}]")
-        else:
-            fc.append(f"[vraw{k}]null[v{k}]")
+        else:  # "clip" : vidéo manuelle (audio ignoré via -map ciblé plus loin)
+            chain = (f"[{k}:v]scale={W}:{H}:force_original_aspect_ratio=increase,"
+                     f"crop={W}:{H},setsar=1,fps={FPS},format=yuv420p,"
+                     f"trim=duration={L:.3f},setpts=PTS-STARTPTS[vraw{k}]")
+            fc.append(chain)
+            fc.append(f"[vraw{k}]fade=t=in:st=0:d=0.10[v{k}]")
+
     fc.append("".join(f"[v{k}]" for k in range(Ncl)) + f"concat=n={Ncl}:v=1:a=0[cv]")
     ass_dir = os.path.dirname(os.path.abspath(ass_path))
     ass_name = os.path.basename(ass_path)

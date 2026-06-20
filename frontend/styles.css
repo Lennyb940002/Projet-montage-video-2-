@@ -95,7 +95,7 @@ body::after {
 .app {
   position: relative; z-index: 2;
   display: grid;
-  grid-template-rows: 60px minmax(0,1fr) 248px;
+  grid-template-rows: 60px minmax(0,1fr) 360px;
   height: 100vh;
 }
 
@@ -299,6 +299,74 @@ body::after {
   background: var(--line); pointer-events: none;
 }
 #wave { position: absolute; inset: 0; width: 100%; height: 100%; display: block; cursor: crosshair; }
+
+/* ============================ Track visuelle (B-roll manuel) ============================ */
+.visualbar {
+  display: flex; align-items: center; gap: var(--s4);
+  padding: var(--s2) var(--s5);
+  border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--surface-3), transparent);
+}
+.vhint { font-size: 11px; color: var(--faint); }
+
+.visualwrap {
+  position: relative; flex: 1; min-height: 0;
+  background:
+    repeating-linear-gradient(90deg, var(--line) 0 1px, transparent 1px 80px),
+    var(--surface-3);
+  overflow: hidden;
+  transition: background var(--dur) var(--ease), box-shadow var(--dur) var(--ease);
+}
+.visualwrap.drag {
+  background:
+    repeating-linear-gradient(90deg, var(--accent-line) 0 1px, transparent 1px 80px),
+    var(--accent-soft);
+  box-shadow: inset 0 0 0 2px var(--accent-line);
+}
+.visual-empty {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font-size: 12.5px; color: var(--faint); pointer-events: none;
+  letter-spacing: .01em;
+}
+.visual-inserts { position: absolute; inset: 0; }
+
+.insert {
+  position: absolute; top: 8px; bottom: 8px;
+  border: 1.5px solid var(--accent-line); border-radius: var(--r-sm);
+  background: var(--surface-2) center/cover no-repeat;
+  box-shadow: var(--shadow-1);
+  cursor: grab; overflow: hidden;
+  transition: border-color var(--dur), box-shadow var(--dur), transform var(--dur);
+  user-select: none;
+}
+.insert:hover { border-color: var(--accent); box-shadow: var(--glow); }
+.insert.dragging { cursor: grabbing; transform: scale(1.02); border-color: var(--accent); }
+.insert .ins-icon {
+  position: absolute; top: 4px; left: 4px;
+  width: 22px; height: 22px; border-radius: 50%;
+  background: rgba(10,10,13,.82); color: var(--accent);
+  display: grid; place-items: center; font-size: 12px;
+  border: 1px solid var(--accent-line);
+}
+.insert .ins-name {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  padding: 3px 6px; font-size: 10.5px; color: var(--text);
+  background: linear-gradient(180deg, transparent, rgba(10,10,13,.85));
+  text-overflow: ellipsis; white-space: nowrap; overflow: hidden;
+}
+.insert .ins-handle {
+  position: absolute; top: 0; bottom: 0; width: 6px;
+  background: var(--accent-line); cursor: ew-resize; opacity: 0;
+  transition: opacity var(--dur);
+}
+.insert:hover .ins-handle { opacity: 1; }
+.insert .ins-handle.left { left: 0; border-radius: var(--r-sm) 0 0 var(--r-sm); }
+.insert .ins-handle.right { right: 0; border-radius: 0 var(--r-sm) var(--r-sm) 0; }
+
+.visual-cursor {
+  position: absolute; top: 0; bottom: 0; width: 2px;
+  background: var(--text); pointer-events: none; opacity: .8;
+}
 
 /* ============================ Menu contextuel ============================ */
 .menu {

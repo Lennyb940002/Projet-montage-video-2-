@@ -139,10 +139,15 @@ def _music_dominance_autofix(debug, *, render_callable, current_gain,
         return True, debug
 
 
-def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
+def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False,
+               manual_inserts=None):
     """Pipeline officiel :
        transcribe -> align -> detect_events -> sentence_ranges (+ boost cuts)
        -> Director.build_plan -> renderers exécutifs (subtitles + montage).
+
+    manual_inserts : liste optionnelle de médias [{kind:"image"|"clip", path,
+      start, end}] qui priment sur les clips auto durant leur fenêtre. Les
+      sous-titres restent par-dessus (rendu ASS = dernier filtre ffmpeg).
     """
     words, duration = T.transcribe(clean_path)
     tokens, n_sent = align.tokenize(text)
@@ -186,7 +191,7 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
 
     montage.render(clean_path, ass, ranges, out_path,
                    boost=boost, sfx_events=sfx_events, plan=plan,
-                   master_lufs=master_lufs)
+                   master_lufs=master_lufs, manual_inserts=manual_inserts)
 
     # 6) Mesures musique post-rendu + auto-fix non bloquant + quality score.
     #    Tout est protégé pour ne JAMAIS interrompre la sortie de la vidéo.
@@ -217,7 +222,7 @@ def make_video(clean_path, text, out_path, style="karaoke_yellow", boost=False):
             # le rendu masterisé par un rendu non masterisé.
             montage.render(clean_path, ass, ranges, out_path,
                            boost=boost, sfx_events=sfx_events, plan=plan,
-                           master_lufs=master_lufs)
+                           master_lufs=master_lufs, manual_inserts=manual_inserts)
             # Met à jour les LUFS post-render
             try:
                 debug["lufs_final_actual"] = audio_meta.lufs_of(out_path)
