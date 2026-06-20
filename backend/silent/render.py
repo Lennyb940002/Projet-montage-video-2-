@@ -1,9 +1,20 @@
 """Renderer — EXÉCUTION PURE. Consomme un VideoRecipe gelé, ne décide rien.
 Texte (overlay ASS) = dernier filtre => toujours par-dessus les visuels.
 Layouts V1 : split_2, reveal."""
-import os
+import os, re
 from backend import ffmpeg
 from backend.config import SILENT
+
+# Les emojis couleur ne rendent pas via libass (glyphes monochromes cassés) :
+# on les retire du texte brûlé. (Rendu emoji couleur = overlay PNG, futur.)
+_EMOJI_RE = re.compile(
+    "[\U0001F000-\U0001FAFF\U00002600-\U000027BF\U00002B00-\U00002BFF"
+    "\U0000FE00-\U0000FE0F\U0001F1E6-\U0001F1FF\U0000200D\U000020E3]+",
+    flags=re.UNICODE)
+
+
+def _strip_emoji(text):
+    return re.sub(r"\s{2,}", " ", _EMOJI_RE.sub("", text)).strip()
 
 _W, _H, _FPS = SILENT["width"], SILENT["height"], SILENT["fps"]
 _IMG_EXT = (".png", ".jpg", ".jpeg", ".webp", ".gif", ".bmp")
@@ -52,7 +63,7 @@ ScaledBorderAndShadow: yes
 
 [V4+ Styles]
 Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
-Style: Default,{recipe.font},90,{recipe.accent},&H00FFFFFF&,&H00000000&,&H00000000&,1,0,0,0,100,100,0,0,1,6,2,5,80,80,60,1
+Style: Default,{recipe.font},84,&H00FFFFFF&,&H00FFFFFF&,&H00000000&,&H64000000&,1,0,0,0,100,100,0,0,1,5,3,5,70,70,60,1
 
 [Events]
 Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
@@ -60,9 +71,10 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     body = []
     end = _ass_time(recipe.duration)
     for text, align, mv in lines:
+        clean = _strip_emoji(text)
         body.append(
             f"Dialogue: 0,{_ass_time(0)},{end},Default,,0,0,{mv},,"
-            f"{{\\an{align}}}{anim}{text.upper()}")
+            f"{{\\an{align}}}{anim}{clean.upper()}")
     open(path, "w", encoding="utf-8").write(header + "\n".join(body) + "\n")
 
 
@@ -70,11 +82,11 @@ def _render_split_2(recipe, out_path):
     a, b = recipe.assets
     d = recipe.duration
     ass_path = out_path + ".ass"
-    # Hook centré (an5) + badges A (haut, an8) / B (bas, an2)
+    # Caption conversationnelle en HAUT (style POV des références) + badges A/B
     _write_ass(recipe, ass_path, [
-        (recipe.hook, 5, 0),
-        ("A", 8, 80),
-        ("B", 2, 80),
+        (recipe.hook, 8, 360),
+        ("A", 4, 0),     # an4 = milieu-gauche (sur la cellule A, haut)
+        ("B", 1, 60),    # an1 = bas-gauche (sur la cellule B, bas)
     ])
     cmd = [ffmpeg.FFMPEG, "-y"]
     cmd += _input_args(a, d)
@@ -111,7 +123,7 @@ def _render_reveal(recipe, out_path):
     (asset,) = recipe.assets
     d = recipe.duration
     ass_path = out_path + ".ass"
-    _write_ass(recipe, ass_path, [(recipe.hook, 2, 140)])
+    _write_ass(recipe, ass_path, [(recipe.hook, 8, 360)])
     sigma = SILENT["reveal_blur_sigma"]
     at = min(SILENT["reveal_at"], max(0.0, d - SILENT["reveal_fade"]))
     fade = SILENT["reveal_fade"]
