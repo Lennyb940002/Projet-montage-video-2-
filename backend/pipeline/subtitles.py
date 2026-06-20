@@ -32,7 +32,9 @@ STYLES = {
         "back_col": "&H00000000&", "border_style": 1, "outline": 6, "shadow": 2,
         "alignment": 5, "margin_v": 60, "mode": "fun"},
     "premium_pop": {"label": "Premium Pop (emphase mots-clés)", "font": "Arial Black", "size": 82,
-        "primary": "&H00FFFFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H00000000&",
+        # primary = couleur "passée" (jaune accent), secondary = couleur "à venir" (blanc).
+        # \kf balaye secondary -> primary mot par mot pour créer un karaoké subtil sans bouger.
+        "primary": "&H0000FFFF&", "secondary": "&H00FFFFFF&", "outline_col": "&H00000000&",
         "back_col": "&H00000000&", "border_style": 1, "outline": 5, "shadow": 2,
         "alignment": 5, "margin_v": 60, "mode": "premium"},
 }
@@ -69,35 +71,52 @@ def ass_time(sec):
     m = cs // 6000; cs %= 6000; s = cs // 100; c = cs % 100
     return f"{h}:{m:02d}:{s:02d}.{c:02d}"
 
-def _premium_word_tag(role, disp, st):
-    """Traduit un rôle de mot (décidé par le Director) en tags ASS."""
-    acc = EMPHASIS["accent"]
-    if role == "kw_active":
-        s0 = EMPHASIS["kw_active_scale"]
-        return ("{\\fscx%d\\fscy%d\\t(0,90,\\fscx%d\\fscy%d)\\t(90,180,\\fscx100\\fscy100)"
-                "\\1c%s\\3c%s\\bord%d}%s{\\r}"
-                % (s0, s0, s0 + 8, s0 + 8, acc, acc, EMPHASIS["kw_outline"], disp))
-    if role == "active":
-        s0 = EMPHASIS["active_scale"]
-        return "{\\fscx%d\\fscy%d\\t(0,120,\\fscx100\\fscy100)\\1c%s}%s{\\r}" % (s0, s0, acc, disp)
-    if role == "kw_idle":
-        s0 = EMPHASIS["kw_idle_scale"]
-        return "{\\fscx%d\\fscy%d\\1c%s}%s{\\r}" % (s0, s0, acc, disp)
-    return disp
+def _premium_word_tag(role, disp_upper, dur_cs):
+    """Tag ASS pour un mot dans une ligne premium V2 (minimaliste).
+
+    - role "normal" : karaoké couleur via \\kf<cs> (sweep secondary -> primary
+      durant la fenêtre du mot). Pas de scale, pas de bounce.
+    - role "kw"     : couleur primary (accent) IMMÉDIATE pour faire ressortir
+      le mot-clé, et \\kf<cs> conservé pour homogénéiser le timing/positionnement.
+
+    `dur_cs` = durée du mot en centisecondes (au moins 1)."""
+    if dur_cs < 1:
+        dur_cs = 1
+    if role == "kw":
+        return "{\\kf%d\\1c%s}%s" % (dur_cs, EMPHASIS["accent"], disp_upper)
+    # normal : pas de \1c -> hérite primary du style, qui sera atteint en fin de \kf
+    return "{\\kf%d}%s" % (dur_cs, disp_upper)
+
 
 def render_plan_subs(plan_subs, path, style=DEFAULT_STYLE):
-    """Renderer purement exécutif : dessine les lignes décidées par le Director.
-    plan_subs : [{start, end, words:[{disp, role}]}]
+    """Renderer purement exécutif — premium V2 minimaliste.
+
+    Contrats visuels :
+      - 1 Dialogue ASS par ligne du plan (pas de redessin par mot)
+      - Mouvement subtil sur le BLOC ENTIER à l'apparition : \\fad(120,80) +
+        \\t(0,180,\\fscx100\\fscy100) depuis 96%. Pas d'animation par mot.
+      - Karaoké couleur via \\kf<cs> : balaye secondary -> primary mot par mot.
+      - Keywords : \\1c<accent> persistant en plus du \\kf.
+
+    plan_subs : [{start, end, words:[{disp, role, start, end}]}]
     """
     st = STYLES.get(style, STYLES[DEFAULT_STYLE])
     if st["mode"] != "premium":
         raise ValueError(f"render_plan_subs supporte uniquement les styles 'premium' (got mode={st['mode']!r})")
     lines = [HEADER.format(w=VIDEO["width"], h=VIDEO["height"], **st)]
+    # Intro de ligne : fade-in 120ms (out 80ms) + léger pop 96% -> 100% sur 180ms.
+    # 1 SEULE animation, sur le bloc entier, JAMAIS par mot.
+    intro = "{\\fad(120,80)\\fscx96\\fscy96\\t(0,180,\\fscx100\\fscy100)}"
     for line in plan_subs:
         s, e = line["start"], line["end"]
         if e <= s: e = s + 0.08
-        parts = [_premium_word_tag(w.get("role", "normal"), w["disp"].upper(), st) for w in line["words"]]
-        lines.append(f"Dialogue: 0,{ass_time(s)},{ass_time(e)},Default,,0,0,0,, " + " ".join(parts))
+        parts = []
+        for w in line["words"]:
+            disp = w["disp"].upper()
+            dur_cs = int(round((w.get("end", s) - w.get("start", s)) * 100))
+            parts.append(_premium_word_tag(w.get("role", "normal"), disp, dur_cs))
+        text = intro + " ".join(parts)
+        lines.append(f"Dialogue: 0,{ass_time(s)},{ass_time(e)},Default,,0,0,0,, " + text)
     open(path, "w", encoding="utf-8").write("\n".join(lines))
     return path
 

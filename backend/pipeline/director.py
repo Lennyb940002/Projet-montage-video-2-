@@ -55,33 +55,48 @@ def _clip_index_for(t, ranges):
 # --- Décisions -------------------------------------------------------------
 
 def _decide_subtitles(events, tokens, n_sent):
-    """Une SubLine par mot actif. Chaque mot reçoit un rôle :
-       active | kw_active | kw_idle | normal."""
+    """Une SubLine PAR CHUNK (pas par mot actif) — V2 minimaliste.
+
+    Chaque mot porte ses propres timings pour permettre un highlight karaoké
+    (\\kf en ASS) sans redessiner la ligne. Roles : kw | normal.
+
+    Contrats stricts :
+      - len(plan_subs) == len(chunks)   (1 ligne par chunk → pas de clignotement)
+      - plan_subs[i].end == plan_subs[i+1].start  (pas d'overlap → pas de phrases fantômes)
+      - words[j].end ≤ line.end          (timings cohérents pour \\kf)
+    """
     plan_subs = []
     chunks = _chunks_by_sentence(tokens, n_sent)
     # marqueur : un mot est "kw" si un évènement keyword chevauche sa fenêtre
     kw_flag = [_is_kw_at(events, t["start"], t["end"]) is not None for t in tokens]
-    # index mot global pour retrouver le flag
     idx_of = {id(t): i for i, t in enumerate(tokens)}
     for ci, chunk in enumerate(chunks):
-        for a in range(len(chunk)):
-            wstart = chunk[a]["start"]
-            wend = chunk[a + 1]["start"] if a + 1 < len(chunk) else chunk[a]["end"]
-            if wend <= wstart:
-                wend = wstart + 0.08
-            words = []
-            for j, wd in enumerate(chunk):
-                is_kw = kw_flag[idx_of[id(wd)]]
-                if j == a and is_kw:
-                    role = "kw_active"
-                elif j == a:
-                    role = "active"
-                elif is_kw:
-                    role = "kw_idle"
-                else:
-                    role = "normal"
-                words.append({"disp": wd["disp"], "role": role})
-            plan_subs.append({"start": wstart, "end": wend, "words": words})
+        line_start = chunk[0]["start"]
+        # Anti-overlap strict : end = start du chunk suivant, sinon end du dernier mot + 0.30s
+        if ci + 1 < len(chunks):
+            line_end = chunks[ci + 1][0]["start"]
+        else:
+            line_end = chunk[-1]["end"] + 0.30
+        if line_end <= line_start:
+            line_end = line_start + 0.10
+        words = []
+        for j, wd in enumerate(chunk):
+            is_kw = kw_flag[idx_of[id(wd)]]
+            w_start = wd["start"]
+            # end du mot = start du mot suivant si présent, sinon end propre clampé à line_end
+            if j + 1 < len(chunk):
+                w_end = chunk[j + 1]["start"]
+            else:
+                w_end = min(line_end, wd["end"])
+            if w_end <= w_start:
+                w_end = w_start + 0.08
+            words.append({
+                "disp": wd["disp"],
+                "role": "kw" if is_kw else "normal",
+                "start": w_start,
+                "end": w_end,
+            })
+        plan_subs.append({"start": line_start, "end": line_end, "words": words})
     return plan_subs
 
 

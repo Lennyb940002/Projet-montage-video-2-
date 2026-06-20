@@ -56,7 +56,10 @@ def test_transitions_zoom_punch_in_on_high_keyword_at_clip_start():
     assert by_clip[1]["kind"] == "zoom_punch_in"   # keyword à 1.1s = début du clip 1
     assert by_clip[2]["kind"] == "fade_in"         # pas de keyword au début du clip 2
 
-def test_subtitles_roles_assigned_correctly():
+def test_subtitles_v2_one_line_per_chunk_with_word_timings():
+    """V2 minimaliste : 1 SubLine par CHUNK (pas par mot), chaque mot porte
+       ses propres start/end + role binaire (kw|normal). Le renderer fait le
+       karaoké via \\kf sans redessiner la ligne — fin du clignotement."""
     tokens = _toks(["Cette", "Rolex", "incroyable"])
     events = [
         {"type": "keyword", "label": "Rolex",      "start": 0.4, "end": 0.7, "importance": "high"},
@@ -64,16 +67,26 @@ def test_subtitles_roles_assigned_correctly():
     ]
     plan = build_plan(events, tokens, 1, [(0.0, 2.0)], 2.0)
     subs = plan["subtitles"]
-    assert len(subs) == 3  # une SubLine par mot actif
-    # Mot 1 actif (Cette) : Rolex en kw_idle, incroyable en kw_idle
-    roles_0 = [w["role"] for w in subs[0]["words"]]
-    assert roles_0 == ["active", "kw_idle", "kw_idle"]
-    # Mot 2 actif (Rolex, kw)
-    roles_1 = [w["role"] for w in subs[1]["words"]]
-    assert roles_1 == ["normal", "kw_active", "kw_idle"]
-    # Mot 3 actif (incroyable, kw)
-    roles_2 = [w["role"] for w in subs[2]["words"]]
-    assert roles_2 == ["normal", "kw_idle", "kw_active"]
+    # 1 chunk de 3 mots -> 1 seule SubLine (avant : 3, qui causait le clignotement)
+    assert len(subs) == 1
+    roles = [w["role"] for w in subs[0]["words"]]
+    assert roles == ["normal", "kw", "kw"]
+    # Chaque mot porte start/end pour le karaoké \kf
+    for w in subs[0]["words"]:
+        assert "start" in w and "end" in w
+        assert w["end"] > w["start"]
+
+
+def test_subtitles_v2_no_overlap_between_lines():
+    """Anti-fantôme : end d'une ligne == start de la suivante (strict),
+       jamais d'overlap qui ferait persister une vieille phrase à l'écran."""
+    # 6 mots -> 2 chunks de 3 (MAXWORDS=3)
+    tokens = _toks(["un", "deux", "trois", "quatre", "cinq", "six"])
+    plan = build_plan([], tokens, 1, [(0.0, 3.0)], 3.0)
+    subs = plan["subtitles"]
+    assert len(subs) == 2
+    # end de la 1re == start de la 2e (anti-overlap strict)
+    assert subs[0]["end"] == subs[1]["start"]
 
 def test_plan_is_json_serializable():
     import json
