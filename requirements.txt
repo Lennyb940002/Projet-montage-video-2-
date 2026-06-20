@@ -1,0 +1,6 @@
+fastapi
+uvicorn
+httpx
+faster-whisper
+python-telegram-bot[job-queue]
+apscheduler

@@ -1,0 +1,13 @@
+[Unit]
+Description=AutoMontage Distribution (scheduler + Telegram bot)
+After=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/home/ubuntu/auto-montage
+ExecStart=/home/ubuntu/auto-montage/.venv/bin/python -m backend.distribution.scheduler
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
