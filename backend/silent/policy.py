@@ -37,6 +37,9 @@ def _weighted_choice(scored, temperature, rng):
         cum += w
         if r <= cum:
             return it
+    # Filet de sécurité fp : si la somme des poids retombe à 0.9999… par erreur
+    # d'arrondi et que r tombe dans ce micro-écart, on renvoie le dernier item.
+    # Cas extrêmement rare ; ce n'est PAS du code mort.
     return items[-1]
 
 

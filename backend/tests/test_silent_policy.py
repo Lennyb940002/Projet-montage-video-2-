@@ -1,6 +1,4 @@
-import random
 from collections import Counter
-import pytest
 from backend.silent import policy
 from backend.silent.strategy import ContentStrategy
 from backend.silent.recipe import VideoRecipe, validate
