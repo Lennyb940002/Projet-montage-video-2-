@@ -86,9 +86,19 @@ SILENT = dict(
     accents=["&H0000FFFF&", "&H0000FF00&", "&H00FFFFFF&", "&H009314FF&"],
     text_anims=["fade", "pop"],
     # Banque vidéo des mannequins/montres (clips Kling, sous-dossiers par modèle)
-    clips_dir=r"C:\Users\User\Downloads\Banque video",
-    # De-watermark : retire le logo "KlingAI" en bas-droite via un léger zoom
-    # biaisé haut-gauche (z=1.12 retire toute la zone y>=89% / x>=89%).
-    dewatermark=dict(enabled=True, zoom=1.12),
+    clips_dir=r"C:\Users\User\Downloads\Montage video\Banque video",
+    # De-watermark : efface le logo "KlingAI" via delogo (interpolation des
+    # pixels voisins) -> PAS de zoom/décalage, la montre reste CENTRÉE.
+    # box = (x, y, w, h) en fractions de l'image (coin bas-droite).
+    dewatermark=dict(enabled=True, box=(0.68, 0.88, 0.30, 0.11)),
+    # Nom + couleur du cartouche par modèle (couleur ASS &H00BBGGRR ≈ couleur montre)
+    models={
+        "Rainbow Or rose": {"name": "Seiko Daytona Or rose", "color": "&H00C828E6&"},
+        "Rainbow saphire": {"name": "Seiko Daytona Saphir",  "color": "&H00DC503C&"},
+        "Rainbow ruby":    {"name": "Seiko Daytona Ruby",    "color": "&H003C1EDC&"},
+        "Rainbow silver":  {"name": "Seiko Daytona Silver",  "color": "&H00B0A89C&"},
+        "GMT":             {"name": "Seiko GMT",             "color": "&H00C87A2A&"},
+    },
+    model_default={"name": "Montre", "color": "&H00707070&"},
 )
 SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")
