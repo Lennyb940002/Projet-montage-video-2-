@@ -85,5 +85,10 @@ SILENT = dict(
     fonts=["Arial Black", "Impact"],
     accents=["&H0000FFFF&", "&H0000FF00&", "&H00FFFFFF&", "&H009314FF&"],
     text_anims=["fade", "pop"],
+    # Banque vidéo des mannequins/montres (clips Kling, sous-dossiers par modèle)
+    clips_dir=r"C:\Users\User\Downloads\Banque video",
+    # De-watermark : retire le logo "KlingAI" en bas-droite via un léger zoom
+    # biaisé haut-gauche (z=1.12 retire toute la zone y>=89% / x>=89%).
+    dewatermark=dict(enabled=True, zoom=1.12),
 )
 SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")
