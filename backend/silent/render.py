@@ -105,11 +105,24 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
     open(path, "w", encoding="utf-8").write(header + "\n".join(body) + "\n")
 
 
-def _encode(cmd, out_path, d, ass_dir, label):
-    cmd += ["-map", "[vout]", "-t", f"{d:.3f}",
-            "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
-            "-pix_fmt", "yuv420p", "-r", str(_FPS),
-            "-movflags", "+faststart", "-an", os.path.abspath(out_path)]
+def _encode(inputs_cmd, fc, out_path, d, ass_dir, label, recipe, n_video):
+    """Assemble filtres + map + encode. Bake un bed musical si recipe.music
+    est défini (son baissé + fade) ; sinon vidéo muette (-an)."""
+    cmd = list(inputs_cmd)
+    amap = ["-an"]
+    track = getattr(recipe, "music", None)
+    if track:
+        cmd += ["-stream_loop", "-1", "-t", f"{d:.3f}", "-i", os.path.abspath(track)]
+        g = SILENT.get("music_gain_db", -8.0)
+        fo = SILENT.get("music_fade_out_s", 0.8)
+        fc = fc + (f";[{n_video}:a]volume={g}dB,afade=t=in:st=0:d=0.4,"
+                   f"afade=t=out:st={max(0.0, d - fo):.3f}:d={fo:.3f},"
+                   f"aformat=sample_fmts=fltp:channel_layouts=stereo[aout]")
+        amap = ["-map", "[aout]", "-c:a", "aac", "-b:a", "192k"]
+    cmd += ["-filter_complex", fc, "-map", "[vout]"] + amap + [
+        "-t", f"{d:.3f}", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+        "-pix_fmt", "yuv420p", "-r", str(_FPS),
+        "-movflags", "+faststart", os.path.abspath(out_path)]
     r = ffmpeg.run(cmd, cwd=ass_dir)
     if r.returncode != 0 or not os.path.exists(out_path):
         raise RuntimeError(f"silent {label} render failed: {r.stderr[-400:]}")
@@ -137,8 +150,8 @@ def _render_split_2(recipe, out_path):
           f"crop={_W}:{half},setsar=1[bot];"
           f"[top][bot]vstack=inputs=2,fps={_FPS},format=yuv420p[stack];"
           f"[stack]ass={os.path.basename(ass_path)}[vout]")
-    cmd += ["-filter_complex", fc]
-    _encode(cmd, out_path, d, os.path.dirname(os.path.abspath(ass_path)), "split_2")
+    _encode(cmd, fc, out_path, d, os.path.dirname(os.path.abspath(ass_path)),
+            "split_2", recipe, 2)
 
 
 def _render_split_3(recipe, out_path):
@@ -164,8 +177,8 @@ def _render_split_3(recipe, out_path):
           f"crop={_W}:{third},setsar=1[c2];"
           f"[c0][c1][c2]vstack=inputs=3,fps={_FPS},format=yuv420p[stack];"
           f"[stack]ass={os.path.basename(ass_path)}[vout]")
-    cmd += ["-filter_complex", fc]
-    _encode(cmd, out_path, d, os.path.dirname(os.path.abspath(ass_path)), "split_3")
+    _encode(cmd, fc, out_path, d, os.path.dirname(os.path.abspath(ass_path)),
+            "split_3", recipe, 3)
 
 
 def _render_reveal(recipe, out_path):
@@ -191,8 +204,8 @@ def _render_reveal(recipe, out_path):
           f"[blurred]fade=t=out:st={at:.3f}:d={fade:.3f}:alpha=1[blurfade];"
           f"[sharp][blurfade]overlay=format=auto[revealed];"
           f"[revealed]ass={os.path.basename(ass_path)}[vout]")
-    cmd += ["-filter_complex", fc]
-    _encode(cmd, out_path, d, os.path.dirname(os.path.abspath(ass_path)), "reveal")
+    _encode(cmd, fc, out_path, d, os.path.dirname(os.path.abspath(ass_path)),
+            "reveal", recipe, 1)
 
 
 def render_recipe(recipe, out_path):

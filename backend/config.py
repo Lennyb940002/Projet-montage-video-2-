@@ -109,5 +109,9 @@ SILENT = dict(
         "revelation": "REVELATION_1",
         "collection": "COMPARAISON_3",
     },
+    # Bed musical : l'utilisateur dépose ses sons ici (baked dans le MP4).
+    music_dir=r"C:\Users\User\Downloads\Montage video\Musique",
+    music_gain_db=-8.0,        # pas de voix à couvrir -> son présent mais pas saturé
+    music_fade_out_s=0.8,
 )
 SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")

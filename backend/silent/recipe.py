@@ -18,6 +18,7 @@ class VideoRecipe:
     accent: str          # couleur ASS, ex "&H0000FFFF&"
     text_anim: str       # "fade" | "pop"
     seed: int
+    music: str = None    # chemin du bed musical (optionnel) — décidé par le Policy
 
 
 def validate(recipe):

@@ -9,6 +9,7 @@ import math
 import random as _random
 from backend.config import SILENT
 from backend.silent import registry, hooks, sampler
+from backend.silent import music as _music
 from backend.silent.recipe import VideoRecipe, validate
 
 
@@ -98,5 +99,6 @@ def decide(strategy, history, seed):
         mechanic=mechanic, layout=layout, hook=hook, content_angle=angle,
         assets=assets, duration=duration,
         font=rng.choice(SILENT["fonts"]), accent=rng.choice(SILENT["accents"]),
-        text_anim=rng.choice(SILENT["text_anims"]), seed=seed)
+        text_anim=rng.choice(SILENT["text_anims"]), seed=seed,
+        music=_music.pick_track(rng))   # bed musical seedé (None si dossier vide)
     return validate(recipe)                                                    # R3
