@@ -4,6 +4,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 from backend import service
+from backend import silent_service
 from backend.pipeline import subtitles
 from backend.config import WORKDIR
 
@@ -27,6 +28,7 @@ class VideoReq(BaseModel):
     out_path: str | None = None
     style: str = "karaoke_yellow"
     boost: bool = False
+    manual_inserts: list[dict] | None = None
 
 class CutReq(BaseModel):
     clean_path: str
@@ -42,6 +44,13 @@ class SettingsReq(BaseModel):
 class PublishReq(BaseModel):
     video_path: str
     caption: str
+
+class SilentReq(BaseModel):
+    goal: str
+    mechanic: str | None = None
+    assets: list[str] | None = None
+    seed: int = 0
+    out_path: str | None = None
 
 @app.get("/health")
 def health():
@@ -78,8 +87,21 @@ def publish_ig_ep(req: PublishReq):
 @app.post("/preview")
 def preview(req: VideoReq):
     out = req.out_path or os.path.join(WORKDIR, uuid.uuid4().hex + ".mp4")
-    return {"video_path": service.make_video(req.clean_path, req.text, out, req.style, req.boost)}
+    return {"video_path": service.make_video(req.clean_path, req.text, out,
+                                              req.style, req.boost,
+                                              manual_inserts=req.manual_inserts)}
 
 @app.post("/export")
 def export(req: VideoReq):
-    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path, req.style, req.boost)}
+    return {"video_path": service.make_video(req.clean_path, req.text, req.out_path,
+                                              req.style, req.boost,
+                                              manual_inserts=req.manual_inserts)}
+
+@app.get("/silent/mechanics")
+def silent_mechanics():
+    return silent_service.list_mechanics()
+
+@app.post("/silent/generate")
+def silent_generate(req: SilentReq):
+    return silent_service.generate(req.goal, req.mechanic, req.assets,
+                                   req.seed, req.out_path)
