@@ -92,4 +92,26 @@ def render_recipe(recipe, out_path):
 
 
 def _render_reveal(recipe, out_path):
-    raise NotImplementedError("reveal layout: implemented in Task 10")
+    """1 asset plein écran ; couche floutée par-dessus qui se dissout (flou->net)
+    sur [reveal_at, reveal_at+reveal_fade]. Texte hook en bas."""
+    (asset,) = recipe.assets
+    d = recipe.duration
+    ass_path = out_path + ".ass"
+    _write_ass(recipe, ass_path, [(recipe.hook, 2, 140)])
+    sigma = SILENT["reveal_blur_sigma"]
+    at = min(SILENT["reveal_at"], max(0.0, d - SILENT["reveal_fade"]))
+    fade = SILENT["reveal_fade"]
+    cmd = [ffmpeg.FFMPEG, "-y"] + _input_args(asset, d)
+    fc = (f"[0:v]scale={_W}:{_H}:force_original_aspect_ratio=increase,"
+          f"crop={_W}:{_H},setsar=1,fps={_FPS},format=yuv420p,split[sharp][toblur];"
+          f"[toblur]gblur=sigma={sigma}[blurred];"
+          f"[blurred]fade=t=out:st={at:.3f}:d={fade:.3f}:alpha=1[blurfade];"
+          f"[sharp][blurfade]overlay=format=auto[revealed];"
+          f"[revealed]ass={os.path.basename(ass_path)}[vout]")
+    cmd += ["-filter_complex", fc, "-map", "[vout]", "-t", f"{d:.3f}",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+            "-pix_fmt", "yuv420p", "-r", str(_FPS),
+            "-movflags", "+faststart", "-an", os.path.abspath(out_path)]
+    r = ffmpeg.run(cmd, cwd=os.path.dirname(os.path.abspath(ass_path)))
+    if r.returncode != 0 or not os.path.exists(out_path):
+        raise RuntimeError(f"silent reveal render failed: {r.stderr[-400:]}")

@@ -45,3 +45,18 @@ def test_end_to_end_comparison_strategy_to_mp4(tmp_path, monkeypatch):
     recent = store.query_recent(1)
     assert recent[0]["mechanic"] == "comparison"
     assert recent[0]["content_angle"] == recipe.content_angle
+
+
+def test_render_reveal_produces_vertical_mp4(tmp_path):
+    r = VideoRecipe(mechanic="revelation", layout="reveal",
+                    hook="Attends la fin", content_angle="wait_end",
+                    assets=(IMG,), duration=5.0,
+                    font="Arial Black", accent="&H00FFFFFF&",
+                    text_anim="fade", seed=3)
+    out = str(tmp_path / "rev.mp4")
+    render_recipe(r, out)
+    assert os.path.exists(out)
+    probe = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                        "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
+    assert "1080,1920" in probe.stdout
+    assert abs(ffmpeg.probe_duration(out) - 5.0) < 0.5
