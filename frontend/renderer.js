@@ -468,3 +468,60 @@ expBtn.addEventListener('click', async () => {
     igBtn.disabled = false;
   } catch (e) { setStatus('Erreur export : ' + (e.message || e)); }
 });
+
+// ====== Mode silencieux ======
+const modeVoice = document.getElementById('modeVoice');
+const modeSilent = document.getElementById('modeSilent');
+const silentPanel = document.getElementById('silentPanel');
+const dropScene = document.getElementById('drop');
+const silentGoal = document.getElementById('silentGoal');
+const silentMech = document.getElementById('silentMech');
+const silentAssets = document.getElementById('silentAssets');
+const silentGenBtn = document.getElementById('silentGenBtn');
+const silentPreview = document.getElementById('silentPreview');
+const silentStatus = document.getElementById('silentStatus');
+let silentAssetPaths = [];
+
+function setMode(silent) {
+  silentPanel.style.display = silent ? 'flex' : 'none';
+  dropScene.style.display = silent ? 'none' : 'flex';
+  modeSilent.classList.toggle('active', silent);
+  modeVoice.classList.toggle('active', !silent);
+}
+modeVoice.addEventListener('click', () => setMode(false));
+modeSilent.addEventListener('click', () => setMode(true));
+
+(async function initSilentMechs() {
+  try {
+    const list = await window.api.silentMechanics();
+    list.forEach(m => { const o = document.createElement('option');
+      o.value = m.name; o.textContent = `${m.name} (${m.goal})`; silentMech.appendChild(o); });
+  } catch (_) {}
+})();
+
+['dragenter','dragover'].forEach(e => silentAssets.addEventListener(e, ev => {
+  ev.preventDefault(); silentAssets.classList.add('drag'); }));
+['dragleave','drop'].forEach(e => silentAssets.addEventListener(e, ev => {
+  ev.preventDefault(); silentAssets.classList.remove('drag'); }));
+silentAssets.addEventListener('drop', ev => {
+  ev.preventDefault();
+  silentAssetPaths = Array.from(ev.dataTransfer.files || [])
+    .map(f => window.api.getPath(f)).filter(Boolean);
+  silentAssets.textContent = silentAssetPaths.length
+    ? silentAssetPaths.map(p => p.split(/[\\/]/).pop()).join(' · ')
+    : 'Glisse 1–2 clips/images ici';
+});
+
+silentGenBtn.addEventListener('click', async () => {
+  silentStatus.textContent = 'Génération…';
+  try {
+    const seed = Math.floor(Math.random() * 1e9);
+    const res = await window.api.silentGenerate(
+      silentGoal.value, silentMech.value || null, silentAssetPaths, seed);
+    if (res.error) throw new Error(res.error);
+    silentPreview.src = 'file://' + res.video_path.replace(/\\/g, '/') + '?t=' + Date.now();
+    silentPreview.style.display = 'block';
+    silentPreview.play().catch(() => {});
+    silentStatus.textContent = `Prêt — ${res.recipe.mechanic} / ${res.recipe.content_angle}`;
+  } catch (e) { silentStatus.textContent = 'Erreur : ' + (e.message || e); }
+});

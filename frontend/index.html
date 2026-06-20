@@ -9,6 +9,10 @@
   <div class="app">
     <header class="top">
       <span class="logo">AutoMontage</span>
+      <div class="modeswitch" role="tablist" aria-label="Mode">
+        <button id="modeVoice" class="modebtn active">🎙 Voix-off</button>
+        <button id="modeSilent" class="modebtn">🤫 Silencieux</button>
+      </div>
       <span id="file" class="file">Aucun audio chargé</span>
       <div class="right">
         <span class="sellbl">Sous-titres</span>
@@ -55,6 +59,23 @@
           </div>
         </div>
       </aside>
+
+      <section id="silentPanel" class="silent-panel" style="display:none">
+        <h2 class="silent-title">Génération silencieuse</h2>
+        <label class="silent-row">Objectif
+          <select id="silentGoal" class="sel">
+            <option value="engagement">Engagement (commentaires)</option>
+            <option value="retention">Rétention</option>
+          </select>
+        </label>
+        <label class="silent-row">Mécanique
+          <select id="silentMech" class="sel"><option value="">Auto (selon objectif)</option></select>
+        </label>
+        <div class="silent-assets" id="silentAssets">Glisse 1–2 clips/images ici</div>
+        <button id="silentGenBtn" class="btn green">🎬 Générer la vidéo</button>
+        <video id="silentPreview" controls style="display:none"></video>
+        <p id="silentStatus" class="status"></p>
+      </section>
     </main>
 
     <footer class="bottom">
