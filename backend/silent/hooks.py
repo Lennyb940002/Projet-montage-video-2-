@@ -1,7 +1,9 @@
 """Sous-système hooks : couche d'engagement orthogonale (≠ mécanique, ≠ layout).
-Un fichier JSON par mécanique ; chaque entrée porte son `angle` (analytics)."""
+Source prioritaire = DOSSIER_CONCEPTS.md (via concepts.py) ; fallback = banques
+JSON intégrées (chaque entrée porte son `angle` pour l'analytics)."""
 import os, json, functools
 from backend.silent import registry
+from backend.silent import concepts as _concepts
 
 _HOOKS_DIR = os.path.join(os.path.dirname(__file__), "hooks")
 
@@ -23,6 +25,10 @@ def load_hooks(mechanic):
 
 
 def pick_hook(mechanic, rng):
-    """Tire (text, angle) au hasard (seedé via `rng`)."""
+    """Tire (text, angle) au hasard (seedé via `rng`). Priorité au dossier
+    concepts (édité par l'utilisateur) ; sinon banque JSON intégrée."""
+    pool = _concepts.hooks_for(mechanic)
+    if pool:
+        return rng.choice(pool)
     e = rng.choice(load_hooks(mechanic))
     return e["text"], e["angle"]

@@ -120,10 +120,13 @@ def _render_split_2(recipe, out_path):
     d = recipe.duration
     ass_path = out_path + ".ass"
     na, ca = _model_meta(a); nb, cb = _model_meta(b)
+    cx = _W // 2
+    # Tout regroupé au CENTRE (zone sûre) : nom A juste au-dessus du hook,
+    # nom B juste en dessous. Évite la notch (haut) et la description (bas).
     _write_ass(recipe, ass_path, [
-        (na, "box", f"\\an8\\3c{ca}"),       # cartouche haut (montre A)
-        (recipe.hook, "q", "\\an5"),         # question centrée
-        (nb, "box", f"\\an2\\3c{cb}"),       # cartouche bas (montre B)
+        (na, "box", f"\\an5\\pos({cx},780)\\3c{ca}"),
+        (recipe.hook, "q", f"\\an5\\pos({cx},960)"),
+        (nb, "box", f"\\an5\\pos({cx},1140)\\3c{cb}"),
     ])
     half = _H // 2
     wa, ha = _dims(a); wb, hb = _dims(b)
@@ -144,11 +147,12 @@ def _render_split_3(recipe, out_path):
     ass_path = out_path + ".ass"
     third = _H // 3
     metas = [_model_meta(x) for x in (a, b, c)]
-    # Cartouche centré dans la partie basse de chaque bande (près de la montre).
-    ys = [int(third * 0.78), int(third + third * 0.78), int(2 * third + third * 0.78)]
-    lines = [(recipe.hook, "q", "\\an8")]
+    cx = _W // 2
+    # Cartouches dans la zone sûre (250..1500) pour éviter notch/description.
+    ys = [430, 960, 1330]
+    lines = [(recipe.hook, "q", f"\\an5\\pos({cx},270)")]
     for (name, col), y in zip(metas, ys):
-        lines.append((name, "box", f"\\an5\\pos({_W // 2},{y})\\3c{col}"))
+        lines.append((name, "box", f"\\an5\\pos({cx},{y})\\3c{col}"))
     _write_ass(recipe, ass_path, lines)
     wa, ha = _dims(a); wb, hb = _dims(b); wc, hc = _dims(c)
     cmd = [ffmpeg.FFMPEG, "-y"] + _input_args(a, d) + _input_args(b, d) + _input_args(c, d)
@@ -171,9 +175,10 @@ def _render_reveal(recipe, out_path):
     d = recipe.duration
     ass_path = out_path + ".ass"
     name, col = _model_meta(asset)
+    cx = _W // 2
     _write_ass(recipe, ass_path, [
-        (recipe.hook, "q", "\\an8"),
-        (name, "box", f"\\an2\\3c{col}"),
+        (recipe.hook, "q", f"\\an5\\pos({cx},820)"),
+        (name, "box", f"\\an5\\pos({cx},1080)\\3c{col}"),
     ])
     sigma = SILENT["reveal_blur_sigma"]
     at = min(SILENT["reveal_at"], max(0.0, d - SILENT["reveal_fade"]))

@@ -8,11 +8,14 @@ def test_pick_hook_returns_text_and_angle():
     assert isinstance(angle, str) and angle
 
 
-def test_pick_hook_angle_in_file():
-    entries = hooks.load_hooks("comparison")
-    angles = {e["angle"] for e in entries}
-    _, angle = hooks.pick_hook("comparison", random.Random(7))
-    assert angle in angles
+def test_pick_hook_text_in_active_pool():
+    # Pool actif = dossier concepts si dispo, sinon JSON intégré.
+    from backend.silent import concepts
+    dossier = [t for t, _ in concepts.hooks_for("comparison")]
+    jsonp = [e["text"] for e in hooks.load_hooks("comparison")]
+    pool = set(dossier) | set(jsonp)
+    text, angle = hooks.pick_hook("comparison", random.Random(7))
+    assert text in pool and angle
 
 
 def test_pick_hook_reroll_varies():

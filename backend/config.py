@@ -100,5 +100,14 @@ SILENT = dict(
         "GMT":             {"name": "Seiko GMT",             "color": "&H00C87A2A&"},
     },
     model_default={"name": "Montre", "color": "&H00707070&"},
+    # Dossier de concepts (hooks/CTA/règles) édité par l'utilisateur : source de
+    # vérité des textes. L'app le parse ; fallback sur les JSON si absent.
+    concepts_file=r"C:\Users\User\Downloads\Montage video\DOSSIER_CONCEPTS.md",
+    mechanic_concept={
+        "comparison": "COMPARAISON_2",
+        "vote":       "VOTE_2",
+        "revelation": "REVELATION_1",
+        "collection": "COMPARAISON_3",
+    },
 )
 SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")
