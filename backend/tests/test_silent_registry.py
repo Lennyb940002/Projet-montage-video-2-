@@ -10,11 +10,11 @@ def test_mechanics_have_required_fields():
         assert m["default_duration"] > 0
 
 
-def test_v1_has_three_mechanics():
-    assert set(registry.MECHANICS) == {"comparison", "vote", "revelation"}
+def test_mechanics_set():
+    assert set(registry.MECHANICS) == {"comparison", "vote", "revelation", "collection"}
 
 
 def test_mechanics_for_goal_filters():
-    assert set(registry.mechanics_for_goal("engagement")) == {"comparison", "vote"}
+    assert set(registry.mechanics_for_goal("engagement")) == {"comparison", "vote", "collection"}
     assert registry.mechanics_for_goal("retention") == ["revelation"]
     assert registry.mechanics_for_goal("nope") == []

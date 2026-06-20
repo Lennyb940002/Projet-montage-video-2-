@@ -56,6 +56,17 @@ def decide(strategy, history, seed):
             raise ValueError(f"mechanic {strategy.mechanic!r} not in {candidates}")
         candidates = [strategy.mechanic]                                       # I4 read-only
 
+    # Si des assets sont imposés, ne garder que les mécaniques dont l'asset_count
+    # correspond (sinon on choisirait une méca incompatible -> échec validate).
+    if strategy.assets is not None:
+        n = len(strategy.assets)
+        sized = [m for m in candidates
+                 if registry.MECHANICS[m]["asset_count"] == n]
+        if not sized:
+            raise ValueError(
+                f"no mechanic for goal {strategy.goal!r} accepts {n} assets")
+        candidates = sized
+
     window = list(history)[:SILENT["window_n"]]   # plus récent d'abord (cf store)
     denom = max(1, len(window))
     scored = []

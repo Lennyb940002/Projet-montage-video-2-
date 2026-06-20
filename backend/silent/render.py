@@ -108,10 +108,45 @@ def _render_split_2(recipe, out_path):
         raise RuntimeError(f"silent split_2 render failed: {r.stderr[-400:]}")
 
 
+def _render_split_3(recipe, out_path):
+    """3 bandes horizontales (1080 x H/3), une montre par bande. Caption en haut
+    + badges 1/2/3. De-watermark appliqué à chaque input."""
+    a, b, c = recipe.assets
+    d = recipe.duration
+    ass_path = out_path + ".ass"
+    third = _H // 3
+    # Caption haut (an8) + numéros : an7=haut-gauche (bande 1), an4=milieu-gauche
+    # (bande 2), an1=bas-gauche (bande 3).
+    _write_ass(recipe, ass_path, [
+        (recipe.hook, 8, 360),
+        ("1", 7, 60), ("2", 4, 0), ("3", 1, 60),
+    ])
+    dw = _dewm()
+    cmd = [ffmpeg.FFMPEG, "-y"]
+    cmd += _input_args(a, d) + _input_args(b, d) + _input_args(c, d)
+    fc = (f"[0:v]{dw}scale={_W}:{third}:force_original_aspect_ratio=increase,"
+          f"crop={_W}:{third},setsar=1[c0];"
+          f"[1:v]{dw}scale={_W}:{third}:force_original_aspect_ratio=increase,"
+          f"crop={_W}:{third},setsar=1[c1];"
+          f"[2:v]{dw}scale={_W}:{third}:force_original_aspect_ratio=increase,"
+          f"crop={_W}:{third},setsar=1[c2];"
+          f"[c0][c1][c2]vstack=inputs=3,fps={_FPS},format=yuv420p[stack];"
+          f"[stack]ass={os.path.basename(ass_path)}[vout]")
+    cmd += ["-filter_complex", fc, "-map", "[vout]", "-t", f"{d:.3f}",
+            "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+            "-pix_fmt", "yuv420p", "-r", str(_FPS),
+            "-movflags", "+faststart", "-an", os.path.abspath(out_path)]
+    r = ffmpeg.run(cmd, cwd=os.path.dirname(os.path.abspath(ass_path)))
+    if r.returncode != 0 or not os.path.exists(out_path):
+        raise RuntimeError(f"silent split_3 render failed: {r.stderr[-400:]}")
+
+
 def render_recipe(recipe, out_path):
-    """Dispatch par layout. Étend ici pour ajouter des layouts (V1.1/V1.2)."""
+    """Dispatch par layout. Étend ici pour ajouter des layouts (V1.2)."""
     if recipe.layout == "split_2":
         return _render_split_2(recipe, out_path)
+    if recipe.layout == "split_3":
+        return _render_split_3(recipe, out_path)
     if recipe.layout == "reveal":
         return _render_reveal(recipe, out_path)
     raise ValueError(f"unknown layout: {recipe.layout!r}")

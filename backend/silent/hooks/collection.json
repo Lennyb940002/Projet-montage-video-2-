@@ -1,0 +1,7 @@
+[
+  {"text": "Tu prends laquelle des 3 ?", "angle": "which_of_3"},
+  {"text": "Ta préférée des 3 ?", "angle": "favorite_of_3"},
+  {"text": "Team 1, 2 ou 3 ?", "angle": "team_123"},
+  {"text": "Laquelle pour cet été ?", "angle": "which_summer_3"},
+  {"text": "Commente ton numéro préféré", "angle": "comment_number"}
+]
