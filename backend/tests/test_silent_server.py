@@ -11,7 +11,7 @@ VID = os.path.join(FIX, "sample_insert.mp4")
 def test_silent_mechanics_lists_v1():
     data = client.get("/silent/mechanics").json()
     names = {m["name"] for m in data}
-    assert names == {"comparison", "vote", "revelation"}
+    assert names == {"comparison", "vote", "revelation", "collection"}
 
 
 def test_silent_generate_produces_video(tmp_path):
