@@ -51,6 +51,7 @@ class SilentReq(BaseModel):
     assets: list[str] | None = None
     seed: int = 0
     out_path: str | None = None
+    count: int = 1
 
 @app.get("/health")
 def health():
@@ -104,4 +105,4 @@ def silent_mechanics():
 @app.post("/silent/generate")
 def silent_generate(req: SilentReq):
     return silent_service.generate(req.goal, req.mechanic, req.assets,
-                                   req.seed, req.out_path)
+                                   req.seed, req.out_path, req.count)

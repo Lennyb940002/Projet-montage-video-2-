@@ -100,7 +100,9 @@ class VideoRecipe:
     content_angle: str     # angle catégoriel du hook (analytics-ready)
     assets: tuple[str]     # chemins ; len == registry.asset_count[mechanic]
     duration: float        # ∈ [min_duration, max_duration]
-    variation: dict        # {font, accent, text_anim} — seedé
+    font: str              # variation seedée (aplati en champs scalaires immuables
+    accent: str            #   plutôt qu'un dict, pour rester strictement frozen)
+    text_anim: str         #   "fade" | "pop"
     seed: int
 ```
 Tout converge vers cet objet ; **tout le reste n'est que compilation**. Une fois émis, il est
@@ -290,7 +292,10 @@ backend/silent/
 ```
 
 Endpoints serveur (FastAPI) : `/silent/mechanics` (liste registre), `/silent/generate`
-(strategy → recipe(s) → render → store → MP4), `/silent/recipe` (build sans render, debug).
+(strategy → recipe(s) → render → store → MP4). As-built : `/silent/generate` honore
+`count` (batch — l'historique est re-lu entre chaque item, donc la fatigue D0 s'applique à
+travers le batch ; `count==1` renvoie `{video_path, recipe}`, `count>1` renvoie `{videos:[…]}`).
+Le `/silent/recipe` (build sans render) est **reporté hors V1** (non nécessaire au flux actuel).
 
 UI : toggle de mode "Voix-off / Silencieux" en haut. Panneau silencieux : pick goal/mécanique,
 sélection assets (manuel + 🎲 seedé, réutilise la logique inserts photo/vidéo), hook éditable +
