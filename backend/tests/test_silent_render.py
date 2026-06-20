@@ -60,3 +60,27 @@ def test_render_reveal_produces_vertical_mp4(tmp_path):
                         "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
     assert "1080,1920" in probe.stdout
     assert abs(ffmpeg.probe_duration(out) - 5.0) < 0.5
+
+
+def test_vote_end_to_end(tmp_path):
+    import random
+    from backend.silent.strategy import ContentStrategy
+    from backend.silent import policy
+    strat = ContentStrategy(goal="engagement", count=1, mechanic="vote",
+                            assets=(IMG, VID))
+    recipe = policy.decide(strat, [], seed=11)
+    assert recipe.mechanic == "vote" and recipe.layout == "split_2"
+    out = str(tmp_path / "vote.mp4")
+    render_recipe(recipe, out)
+    assert os.path.exists(out) and abs(ffmpeg.probe_duration(out) - recipe.duration) < 0.5
+
+
+def test_revelation_end_to_end(tmp_path):
+    from backend.silent.strategy import ContentStrategy
+    from backend.silent import policy
+    strat = ContentStrategy(goal="retention", count=1, assets=(IMG,))
+    recipe = policy.decide(strat, [], seed=5)
+    assert recipe.mechanic == "revelation" and recipe.layout == "reveal"
+    out = str(tmp_path / "rev2.mp4")
+    render_recipe(recipe, out)
+    assert os.path.exists(out) and abs(ffmpeg.probe_duration(out) - recipe.duration) < 0.5
