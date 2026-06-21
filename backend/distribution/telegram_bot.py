@@ -1,5 +1,6 @@
 """Bot Telegram : envoie la vidéo pour validation (boutons ✅/❌/🔄), gère les
 callbacks et le timeout 30 min. Long-polling (OK sur VM always-on)."""
+import asyncio
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import Application, CallbackQueryHandler
 from backend import settings
@@ -32,7 +33,7 @@ async def send_for_approval(app, pid, video_path, caption):
 
 
 async def _on_timeout(context):
-    orchestrator.decide_and_post(context.job.data, "timeout")
+    await asyncio.to_thread(orchestrator.decide_and_post, context.job.data, "timeout")
 
 
 def _pid_from_message(message):
@@ -51,9 +52,12 @@ async def _on_callback(update, context):
     if decision == "regenerate":
         await q.edit_message_caption(caption="🔄 Nouvelle version en cours…")
         from backend.distribution.scheduler import run_slot
-        run_slot(context.application)
+        res = await asyncio.to_thread(run_slot)
+        await send_for_approval(context.application, res["pid"],
+                                res["video_path"], res["caption"])
         return
-    orchestrator.decide_and_post(pid, "approve" if decision == "approve" else "skip")
+    await asyncio.to_thread(orchestrator.decide_and_post, pid,
+                            "approve" if decision == "approve" else "skip")
     await q.edit_message_caption(
         caption="✅ Publié" if decision == "approve" else "❌ Skippé")
 
