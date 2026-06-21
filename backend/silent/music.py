@@ -22,7 +22,12 @@ def list_tracks(music_dir=None):
     return sorted(out)
 
 
-def pick_track(rng, music_dir=None):
-    """Tire un morceau (seedé). None si aucun son dans le dossier."""
+def pick_track(rng, music_dir=None, exclude=()):
+    """Tire un morceau (seedé), en évitant ceux de `exclude` (sons récents).
+    Si tout est exclu, on recycle (le pool complet). None si dossier vide."""
     tracks = list_tracks(music_dir)
-    return rng.choice(tracks) if tracks else None
+    if not tracks:
+        return None
+    ex = set(exclude or ())
+    fresh = [t for t in tracks if t not in ex]
+    return rng.choice(fresh if fresh else tracks)

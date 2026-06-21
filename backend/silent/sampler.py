@@ -20,13 +20,33 @@ def _list_assets(clips_dir):
     return sorted(out)
 
 
-def sample(constraint, rng, clips_dir=None):
-    """Tire `constraint['count']` assets distincts depuis la banque (seedé).
-    Lève ValueError si la banque n'a pas assez d'assets (R1/R2)."""
+def model_of(path):
+    """Le 'modèle' (= la montre) = nom du dossier parent du clip."""
+    return os.path.basename(os.path.dirname(path))
+
+
+def _by_model(pool):
+    d = {}
+    for p in pool:
+        d.setdefault(model_of(p), []).append(p)
+    return d
+
+
+def sample(constraint, rng, clips_dir=None, exclude_models=()):
+    """Tire `count` clips de `count` MODÈLES DISTINCTS (jamais 2 fois la même
+    montre dans une vidéo). Évite en priorité les modèles `exclude_models`
+    (montres des vidéos récentes) ; relâche si pas assez de modèles frais
+    (best-effort, ne échoue jamais tant qu'il y a assez de modèles distincts)."""
     clips_dir = clips_dir or _DEFAULT
     count = constraint["count"]
-    pool = _list_assets(clips_dir)
-    if len(pool) < count:
+    by_model = _by_model(_list_assets(clips_dir))
+    models = list(by_model)
+    if len(models) < count:
         raise ValueError(
-            f"not enough clips in {clips_dir}: need {count}, found {len(pool)}")
-    return rng.sample(pool, count)
+            f"not enough distinct models in {clips_dir}: need {count}, have {len(models)}")
+    ex = set(exclude_models or ())
+    fresh = [m for m in models if m not in ex]
+    stale = [m for m in models if m in ex]
+    rng.shuffle(fresh); rng.shuffle(stale)
+    chosen = (fresh + stale)[:count]      # frais d'abord, complète avec récents si besoin
+    return [rng.choice(by_model[m]) for m in chosen]

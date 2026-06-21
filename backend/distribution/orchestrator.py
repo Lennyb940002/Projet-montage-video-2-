@@ -12,9 +12,14 @@ from backend import settings
 from backend.distribution import uploadpost
 
 
-def _decide_recipe(goal, seed):
+# Cycle d'anti-répétition : une montre/musique ne réapparaît pas avant N vidéos.
+CYCLE = 2   # "jamais les mêmes montres dans 3 vidéos consécutives"
+
+
+def _decide_recipe(goal, seed, exclude_models=(), exclude_music=()):
     strat = ContentStrategy(goal=goal, count=1)
-    return _policy.decide(strat, history=[], seed=seed)
+    return _policy.decide(strat, history=[], seed=seed,
+                          exclude_models=exclude_models, exclude_music=exclude_music)
 
 
 def _render(recipe, out_path):
@@ -35,7 +40,10 @@ def generate_for_slot(goal, seed, store=None, out_dir=None):
     Renvoie {pid, video_path, caption}."""
     store = store or DistStore(SILENT_DB)
     out_dir = out_dir or WORKDIR
-    recipe = _decide_recipe(goal, seed)
+    # Anti-répétition : éviter montres + musiques des CYCLE dernières vidéos.
+    recipe = _decide_recipe(goal, seed,
+                            exclude_models=store.recent_models(CYCLE),
+                            exclude_music=store.recent_music(CYCLE))
     out = os.path.join(out_dir, "dist_" + uuid.uuid4().hex + ".mp4")
     _render(recipe, out)
     caption, tags = caption_seo.build_caption(
@@ -43,7 +51,7 @@ def generate_for_slot(goal, seed, store=None, out_dir=None):
     full = caption + ("\n\n" + " ".join(tags) if tags else "")
     pid = store.insert(video_path=out, mechanic=recipe.mechanic,
                        content_angle=recipe.content_angle, layout=recipe.layout,
-                       asset_ids=list(recipe.assets), caption=full)
+                       asset_ids=list(recipe.assets), caption=full, music=recipe.music)
     return {"pid": pid, "video_path": out, "caption": full}
 
 

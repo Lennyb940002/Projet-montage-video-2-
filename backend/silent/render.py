@@ -13,6 +13,9 @@ from backend.silent import registry
 # Couleurs ASS (&H00BBGGRR) pour les label_modes non liés à la montre.
 _RED = "&H003C1EDC&"; _GREEN = "&H005CC95C&"; _GOLD = "&H0033B4E7&"
 _GREY = "&H00909090&"; _BLUE = "&H00DC503C&"
+# Palette des cartouches numérotés/profils : couleurs distinctes, JAMAIS de blanc
+# (sinon "3" blanc sur fond blanc = invisible).
+_LABEL_PALETTE = ("&H0000FFFF&", "&H0000FF00&", "&H009314FF&", "&H00DC503C&")  # jaune, vert, rose, bleu
 
 # Les emojis couleur ne rendent pas via libass (glyphes monochromes cassés) :
 # on les retire du texte brûlé. (Rendu emoji couleur = overlay PNG, futur.)
@@ -72,9 +75,9 @@ def _cell_labels(recipe):
     meta = registry.MECHANICS.get(recipe.mechanic, {})
     mode = meta.get("label_mode", "model_name")
     n = len(recipe.assets)
-    accents = SILENT.get("accents") or ["&H00FFFFFF&"]
+    pal = _LABEL_PALETTE   # jamais de blanc -> chiffres toujours visibles
     if mode == "number":
-        return [(str(i + 1), accents[i % len(accents)]) for i in range(n)]
+        return [(str(i + 1), pal[i % len(pal)]) for i in range(n)]
     if mode == "podium":
         return list(zip(["N°3", "N°2", "N°1"][:n], [_GREY, _BLUE, _GOLD][:n]))
     if mode == "before_after":
@@ -85,7 +88,7 @@ def _cell_labels(recipe):
         return [("STYLE A", _BLUE), ("STYLE B", _RED)][:n]
     if mode == "profile":
         profs = ["MINIMALISTE", "AMBITIEUX", "CLASSIQUE", "AUDACIEUX"]
-        return [(profs[i], accents[i % len(accents)]) for i in range(n)]
+        return [(profs[i], pal[i % len(pal)]) for i in range(n)]
     return [_model_meta(a) for a in recipe.assets]   # "model_name" (défaut)
 
 
