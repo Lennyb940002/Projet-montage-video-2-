@@ -66,18 +66,32 @@ def _do_post(row):
                            token=s.get("uploadpost_token", ""))
 
 
+def _cleanup_local(video_path):
+    """Une fois postée/skippée : on ne stocke PAS la vidéo ailleurs (Telegram +
+    le post = l'archive). Supprime le mp4 local + son .ass."""
+    for p in (video_path, video_path + ".ass"):
+        try:
+            if p and os.path.exists(p):
+                os.remove(p)
+        except OSError:
+            pass
+
+
 def decide_and_post(pid, decision, store=None):
     """Applique la décision (approve|skip|timeout) : poste si besoin, met le
-    statut. NON BLOQUANT : échec post -> statut 'failed'."""
+    statut. NON BLOQUANT : échec post -> statut 'failed'. Vidéo locale supprimée
+    après post/skip réussi (pas de stockage ailleurs ; 'failed' conservé pour debug)."""
     store = store or DistStore(SILENT_DB)
     row = store.get(pid)
     if not row or row["status"] != "pending":
         return
     if decision == "skip":
         store.update_status(pid, "skipped")
+        _cleanup_local(row["video_path"])
         return
     res = _do_post(row)
     if res.get("ok"):
         store.update_status(pid, _POST_STATUS.get(decision, "posted"))
+        _cleanup_local(row["video_path"])           # posté -> on jette le local
     else:
-        store.update_status(pid, "failed")
+        store.update_status(pid, "failed")           # gardé pour debug/retry
