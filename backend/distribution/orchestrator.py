@@ -61,7 +61,10 @@ _POST_STATUS = {"approve": "posted", "timeout": "auto_posted"}
 
 def _do_post(row):
     s = settings.load()
-    return uploadpost.post(row["video_path"], row["caption"], ["tiktok", "instagram"],
+    # Plateformes connectées sur upload-post (réglable). Défaut : IG + TikTok ;
+    # tant que TikTok n'est pas connecté, mettre ["instagram"] dans les réglages.
+    platforms = s.get("uploadpost_platforms") or ["instagram", "tiktok"]
+    return uploadpost.post(row["video_path"], row["caption"], platforms,
                            user=s.get("uploadpost_user", ""),
                            token=s.get("uploadpost_token", ""))
 
