@@ -11,10 +11,15 @@ def test_mechanics_have_required_fields():
 
 
 def test_mechanics_set():
-    assert set(registry.MECHANICS) == {"comparison", "vote", "revelation", "collection"}
+    assert set(registry.MECHANICS) == {
+        "comparison", "vote", "revelation", "collection", "elimination", "top3",
+        "test", "battle", "transformation", "erreur", "pov",
+        "comparison_4", "collection_4"}
 
 
 def test_mechanics_for_goal_filters():
-    assert set(registry.mechanics_for_goal("engagement")) == {"comparison", "vote", "collection"}
-    assert registry.mechanics_for_goal("retention") == ["revelation"]
+    eng = set(registry.mechanics_for_goal("engagement"))
+    assert {"comparison", "vote", "collection", "elimination", "top3",
+            "battle"} <= eng
+    assert set(registry.mechanics_for_goal("retention")) == {"revelation", "pov"}
     assert registry.mechanics_for_goal("nope") == []

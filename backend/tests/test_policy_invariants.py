@@ -8,7 +8,8 @@ from backend.silent.strategy import ContentStrategy
 from backend.silent.recipe import VideoRecipe, validate
 
 _FAKE = {1: ("a.mp4",), 2: ("a.mp4", "b.mp4"),
-         3: ("a.mp4", "b.mp4", "c.mp4")}  # assets bidon par asset_count
+         3: ("a.mp4", "b.mp4", "c.mp4"),
+         4: ("a.mp4", "b.mp4", "c.mp4", "d.mp4")}  # assets bidon par asset_count
 
 
 def _strategy_for(mechanic):

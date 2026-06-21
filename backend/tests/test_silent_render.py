@@ -8,6 +8,32 @@ IMG = os.path.join(FIX, "sample_insert.png")
 VID = os.path.join(FIX, "sample_insert.mp4")
 
 
+def test_render_single_produces_vertical_mp4(tmp_path):
+    r = VideoRecipe(mechanic="pov", layout="single",
+                    hook="POV : ta nouvelle montre", content_angle="pov",
+                    assets=(VID,), duration=5.0, font="Arial Black",
+                    accent="&H00FFFFFF&", text_anim="fade", seed=4)
+    out = str(tmp_path / "pov.mp4")
+    render_recipe(r, out)
+    assert os.path.exists(out)
+    probe = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                        "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
+    assert "1080,1920" in probe.stdout
+
+
+def test_render_grid_4_produces_vertical_mp4(tmp_path):
+    r = VideoRecipe(mechanic="comparison_4", layout="grid_4",
+                    hook="Laquelle des 4 ?", content_angle="which_4",
+                    assets=(IMG, VID, IMG, VID), duration=5.0, font="Arial Black",
+                    accent="&H00FFFFFF&", text_anim="pop", seed=5)
+    out = str(tmp_path / "grid.mp4")
+    render_recipe(r, out)
+    assert os.path.exists(out)
+    probe = ffmpeg.run([ffmpeg.FFPROBE, "-v", "quiet", "-select_streams", "v:0",
+                        "-show_entries", "stream=width,height", "-of", "csv=p=0", out])
+    assert "1080,1920" in probe.stdout
+
+
 def test_render_split_3_produces_vertical_mp4(tmp_path):
     r = VideoRecipe(mechanic="collection", layout="split_3",
                     hook="Tu prends laquelle des 3 ?", content_angle="which_of_3",
@@ -93,7 +119,7 @@ def test_vote_end_to_end(tmp_path):
 def test_revelation_end_to_end(tmp_path):
     from backend.silent.strategy import ContentStrategy
     from backend.silent import policy
-    strat = ContentStrategy(goal="retention", count=1, assets=(IMG,))
+    strat = ContentStrategy(goal="retention", count=1, mechanic="revelation", assets=(IMG,))
     recipe = policy.decide(strat, [], seed=5)
     assert recipe.mechanic == "revelation" and recipe.layout == "reveal"
     out = str(tmp_path / "rev2.mp4")

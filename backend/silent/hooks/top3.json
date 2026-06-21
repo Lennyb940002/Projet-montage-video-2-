@@ -1,0 +1,6 @@
+[
+  {"text": "Top 3 des montres pour l'été", "angle": "top3_summer"},
+  {"text": "Mes 3 préférées", "angle": "top3_fav"},
+  {"text": "Le classement du jour", "angle": "top3_today"},
+  {"text": "Top 3 à posséder", "angle": "top3_own"}
+]

@@ -1,5 +1,5 @@
 from collections import Counter
-from backend.silent import policy
+from backend.silent import policy, registry
 from backend.silent.strategy import ContentStrategy
 from backend.silent.recipe import VideoRecipe, validate
 
@@ -12,7 +12,9 @@ def test_decide_returns_valid_recipe():
     r = _decide(ContentStrategy(goal="engagement", count=1, assets=("a.mp4", "b.mp4")))
     assert isinstance(r, VideoRecipe)
     validate(r)                       # I2/I3/R3
-    assert r.mechanic in ("comparison", "vote")
+    # engagement + 2 assets -> une mécanique 2-assets de ce goal
+    assert r.mechanic in registry.mechanics_for_goal("engagement")
+    assert len(r.assets) == 2
 
 
 def test_decide_is_seed_reproducible():
@@ -22,7 +24,7 @@ def test_decide_is_seed_reproducible():
 
 def test_decide_respects_goal():
     r = _decide(ContentStrategy(goal="retention", count=1, assets=("x.mp4",)))
-    assert r.mechanic == "revelation"                           # P1
+    assert r.mechanic in registry.mechanics_for_goal("retention")   # P1
 
 
 def test_decide_honors_mechanic_override():

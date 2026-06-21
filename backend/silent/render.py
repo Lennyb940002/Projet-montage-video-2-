@@ -8,6 +8,11 @@ effacé par `delogo` (sans décalage -> montres restent centrées)."""
 import os, re
 from backend import ffmpeg
 from backend.config import SILENT
+from backend.silent import registry
+
+# Couleurs ASS (&H00BBGGRR) pour les label_modes non liés à la montre.
+_RED = "&H003C1EDC&"; _GREEN = "&H005CC95C&"; _GOLD = "&H0033B4E7&"
+_GREY = "&H00909090&"; _BLUE = "&H00DC503C&"
 
 # Les emojis couleur ne rendent pas via libass (glyphes monochromes cassés) :
 # on les retire du texte brûlé. (Rendu emoji couleur = overlay PNG, futur.)
@@ -59,6 +64,29 @@ def _model_meta(asset_path):
         return m["name"], m["color"]
     d = SILENT.get("model_default") or {"name": folder or "Montre", "color": "&H00707070&"}
     return d["name"], d["color"]
+
+
+def _cell_labels(recipe):
+    """[(texte, couleur)] par cellule selon le `label_mode` de la mécanique.
+    Couvre tous les concepts Tier 1 sans toucher au rendu (juste les cartouches)."""
+    meta = registry.MECHANICS.get(recipe.mechanic, {})
+    mode = meta.get("label_mode", "model_name")
+    n = len(recipe.assets)
+    accents = SILENT.get("accents") or ["&H00FFFFFF&"]
+    if mode == "number":
+        return [(str(i + 1), accents[i % len(accents)]) for i in range(n)]
+    if mode == "podium":
+        return list(zip(["N°3", "N°2", "N°1"][:n], [_GREY, _BLUE, _GOLD][:n]))
+    if mode == "before_after":
+        return [("AVANT", _GREY), ("APRÈS", _GOLD)][:n]
+    if mode == "wrong_right":
+        return [("À ÉVITER", _RED), ("LE BON CHOIX", _GREEN)][:n]
+    if mode == "category":
+        return [("STYLE A", _BLUE), ("STYLE B", _RED)][:n]
+    if mode == "profile":
+        profs = ["MINIMALISTE", "AMBITIEUX", "CLASSIQUE", "AUDACIEUX"]
+        return [(profs[i], accents[i % len(accents)]) for i in range(n)]
+    return [_model_meta(a) for a in recipe.assets]   # "model_name" (défaut)
 
 
 def _input_args(path, duration):
@@ -132,7 +160,7 @@ def _render_split_2(recipe, out_path):
     a, b = recipe.assets
     d = recipe.duration
     ass_path = out_path + ".ass"
-    na, ca = _model_meta(a); nb, cb = _model_meta(b)
+    (na, ca), (nb, cb) = _cell_labels(recipe)
     cx = _W // 2
     # Tout regroupé au CENTRE (zone sûre) : nom A juste au-dessus du hook,
     # nom B juste en dessous. Évite la notch (haut) et la description (bas).
@@ -159,7 +187,7 @@ def _render_split_3(recipe, out_path):
     d = recipe.duration
     ass_path = out_path + ".ass"
     third = _H // 3
-    metas = [_model_meta(x) for x in (a, b, c)]
+    metas = _cell_labels(recipe)
     cx = _W // 2
     # Cartouches dans la zone sûre (250..1500) pour éviter notch/description.
     ys = [430, 960, 1330]
@@ -208,12 +236,59 @@ def _render_reveal(recipe, out_path):
             "reveal", recipe, 1)
 
 
+def _render_single(recipe, out_path):
+    """1 montre plein écran + texte (POV : la phrase situation, centrée)."""
+    (asset,) = recipe.assets
+    d = recipe.duration
+    ass_path = out_path + ".ass"
+    cx = _W // 2
+    _write_ass(recipe, ass_path, [(recipe.hook, "q", f"\\an5\\pos({cx},760)")])
+    w, h = _dims(asset)
+    cmd = [ffmpeg.FFMPEG, "-y"] + _input_args(asset, d)
+    fc = (f"[0:v]{_delogo(w,h)}scale={_W}:{_H}:force_original_aspect_ratio=increase,"
+          f"crop={_W}:{_H},setsar=1,fps={_FPS},format=yuv420p,"
+          f"ass={os.path.basename(ass_path)}[vout]")
+    _encode(cmd, fc, out_path, d, os.path.dirname(os.path.abspath(ass_path)),
+            "single", recipe, 1)
+
+
+def _render_grid_4(recipe, out_path):
+    """4 montres en grille 2×2 (540×960 chacune). Cartouches par cellule + hook
+    au centre. De-watermark sur chaque input."""
+    d = recipe.duration
+    ass_path = out_path + ".ass"
+    hw, hh = _W // 2, _H // 2
+    labels = _cell_labels(recipe)
+    cx = _W // 2
+    # Cartouches en bas de chaque quadrant, dans la zone sûre (250..1500).
+    pos = [(hw // 2, 760), (hw + hw // 2, 760),
+           (hw // 2, 1240), (hw + hw // 2, 1240)]
+    lines = [(recipe.hook, "q", f"\\an5\\pos({cx},{_H // 2})")]
+    for (txt, col), (px, py) in zip(labels, pos):
+        lines.append((txt, "box", f"\\an5\\pos({px},{py})\\3c{col}"))
+    _write_ass(recipe, ass_path, lines)
+    dims = [_dims(x) for x in recipe.assets]
+    cmd = [ffmpeg.FFMPEG, "-y"]
+    for x in recipe.assets:
+        cmd += _input_args(x, d)
+    parts = [
+        f"[{i}:v]{_delogo(w, h)}scale={hw}:{hh}:force_original_aspect_ratio=increase,"
+        f"crop={hw}:{hh},setsar=1[g{i}]"
+        for i, (w, h) in enumerate(dims)]
+    fc = ";".join(parts) + ";" + (
+        f"[g0][g1]hstack=inputs=2[top];[g2][g3]hstack=inputs=2[bot];"
+        f"[top][bot]vstack=inputs=2,fps={_FPS},format=yuv420p[stack];"
+        f"[stack]ass={os.path.basename(ass_path)}[vout]")
+    _encode(cmd, fc, out_path, d, os.path.dirname(os.path.abspath(ass_path)),
+            "grid_4", recipe, 4)
+
+
 def render_recipe(recipe, out_path):
-    """Dispatch par layout. Étend ici pour ajouter des layouts (V1.2)."""
-    if recipe.layout == "split_2":
-        return _render_split_2(recipe, out_path)
-    if recipe.layout == "split_3":
-        return _render_split_3(recipe, out_path)
-    if recipe.layout == "reveal":
-        return _render_reveal(recipe, out_path)
-    raise ValueError(f"unknown layout: {recipe.layout!r}")
+    """Dispatch par layout."""
+    dispatch = {"split_2": _render_split_2, "split_3": _render_split_3,
+                "reveal": _render_reveal, "single": _render_single,
+                "grid_4": _render_grid_4}
+    fn = dispatch.get(recipe.layout)
+    if fn is None:
+        raise ValueError(f"unknown layout: {recipe.layout!r}")
+    return fn(recipe, out_path)
