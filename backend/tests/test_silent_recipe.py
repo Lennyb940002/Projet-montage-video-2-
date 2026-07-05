@@ -41,3 +41,15 @@ def test_validate_rejects_wrong_asset_count():
 def test_validate_rejects_duration_out_of_range():
     with pytest.raises(ValueError, match="duration"):
         validate(_ok_recipe(duration=99.0))
+
+
+def test_recipe_accepts_labels():
+    r = _ok_recipe(mechanic="test", layout="split_3", assets=("x", "y", "z"),
+                   labels=(("discret", "&H0000FFFF&"),
+                           ("froid", "&H0000FF00&"),
+                           ("carré", "&H009314FF&")))
+    assert validate(r).labels[0][0] == "discret"
+
+
+def test_recipe_labels_default_none():
+    assert _ok_recipe().labels is None

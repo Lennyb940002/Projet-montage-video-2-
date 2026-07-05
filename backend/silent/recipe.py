@@ -19,6 +19,8 @@ class VideoRecipe:
     text_anim: str       # "fade" | "pop"
     seed: int
     music: str = None    # chemin du bed musical (optionnel) — décidé par le Policy
+    cta_type: str = None # CTA principal (V2) : comment|profile_visit|save_share|dm_choix|proof_action
+    labels: tuple = None # ((texte, couleurASS), ...) 1 par montre ; décidé par la Policy (formats 1A)
 
 
 def validate(recipe):
