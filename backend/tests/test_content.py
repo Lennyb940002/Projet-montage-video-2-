@@ -52,6 +52,13 @@ def test_pick_cta_rotates_types():
     assert len(set(used)) >= 2
 
 
+def test_label_mode_of_reflects_real_label():
+    # un label de la banque coherents -> "coherent" ; de surprise_acceptes -> "surprise"
+    assert content.label_mode_of("test", "gmt", "discret") == "coherent"
+    assert content.label_mode_of("test", "gmt", "ambitieux discret") == "surprise"
+    assert content.label_mode_of("test", "gmt", "inexistant xyz") == "inconnu"
+
+
 def test_deterministic():
     a = content.pick_labels("test", (GMT, ORO, GMT), random.Random(7))
     b = content.pick_labels("test", (GMT, ORO, GMT), random.Random(7))

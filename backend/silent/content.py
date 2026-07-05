@@ -58,6 +58,21 @@ def pick_labels(mechanic, assets, rng):
     return tuple(labels), tuple(meta)
 
 
+def label_mode_of(mechanic, family, text):
+    """Déduit 'coherent'|'surprise'|'inconnu' à partir du label RÉEL (pas d'un
+    re-tirage) : cherche `text` dans les banques de la famille pour ce label_mode.
+    Sert au manifest d'audit — reflète exactement ce qui a été rendu."""
+    block = _familles().get(family, {}).get("labels", {}).get(_label_mode(mechanic))
+    if not block:
+        return "inconnu"
+    t = text.lower()
+    if t in {x.lower() for x in block["coherents"]}:
+        return "coherent"
+    if t in {x.lower() for x in block["surprise_acceptes"]}:
+        return "surprise"
+    return "inconnu"
+
+
 def pick_cta(mechanic, rng, used_types=()):
     """(texte, type) d'un CTA. Évite en priorité les `used_types` récents
     (rotation comment/dm/question)."""
