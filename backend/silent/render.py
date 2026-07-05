@@ -237,8 +237,9 @@ def _render_split_3(recipe, out_path):
     third = _H // 3
     metas = _cell_labels(recipe)
     cx = _W // 2
-    # Cartouches dans la zone sûre (250..1500) pour éviter notch/description.
-    ys = [430, 960, 1330]
+    # Cartouches calés sur chaque montre (centres de cellule 320/960/1600), bornés
+    # à la zone sûre (<=1500) : symétriques autour du centre, jamais sur la frontière.
+    ys = [430, 960, 1480]
     lines = [(recipe.hook, "q", f"\\an5\\pos({cx},270)")]
     for (name, col), y in zip(metas, ys):
         lines.append((name, "box", f"\\an5\\pos({cx},{y})\\3c{col}"))
