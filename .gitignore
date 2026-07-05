@@ -11,3 +11,15 @@ demo_ab/
 demo_final/
 demo_music/
 diag_subs/
+# Sorties générées (reels, prototypes, lots) — lourdes, jamais versionnées
+output/
+# Secrets / config locale Oracle — NE JAMAIS committer
+deploy/oracle_autolaunch.config.json
+deploy/oracle_instance.json
+.oci/
+*.pem
+*.key
+*.key.pub
+# Réglages locaux avec secrets (au cas où déposés dans le repo)
+settings.json
+.env
