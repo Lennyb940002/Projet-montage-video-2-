@@ -1,0 +1,9 @@
+[
+  {"text": "La montre que tu choisis révèle quelque chose", "angle": "choice_reveals"},
+  {"text": "Ton choix n'est pas innocent", "angle": "not_innocent"},
+  {"text": "Tu crois choisir une montre. Tu choisis une image.", "angle": "choose_image"},
+  {"text": "Cette montre dit ce que tu ne dis pas", "angle": "says_unsaid"},
+  {"text": "Ton choix parle avant toi", "angle": "speaks_before"},
+  {"text": "La montre que tu choisis montre ce que tu veux renvoyer", "angle": "what_you_project"},
+  {"text": "Ton choix révèle quelque chose", "angle": "reveals_short"}
+]

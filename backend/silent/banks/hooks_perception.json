@@ -1,0 +1,9 @@
+[
+  {"text": "Ce que ta montre dit aux autres", "angle": "says_to_others"},
+  {"text": "Les gens remarquent plus que tu crois", "angle": "people_notice"},
+  {"text": "Avant que tu parles, ton style parle", "angle": "style_speaks_first"},
+  {"text": "Ta montre donne une première impression", "angle": "first_impression"},
+  {"text": "Ton poignet parle avant toi", "angle": "wrist_speaks_first"},
+  {"text": "Ce détail change la perception", "angle": "detail_changes_perception"},
+  {"text": "On te juge au poignet, que tu le veuilles ou non", "angle": "judged_wrist"}
+]

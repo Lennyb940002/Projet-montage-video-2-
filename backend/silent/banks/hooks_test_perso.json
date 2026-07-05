@@ -1,0 +1,8 @@
+[
+  {"text": "Test rapide. Choisis une montre.", "angle": "quick_test"},
+  {"text": "Test de personnalité en 3 secondes", "angle": "perso_test_3s"},
+  {"text": "Choisis sans réfléchir. Ton choix va parler.", "angle": "no_think_speaks"},
+  {"text": "3 secondes pour choisir", "angle": "3s_choose"},
+  {"text": "Test rapide : t'es lequel ?", "angle": "which_one_test"},
+  {"text": "Ton choix va parler pour toi", "angle": "choice_will_speak"}
+]

@@ -1,0 +1,10 @@
+[
+  {"text": "Choisis une montre, je te dis qui tu es", "angle": "which_man"},
+  {"text": "Ce que tu choisis dit de toi", "angle": "what_choice_says"},
+  {"text": "Une montre. Une personnalité.", "angle": "one_watch_one_perso"},
+  {"text": "Dis-moi ta montre, je te dis ton énergie", "angle": "watch_energy"},
+  {"text": "Ton poignet dit plus que tu crois", "angle": "wrist_says"},
+  {"text": "Choisis vite. Pas de réflexion.", "angle": "choose_fast"},
+  {"text": "Ton choix de montre parle pour toi", "angle": "choice_speaks"},
+  {"text": "La montre que tu préfères te décrit", "angle": "fav_describes"}
+]

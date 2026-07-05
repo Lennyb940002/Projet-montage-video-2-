@@ -1,0 +1,162 @@
+{
+  "gmt": {
+    "dossiers": ["GMT"],
+    "labels": {
+      "profile": {
+        "coherents": ["discret", "stratégique", "froid", "carré", "précis", "mature"],
+        "surprise_acceptes": ["ambitieux discret", "indépendant calme"],
+        "interdits": ["solaire", "extravagant", "joyeux", "fun", "voyant"]
+      },
+      "psycho": {
+        "coherents": ["tu contrôles ton image", "tu préfères le calme au bruit",
+                      "tu veux qu'on te respecte sans parler"],
+        "surprise_acceptes": ["tu caches un côté compétiteur"],
+        "interdits": ["tu veux qu'on te remarque tout de suite"]
+      },
+      "trahison": {
+        "coherents": ["tu veux rester discret mais respecté",
+                      "tu veux paraître calme mais puissant"],
+        "surprise_acceptes": ["tu veux montrer que tu montes d'un cran"],
+        "interdits": ["tu veux être le centre de l'attention"]
+      },
+      "perception": {
+        "coherents": ["il est discret", "il est carré", "il a une énergie froide",
+                      "il sait ce qu'il veut"],
+        "surprise_acceptes": ["il est ambitieux mais calme"],
+        "interdits": ["il aime qu'on le remarque"]
+      },
+      "test_reveal": {
+        "coherents": ["tu contrôles ton image", "tu veux dégager du sérieux"],
+        "surprise_acceptes": ["tu caches un côté compétiteur"],
+        "interdits": ["tu veux réussir fort et que ça se voie"]
+      }
+    }
+  },
+  "or_rose": {
+    "dossiers": ["Rainbow Or rose"],
+    "labels": {
+      "profile": {
+        "coherents": ["solaire", "assumé", "ambitieux", "confiant", "chaud", "voyant"],
+        "surprise_acceptes": ["stratégique visible", "ambitieux calme"],
+        "interdits": ["minimaliste", "discret", "timide", "effacé"]
+      },
+      "psycho": {
+        "coherents": ["tu veux être vu", "tu assumes ton image",
+                      "tu veux qu'on sente ton ambition"],
+        "surprise_acceptes": ["tu veux réussir sans le crier"],
+        "interdits": ["tu préfères passer inaperçu"]
+      },
+      "trahison": {
+        "coherents": ["tu veux qu'on te remarque", "tu veux montrer que tu montes"],
+        "surprise_acceptes": ["tu veux impressionner sans le dire"],
+        "interdits": ["tu veux rester dans l'ombre"]
+      },
+      "perception": {
+        "coherents": ["il aime qu'on le remarque", "il assume", "il a de l'ambition"],
+        "surprise_acceptes": ["il est confiant mais posé"],
+        "interdits": ["il est discret"]
+      },
+      "test_reveal": {
+        "coherents": ["tu veux réussir fort et que ça se voie",
+                      "tu veux qu'on voie ton ambition"],
+        "surprise_acceptes": ["tu veux montrer ta réussite avec goût"],
+        "interdits": ["tu veux rester discret"]
+      }
+    }
+  },
+  "saphir": {
+    "dossiers": ["Rainbow saphire"],
+    "labels": {
+      "profile": {
+        "coherents": ["calme", "élégant", "différent", "subtil", "frais", "posé"],
+        "surprise_acceptes": ["élégant assumé", "différent visible"],
+        "interdits": ["agressif", "criard", "vulgaire", "brutal"]
+      },
+      "psycho": {
+        "coherents": ["tu veux te démarquer sans forcer", "tu aimes la subtilité",
+                      "tu veux paraître posé"],
+        "surprise_acceptes": ["tu veux être différent et qu'on le voie"],
+        "interdits": ["tu veux dominer par le bruit"]
+      },
+      "trahison": {
+        "coherents": ["tu veux être différent sans être ridicule",
+                      "tu veux qu'on sente ton goût"],
+        "surprise_acceptes": ["tu veux te démarquer clairement"],
+        "interdits": ["tu veux écraser les autres"]
+      },
+      "perception": {
+        "coherents": ["il a du goût", "il est posé", "il est différent sans forcer"],
+        "surprise_acceptes": ["il est élégant et sûr de lui"],
+        "interdits": ["il est agressif"]
+      },
+      "test_reveal": {
+        "coherents": ["tu veux te démarquer avec finesse",
+                      "tu préfères le style propre au bruit"],
+        "surprise_acceptes": ["tu veux qu'on remarque ta différence"],
+        "interdits": ["tu veux te faire craindre"]
+      }
+    }
+  },
+  "ruby": {
+    "dossiers": ["Rainbow ruby"],
+    "labels": {
+      "profile": {
+        "coherents": ["intense", "assumé", "magnétique", "provocateur", "visible", "insolent"],
+        "surprise_acceptes": ["élégant intense", "assumé maîtrisé"],
+        "interdits": ["discret", "effacé", "timide", "banal"]
+      },
+      "psycho": {
+        "coherents": ["tu n'as pas peur du regard", "tu veux marquer les esprits",
+                      "tu assumes ton intensité"],
+        "surprise_acceptes": ["tu veux impressionner avec classe"],
+        "interdits": ["tu veux rester dans l'ombre"]
+      },
+      "trahison": {
+        "coherents": ["tu veux être remarqué", "tu veux qu'on sente ta présence"],
+        "surprise_acceptes": ["tu veux frapper fort mais juste"],
+        "interdits": ["tu veux te faire oublier"]
+      },
+      "perception": {
+        "coherents": ["il n'a pas peur du regard", "il assume", "il a une présence forte"],
+        "surprise_acceptes": ["il est intense mais maîtrisé"],
+        "interdits": ["il est effacé"]
+      },
+      "test_reveal": {
+        "coherents": ["tu veux qu'on te remarque", "tu assumes ton côté fort"],
+        "surprise_acceptes": ["tu veux marquer sans en faire trop"],
+        "interdits": ["tu veux passer inaperçu"]
+      }
+    }
+  },
+  "silver": {
+    "dossiers": ["Rainbow silver"],
+    "labels": {
+      "profile": {
+        "coherents": ["classique", "propre", "mature", "polyvalent", "simple", "élégant"],
+        "surprise_acceptes": ["élégant discret", "mature assumé"],
+        "interdits": ["extravagant", "provocateur", "criard", "voyant"]
+      },
+      "psycho": {
+        "coherents": ["tu veux une image mature", "tu préfères le propre au bruit",
+                      "tu veux quelque chose de sûr"],
+        "surprise_acceptes": ["tu veux du classique avec du caractère"],
+        "interdits": ["tu veux choquer"]
+      },
+      "trahison": {
+        "coherents": ["tu veux paraître sérieux", "tu veux une image solide"],
+        "surprise_acceptes": ["tu veux du classique qui monte d'un cran"],
+        "interdits": ["tu veux provoquer"]
+      },
+      "perception": {
+        "coherents": ["il est propre sur lui", "il est mature", "il a du goût"],
+        "surprise_acceptes": ["il est classique mais pas fade"],
+        "interdits": ["il est extravagant"]
+      },
+      "test_reveal": {
+        "coherents": ["tu veux dégager du sérieux", "tu préfères le style propre au bruit"],
+        "surprise_acceptes": ["tu veux du classique avec une touche"],
+        "interdits": ["tu veux choquer"]
+      }
+    }
+  }
+}

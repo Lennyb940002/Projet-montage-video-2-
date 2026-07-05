@@ -1,0 +1,9 @@
+[
+  {"text": "Ton choix te trahit", "angle": "betrays"},
+  {"text": "Tu vas choisir avec ton ego", "angle": "ego_choice"},
+  {"text": "Ta montre préférée dit trop de choses", "angle": "says_too_much"},
+  {"text": "Tu crois choisir au hasard ?", "angle": "not_random"},
+  {"text": "Ce choix parle pour toi", "angle": "choice_speaks_betray"},
+  {"text": "Ton choix te trahit un peu", "angle": "betrays_a_bit"},
+  {"text": "Tu vas te trahir en 3 secondes", "angle": "betray_3s"}
+]

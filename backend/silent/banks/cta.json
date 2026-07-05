@@ -1,0 +1,10 @@
+[
+  {"text": "Laquelle te décrit ?", "type": "comment"},
+  {"text": "T'es laquelle ?", "type": "comment"},
+  {"text": "Tu portes laquelle ?", "type": "comment"},
+  {"text": "J'ai raison ?", "type": "question"},
+  {"text": "J'ai menti ?", "type": "question"},
+  {"text": "Tu valides ?", "type": "question"},
+  {"text": "DM « MONTRE »", "type": "dm"},
+  {"text": "Ton budget en DM, je te dis laquelle", "type": "dm"}
+]
