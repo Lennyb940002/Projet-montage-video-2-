@@ -9,6 +9,7 @@ import os, re
 from backend import ffmpeg
 from backend.config import SILENT
 from backend.silent import registry
+from backend.silent import cta_v2
 
 # Couleurs ASS (&H00BBGGRR) pour les label_modes non liés à la montre.
 _RED = "&H003C1EDC&"; _GREEN = "&H005CC95C&"; _GOLD = "&H0033B4E7&"
@@ -69,9 +70,19 @@ def _model_meta(asset_path):
     return d["name"], d["color"]
 
 
+_FORMATS_1A = {"test", "revelation_psy", "trahison", "perception", "test_perso"}
+
+
 def _cell_labels(recipe):
-    """[(texte, couleur)] par cellule selon le `label_mode` de la mécanique.
-    Couvre tous les concepts Tier 1 sans toucher au rendu (juste les cartouches)."""
+    """[(texte, couleur)] par cellule. Formats 1A : labels décidés par la Policy
+    (recipe.labels). Fail dur si un format 1A arrive sans labels (le fallback
+    hardcodé est interdit sur les formats du guide). Legacy : label_mode."""
+    if getattr(recipe, "labels", None) is not None:
+        return [tuple(l) for l in recipe.labels]
+    if recipe.mechanic in _FORMATS_1A:
+        raise ValueError(
+            f"labels manquants pour le format 1A {recipe.mechanic!r} : "
+            "le fallback hardcodé est interdit sur les formats du guide")
     meta = registry.MECHANICS.get(recipe.mechanic, {})
     mode = meta.get("label_mode", "model_name")
     n = len(recipe.assets)
@@ -134,6 +145,40 @@ Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
             f"Dialogue: 0,{_ass_time(0)},{end},{style_of[kind]},,0,0,0,,"
             f"{{{tags}{fade}}}{clean.upper()}")
     open(path, "w", encoding="utf-8").write(header + "\n".join(body) + "\n")
+
+
+def _ass_header(recipe):
+    return f"""[Script Info]
+ScriptType: v4.00+
+PlayResX: {_W}
+PlayResY: {_H}
+WrapStyle: 0
+ScaledBorderAndShadow: yes
+
+[V4+ Styles]
+Format: Name, Fontname, Fontsize, PrimaryColour, SecondaryColour, OutlineColour, BackColour, Bold, Italic, Underline, StrikeOut, ScaleX, ScaleY, Spacing, Angle, BorderStyle, Outline, Shadow, Alignment, MarginL, MarginR, MarginV, Encoding
+Style: Q,{recipe.font},96,&H00FFFFFF&,&H00FFFFFF&,&H00000000&,&H00000000&,1,0,0,0,100,100,0,0,1,4,2,5,80,80,60,1
+Style: Box,{recipe.font},58,&H00FFFFFF&,&H00FFFFFF&,&H00FFFFFF&,&H00000000&,1,0,0,0,100,100,0,0,3,18,0,5,40,40,50,1
+
+[Events]
+Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+"""
+
+
+def _write_ass_timed(recipe, path, events):
+    """ASS avec timing PAR événement. events = [(text, kind, tags, start_s, end_s)].
+    Sert aux layouts séquentiels (montres successives + écran CTA)."""
+    fade = "\\fad(120,0)"
+    style_of = {"q": "Q", "box": "Box"}
+    body = []
+    for text, kind, tags, s0, s1 in events:
+        clean = _strip_emoji(text)
+        if not clean:
+            continue
+        body.append(
+            f"Dialogue: 0,{_ass_time(s0)},{_ass_time(s1)},{style_of[kind]},,0,0,0,,"
+            f"{{{tags}{fade}}}{clean.upper()}")
+    open(path, "w", encoding="utf-8").write(_ass_header(recipe) + "\n".join(body) + "\n")
 
 
 def _encode(inputs_cmd, fc, out_path, d, ass_dir, label, recipe, n_video):
@@ -286,11 +331,53 @@ def _render_grid_4(recipe, out_path):
             "grid_4", recipe, 4)
 
 
+def _render_sequence(recipe, out_path):
+    """Layout V2 `sequence_N` : montres plein cadre SUCCESSIVES (une seule à la
+    fois, même cadrage) puis un écran CTA final. Aucun split, aucune grille."""
+    assets = list(recipe.assets)
+    n = len(assets)
+    d = recipe.duration
+    cta_dur = min(1.4, d * 0.28)
+    seg = (d - cta_dur) / n
+    watch_total = seg * n
+    ass_path = out_path + ".ass"
+    cx = _W // 2
+    labels = _cell_labels(recipe)                 # (nom, couleur) par montre
+    # ASS daté : hook sur toute la séquence (haut, jamais sur le cadran),
+    # cartouche de chaque montre pendant SON segment, CTA sur l'écran final.
+    events = [(recipe.hook, "q", f"\\an5\\pos({cx},760)", 0.0, watch_total)]
+    for i, (name, col) in enumerate(labels):
+        events.append((name, "box", f"\\an5\\pos({cx},1200)\\3c{col}", i * seg, (i + 1) * seg))
+    events.append((cta_v2.screen(getattr(recipe, "cta_type", None)), "q",
+                   f"\\an5\\pos({cx},{_H // 2})", watch_total, d))
+    _write_ass_timed(recipe, ass_path, events)
+    # Vidéo : chaque montre plein cadre (trim=seg) + écran CTA noir, concaténés.
+    cmd = [ffmpeg.FFMPEG, "-y"]
+    for a in assets:
+        cmd += _input_args(a, seg)
+    cmd += ["-f", "lavfi", "-t", f"{cta_dur:.3f}",
+            "-i", f"color=c=0x070707:s={_W}x{_H}:r={_FPS}"]
+    parts = []
+    for i, a in enumerate(assets):
+        w, h = _dims(a)
+        parts.append(
+            f"[{i}:v]{_delogo(w, h)}scale={_W}:{_H}:force_original_aspect_ratio=increase,"
+            f"crop={_W}:{_H},setsar=1,fps={_FPS},format=yuv420p,"
+            f"trim=0:{seg:.3f},setpts=PTS-STARTPTS[v{i}]")
+    parts.append(f"[{n}:v]setsar=1,format=yuv420p,setpts=PTS-STARTPTS[vcta]")
+    concat_in = "".join(f"[v{i}]" for i in range(n)) + "[vcta]"
+    parts.append(f"{concat_in}concat=n={n + 1}:v=1:a=0[cat]")
+    parts.append(f"[cat]ass={os.path.basename(ass_path)}[vout]")
+    _encode(cmd, ";".join(parts), out_path, d,
+            os.path.dirname(os.path.abspath(ass_path)), f"sequence_{n}", recipe, n + 1)
+
+
 def render_recipe(recipe, out_path):
     """Dispatch par layout."""
     dispatch = {"split_2": _render_split_2, "split_3": _render_split_3,
                 "reveal": _render_reveal, "single": _render_single,
-                "grid_4": _render_grid_4}
+                "grid_4": _render_grid_4,
+                "sequence_2": _render_sequence, "sequence_3": _render_sequence}
     fn = dispatch.get(recipe.layout)
     if fn is None:
         raise ValueError(f"unknown layout: {recipe.layout!r}")
