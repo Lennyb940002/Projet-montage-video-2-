@@ -109,9 +109,64 @@ SILENT = dict(
         "revelation": "REVELATION_1",
         "collection": "COMPARAISON_3",
     },
+    # Biais par mécanique (stratégie data-driven 22/06, cf docs/STRATEGIE_CONTENU_VIDEO.md).
+    # Multiplie le poids softmax. Défaut = 1.0 si absent. 0.0 = banni (retiré).
+    # Mix cible (copywriter) : 60% identité / 20% décision / 15% projection / 5% duel.
+    mechanic_bias={
+        # --- Formats 1A (guide 2026-07-05) ---
+        "test": 3.0,               # identité (les 4 autres 1A ajoutés en Task 5)
+        # --- BANNIS (guide : reels génériques) ---
+        "elimination": 0.0, "vote": 0.0, "comparison": 0.0, "comparison_4": 0.0,
+        "revelation": 0.0, "top3": 0.0, "collection": 0.0, "collection_4": 0.0,
+        "battle": 0.0, "pov": 0.0, "erreur": 0.0, "transformation": 0.0,
+        "projection": 0.0,         # reporté en Phase 1B
+    },
     # Bed musical : l'utilisateur dépose ses sons ici (baked dans le MP4).
     music_dir=r"C:\Users\User\Downloads\Montage video\Musique",
     music_gain_db=-8.0,        # pas de voix à couvrir -> son présent mais pas saturé
     music_fade_out_s=0.8,
 )
 SILENT_DB = os.path.join(os.path.expanduser("~"), ".automontage", "silent.db")
+
+# --- Architecture de contenu V2 (7 familles) — source unique famille->mécanique.
+# objective = objectif PRINCIPAL unique de la famille ; cta_type = CTA principal.
+# Un seul objectif par vidéo (cf docs/BRANDING_V2.md). Révisable.
+FAMILIES_V2 = {
+    "miroir":      {"mechanic": "test",           "objective": "profil",       "cta_type": "profile_visit", "visual_layout": "sequence_3"},
+    "choix_force": {"mechanic": "elimination",    "objective": "commentaire",  "cta_type": "comment",       "visual_layout": "sequence_3"},
+    "projection":  {"mechanic": "projection",     "objective": "save",         "cta_type": "save",          "visual_layout": "sequence_2"},
+    "bascule":     {"mechanic": "transformation", "objective": "save",         "cta_type": "save",          "visual_layout": "sequence_2"},
+    "revelation":  {"mechanic": "revelation",     "objective": "retention",    "cta_type": "profile_visit", "visual_layout": "reveal"},
+    "conseil":     {"mechanic": "conseil",        "objective": "dm",           "cta_type": "dm_choix",      "visual_layout": "sequence_2"},
+    "preuve":      {"mechanic": "preuve",         "objective": "confiance",    "cta_type": "proof_action",  "visual_layout": "reveal"},
+}
+
+# CTA autorisés par famille (un concept choisit UN seul type dans cet ensemble).
+FAMILY_ALLOWED_CTA = {
+    "miroir": {"profile_visit"}, "choix_force": {"comment"},
+    "projection": {"save", "share"}, "bascule": {"save"},
+    "revelation": {"profile_visit"}, "conseil": {"dm_choix"}, "preuve": {"proof_action"},
+}
+
+# --------------------------------------------------------------------------- #
+# POSTS VALEUR (carrousels éducatifs Flowers Chrome — image, pas vidéo)
+# --------------------------------------------------------------------------- #
+POSTS = dict(
+    # Fichier des sujets, DANS le projet (part sur Oracle avec le code).
+    topics_file=os.path.join(os.path.dirname(os.path.abspath(__file__)), "posts", "sujets_valeur.txt"),
+    # 2 carrousels/jour, coloris alternés (rotation dark -> light -> pink).
+    slots=[12, 18],
+    colorways=["dark", "light"],   # rose retiré : noir / blanc en alternance
+    # anti-répétition : un sujet ne revient pas avant N posts.
+    topic_cycle=30,
+    width=1080, height=1350,
+)
+POSTS_DB = os.path.join(os.path.expanduser("~"), ".automontage", "posts.db")
+
+# --------------------------------------------------------------------------- #
+# POSTS PHOTO RÉELS (photos produit, 3/jour matin/aprèm/soir — IG seulement)
+# --------------------------------------------------------------------------- #
+PHOTOS = dict(
+    dir=os.path.join(os.path.dirname(os.path.abspath(__file__)), "Photo réel"),
+    slots=[(9, 0), (14, 0), (20, 0)],   # matin / après-midi / soir
+)
