@@ -1,5 +1,5 @@
 [
-  {"text": "Choisis une montre, je te dis qui tu es", "angle": "which_man"},
+  {"text": "Choisis. Je te décris.", "angle": "which_man"},
   {"text": "Ce que tu choisis dit de toi", "angle": "what_choice_says"},
   {"text": "Une montre. Une personnalité.", "angle": "one_watch_one_perso"},
   {"text": "Dis-moi ta montre, je te dis ton énergie", "angle": "watch_energy"},

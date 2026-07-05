@@ -18,6 +18,15 @@ def test_hooks_banks_non_empty():
         assert all(e["text"] and e["angle"] for e in entries), f
 
 
+def test_hooks_max_8_words():
+    """Guide §5 : 2-8 mots max à l'écran (évite les débordements 3 lignes)."""
+    for f in ["hooks_test.json", "hooks_revelation_psy.json", "hooks_trahison.json",
+              "hooks_perception.json", "hooks_test_perso.json"]:
+        for e in _load(f):
+            n = len(e["text"].split())
+            assert 2 <= n <= 8, (f, e["text"], n)
+
+
 def test_cta_typed():
     cta = _load("cta.json")
     types = {c["type"] for c in cta}
