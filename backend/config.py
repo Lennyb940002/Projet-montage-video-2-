@@ -103,12 +103,10 @@ SILENT = dict(
     # Dossier de concepts (hooks/CTA/règles) édité par l'utilisateur : source de
     # vérité des textes. L'app le parse ; fallback sur les JSON si absent.
     concepts_file=r"C:\Users\User\Downloads\Montage video\DOSSIER_CONCEPTS.md",
-    mechanic_concept={
-        "comparison": "COMPARAISON_2",
-        "vote":       "VOTE_2",
-        "revelation": "REVELATION_1",
-        "collection": "COMPARAISON_3",
-    },
+    # Rollback reels 1A (2026-07-05) : les 5 formats du guide servent leurs hooks
+    # via les banques JSON dédiées (backend/silent/banks/). Plus aucune mécanique
+    # ne tape dans le DOSSIER_CONCEPTS -> l'ancien contenu ne peut plus ressortir.
+    mechanic_concept={},
     # Biais par mécanique (stratégie data-driven 22/06, cf docs/STRATEGIE_CONTENU_VIDEO.md).
     # Multiplie le poids softmax. Défaut = 1.0 si absent. 0.0 = banni (retiré).
     # Mix cible (copywriter) : 60% identité / 20% décision / 15% projection / 5% duel.
