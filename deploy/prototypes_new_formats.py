@@ -187,10 +187,10 @@ def main():
     # --- Concept 3 : Tournoi 4 montres ---
     t3 = [_first(os.path.join(TILES, m, "*.png"))
           for m in ["Datejust", "Daytona", "Seiko GMT", "Nautilus"]]
-    out3 = os.path.join(OUT, "concept3_tournoi.mp4")
-    render_tournoi(t3, bg, "TOURNOI — TU CHOISIS LAQUELLE ?",
+    out3 = os.path.join(OUT, "concept3_choix.mp4")
+    render_tournoi(t3, bg, "TU CHOISIS LAQUELLE ?",
                    ["LIKE = 1", "PARTAGE = 2", "COMMENTE = 3", "ENREGISTRE = 4"], out3)
-    manifest.append({"concept": "tournoi_4_montres", "hook": "Tournoi — tu choisis laquelle ?",
+    manifest.append({"concept": "choix_4_montres", "hook": "Tu choisis laquelle ?",
                      "assets": t3 + [bg], "structure": "grille 2x2 + fond vidéo animé + 4 CTA d'action",
                      "nouveau_rendu": "oui (grille 2x2 sur fond vidéo)", "export": out3})
 
