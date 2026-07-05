@@ -83,3 +83,12 @@ def test_banned_mechanics_never_proposed():
         r = policy.decide(ContentStrategy(goal="engagement", count=1), history=[], seed=s)
         seen.add(r.mechanic)
     assert not (seen & banned), f"mécanique bannie sortie : {seen & banned}"
+
+
+def test_decide_1a_has_labels_and_cta():
+    for mech in ["test", "revelation_psy", "trahison", "perception", "test_perso"]:
+        r = policy.decide(ContentStrategy(goal="engagement", mechanic=mech, count=1),
+                          history=[], seed=3)
+        assert r.labels is not None and len(r.labels) == 3
+        assert all(t and c.startswith("&H") for t, c in r.labels)
+        assert r.cta_type in ("comment", "dm", "question")

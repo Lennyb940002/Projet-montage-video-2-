@@ -27,7 +27,7 @@ MECHANICS = {
                     "hook_file": "top3.json", "default_duration": 6.0,
                     "label_mode": "podium"},
     "test":        {"goal": "engagement", "asset_count": 3, "layouts": ["split_3"],
-                    "hook_file": "test.json", "default_duration": 6.0,
+                    "hook_file": "hooks_test.json", "default_duration": 6.0,
                     "label_mode": "profile"},
     # Projection / occasion (réf stratégie 22/06) : "laquelle pour un mariage ?"
     "projection":  {"goal": "engagement", "asset_count": 2, "layouts": ["split_2"],

@@ -8,7 +8,7 @@ contrainte forte) ; sinon le Sampler tire depuis la banque."""
 import math
 import random as _random
 from backend.config import SILENT
-from backend.silent import registry, hooks, sampler
+from backend.silent import registry, hooks, sampler, content
 from backend.silent import music as _music
 from backend.silent.recipe import VideoRecipe, validate
 
@@ -71,13 +71,26 @@ def decide(strategy, history, seed, exclude_models=(), exclude_music=()):
                 f"no mechanic for goal {strategy.goal!r} accepts {n} assets")
         candidates = sized
 
+    # Biais stratégique par mécanique (favorise/réduit/bannit). Les bannies
+    # (biais 0) sont retirées de la rotation — sauf si la mécanique est imposée
+    # explicitement (I4 : override utilisateur respecté).
+    bias = SILENT.get("mechanic_bias", {})
+    if strategy.mechanic is None:
+        kept = [m for m in candidates if bias.get(m, 1.0) > 0]
+        if kept:
+            candidates = kept
+
     window = list(history)[:SILENT["window_n"]]   # plus récent d'abord (cf store)
     denom = max(1, len(window))
+    temp = SILENT["temperature"]
     scored = []
     for m in candidates:
         score = (SILENT["base_score"]
                  - SILENT["w_rep"] * _occurrences(m, window) / denom            # D1/D3
                  - SILENT["w_pat"] * _is_short_cycle(m, window))                # D2
+        b = bias.get(m, 1.0)
+        if b > 0:
+            score += temp * math.log(b)   # biais multiplicatif exact sur le poids softmax
         scored.append((m, score))
     mechanic = _weighted_choice(scored, SILENT["temperature"], rng)            # S1/S2/S3
 
@@ -98,10 +111,19 @@ def decide(strategy, history, seed, exclude_models=(), exclude_music=()):
 
     duration = max(SILENT["min_duration"],
                    min(SILENT["max_duration"], meta["default_duration"]))
+
+    # Formats 1A : labels (profils/phrases) + CTA décidés ici (jamais dans le renderer).
+    _FORMATS_1A = {"test", "revelation_psy", "trahison", "perception", "test_perso"}
+    labels = cta_type = None
+    if mechanic in _FORMATS_1A:
+        labels, _ = content.pick_labels(mechanic, assets, rng)
+        _, cta_type = content.pick_cta(mechanic, rng)
+
     recipe = VideoRecipe(
         mechanic=mechanic, layout=layout, hook=hook, content_angle=angle,
         assets=assets, duration=duration,
         font=rng.choice(SILENT["fonts"]), accent=rng.choice(SILENT["accents"]),
         text_anim=rng.choice(SILENT["text_anims"]), seed=seed,
-        music=_music.pick_track(rng, exclude=exclude_music))   # son seedé, anti-répétition
+        music=_music.pick_track(rng, exclude=exclude_music),   # son seedé, anti-répétition
+        labels=labels, cta_type=cta_type)
     return validate(recipe)                                                    # R3

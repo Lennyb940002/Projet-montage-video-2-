@@ -114,7 +114,11 @@ SILENT = dict(
     # Mix cible (copywriter) : 60% identité / 20% décision / 15% projection / 5% duel.
     mechanic_bias={
         # --- Formats 1A (guide 2026-07-05) ---
-        "test": 3.0,               # identité (les 4 autres 1A ajoutés en Task 5)
+        "test": 3.0,               # identité
+        "revelation_psy": 2.5,     # révélation psychologique
+        "trahison": 2.0,           # ton choix te trahit
+        "perception": 1.5,         # ce que ta montre dit aux autres
+        "test_perso": 1.0,         # test rapide
         # --- BANNIS (guide : reels génériques) ---
         "elimination": 0.0, "vote": 0.0, "comparison": 0.0, "comparison_4": 0.0,
         "revelation": 0.0, "top3": 0.0, "collection": 0.0, "collection_4": 0.0,
