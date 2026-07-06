@@ -179,8 +179,9 @@
       "facebook"
     ],
     "topic": "Est-ce que ça va durer ?",
-    "posted": false,
-    "id": 9
+    "posted": true,
+    "id": 9,
+    "posted_at": "2026-07-06T22:46:42.381876+02:00"
   },
   {
     "kind": "story",
@@ -194,8 +195,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 10
+    "posted": true,
+    "id": 10,
+    "posted_at": "2026-07-06T22:46:42.381876+02:00"
   },
   {
     "kind": "story",
