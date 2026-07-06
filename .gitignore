@@ -34,3 +34,6 @@ assets/
 backend/Photo réel/
 Vidéo montage fond/
 backend/posts/catalogue/
+
+# logs de génération
+stock/*.log
