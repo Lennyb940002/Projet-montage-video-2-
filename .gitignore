@@ -23,3 +23,6 @@ deploy/oracle_instance.json
 # Réglages locaux avec secrets (au cas où déposés dans le repo)
 settings.json
 .env
+
+# Sous-titres temporaires du renderer
+*.ass
