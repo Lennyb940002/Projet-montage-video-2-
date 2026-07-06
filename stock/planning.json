@@ -126,7 +126,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "Rainbow Or rose",
       "Rainbow silver",
@@ -138,7 +138,8 @@
       "il n'a pas peur du regard"
     ],
     "cta": "comment",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-06T20:49:45.428654+02:00"
   },
   {
     "id": 8,
@@ -153,11 +154,12 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montre": "Rainbow silver",
     "prix": "194,90 €",
     "cta": "Trop cher ou pas ?",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-06T20:49:45.428654+02:00"
   },
   {
     "kind": "carrousel",
