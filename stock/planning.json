@@ -93,8 +93,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 5
+    "posted": true,
+    "id": 5,
+    "posted_at": "2026-07-06T18:47:38.929669+02:00"
   },
   {
     "kind": "story",
@@ -108,8 +109,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 6
+    "posted": true,
+    "id": 6,
+    "posted_at": "2026-07-06T18:47:38.929669+02:00"
   },
   {
     "id": 7,
