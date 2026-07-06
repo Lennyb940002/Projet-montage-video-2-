@@ -31,8 +31,9 @@ jobs:
 
       - name: Poster les reels dus
         env:
-          UPLOAD_POST_TOKEN: ${{ secrets.UPLOAD_POST_TOKEN }}
-          UPLOAD_POST_USER: ${{ secrets.UPLOAD_POST_USER }}
+          # accepte les 2 orthographes de secret (avec ou sans tiret-bas)
+          UPLOAD_POST_TOKEN: ${{ secrets.UPLOAD_POST_TOKEN || secrets.UPLOADPOST_TOKEN }}
+          UPLOAD_POST_USER: ${{ secrets.UPLOAD_POST_USER || secrets.UPLOADPOST_USER }}
           MAX_PER_RUN: "2"
         run: python deploy/post_from_planning.py
 
