@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "date": "2026-07-07",
+    "date": "2026-07-06",
     "heure": "07:00",
     "format": "trahison",
     "hook": "Tu vas choisir avec ton ego",
@@ -26,7 +26,7 @@
   },
   {
     "id": 2,
-    "date": "2026-07-07",
+    "date": "2026-07-06",
     "heure": "11:30",
     "format": "perception",
     "hook": "On te juge au poignet",
@@ -51,7 +51,7 @@
   },
   {
     "id": 3,
-    "date": "2026-07-07",
+    "date": "2026-07-06",
     "heure": "15:00",
     "format": "devine_prix",
     "hook": "Tu paierais combien ?",
@@ -68,7 +68,7 @@
   },
   {
     "id": 4,
-    "date": "2026-07-07",
+    "date": "2026-07-06",
     "heure": "17:00",
     "format": "trahison",
     "hook": "Tu crois choisir au hasard ?",
@@ -93,7 +93,7 @@
   },
   {
     "id": 5,
-    "date": "2026-07-07",
+    "date": "2026-07-06",
     "heure": "21:00",
     "format": "perception",
     "hook": "Ce détail change la perception",
@@ -118,7 +118,7 @@
   },
   {
     "id": 6,
-    "date": "2026-07-08",
+    "date": "2026-07-07",
     "heure": "07:00",
     "format": "trahison",
     "hook": "Ce choix parle pour toi",
@@ -143,7 +143,7 @@
   },
   {
     "id": 7,
-    "date": "2026-07-08",
+    "date": "2026-07-07",
     "heure": "11:30",
     "format": "test",
     "hook": "Ton poignet dit plus que tu crois",
@@ -168,7 +168,7 @@
   },
   {
     "id": 8,
-    "date": "2026-07-08",
+    "date": "2026-07-07",
     "heure": "15:00",
     "format": "perception",
     "hook": "Les gens remarquent plus que tu crois",
@@ -193,7 +193,7 @@
   },
   {
     "id": 9,
-    "date": "2026-07-08",
+    "date": "2026-07-07",
     "heure": "17:00",
     "format": "test_perso",
     "hook": "Test de personnalité en 3 secondes",
@@ -218,7 +218,7 @@
   },
   {
     "id": 10,
-    "date": "2026-07-08",
+    "date": "2026-07-07",
     "heure": "21:00",
     "format": "choix_4",
     "hook": "Ta préférée ?",
@@ -244,7 +244,7 @@
   },
   {
     "id": 11,
-    "date": "2026-07-09",
+    "date": "2026-07-08",
     "heure": "07:00",
     "format": "test",
     "hook": "Choisis vite. Pas de réflexion.",
@@ -269,7 +269,7 @@
   },
   {
     "id": 12,
-    "date": "2026-07-09",
+    "date": "2026-07-08",
     "heure": "11:30",
     "format": "trahison",
     "hook": "Tu vas te trahir en 3 secondes",
@@ -294,7 +294,7 @@
   },
   {
     "id": 13,
-    "date": "2026-07-09",
+    "date": "2026-07-08",
     "heure": "15:00",
     "format": "test",
     "hook": "Ton choix de montre parle pour toi",
@@ -319,7 +319,7 @@
   },
   {
     "id": 14,
-    "date": "2026-07-09",
+    "date": "2026-07-08",
     "heure": "17:00",
     "format": "choix_4",
     "hook": "1, 2, 3 ou 4 ?",
@@ -345,7 +345,7 @@
   },
   {
     "id": 15,
-    "date": "2026-07-09",
+    "date": "2026-07-08",
     "heure": "21:00",
     "format": "perception",
     "hook": "Ta montre donne une première impression",
@@ -370,7 +370,7 @@
   },
   {
     "id": 16,
-    "date": "2026-07-10",
+    "date": "2026-07-09",
     "heure": "07:00",
     "format": "test",
     "hook": "Choisis. Je te décris.",
@@ -395,7 +395,7 @@
   },
   {
     "id": 17,
-    "date": "2026-07-10",
+    "date": "2026-07-09",
     "heure": "11:30",
     "format": "devine_prix",
     "hook": "Tu paierais combien ?",
@@ -412,7 +412,7 @@
   },
   {
     "id": 18,
-    "date": "2026-07-10",
+    "date": "2026-07-09",
     "heure": "15:00",
     "format": "choix_4",
     "hook": "1, 2, 3 ou 4 ?",
@@ -438,7 +438,7 @@
   },
   {
     "id": 19,
-    "date": "2026-07-10",
+    "date": "2026-07-09",
     "heure": "17:00",
     "format": "perception",
     "hook": "Ce que ta montre dit aux autres",
@@ -463,7 +463,7 @@
   },
   {
     "id": 20,
-    "date": "2026-07-10",
+    "date": "2026-07-09",
     "heure": "21:00",
     "format": "test_perso",
     "hook": "Test rapide : t'es lequel ?",
@@ -488,7 +488,7 @@
   },
   {
     "id": 21,
-    "date": "2026-07-11",
+    "date": "2026-07-10",
     "heure": "07:00",
     "format": "test",
     "hook": "Ce que tu choisis dit de toi",
@@ -513,7 +513,7 @@
   },
   {
     "id": 22,
-    "date": "2026-07-11",
+    "date": "2026-07-10",
     "heure": "11:30",
     "format": "revelation_psy",
     "hook": "Ton choix parle pour toi",
@@ -538,7 +538,7 @@
   },
   {
     "id": 23,
-    "date": "2026-07-11",
+    "date": "2026-07-10",
     "heure": "15:00",
     "format": "perception",
     "hook": "Ton poignet parle avant toi",
@@ -563,7 +563,7 @@
   },
   {
     "id": 24,
-    "date": "2026-07-11",
+    "date": "2026-07-10",
     "heure": "17:00",
     "format": "test",
     "hook": "Une montre. Une personnalité.",
@@ -588,7 +588,7 @@
   },
   {
     "id": 25,
-    "date": "2026-07-11",
+    "date": "2026-07-10",
     "heure": "21:00",
     "format": "revelation_psy",
     "hook": "Tu choisis une image",
@@ -613,7 +613,7 @@
   },
   {
     "id": 26,
-    "date": "2026-07-12",
+    "date": "2026-07-11",
     "heure": "07:00",
     "format": "test",
     "hook": "Choisis vite. Pas de réflexion.",
@@ -638,7 +638,7 @@
   },
   {
     "id": 27,
-    "date": "2026-07-12",
+    "date": "2026-07-11",
     "heure": "11:30",
     "format": "revelation_psy",
     "hook": "Ce choix en dit long",
@@ -663,7 +663,7 @@
   },
   {
     "id": 28,
-    "date": "2026-07-12",
+    "date": "2026-07-11",
     "heure": "15:00",
     "format": "perception",
     "hook": "Ce détail change la perception",
@@ -688,7 +688,7 @@
   },
   {
     "id": 29,
-    "date": "2026-07-12",
+    "date": "2026-07-11",
     "heure": "17:00",
     "format": "trahison",
     "hook": "Ta montre préférée dit trop de choses",
@@ -713,7 +713,7 @@
   },
   {
     "id": 30,
-    "date": "2026-07-12",
+    "date": "2026-07-11",
     "heure": "21:00",
     "format": "devine_prix",
     "hook": "Ça coûte combien à ton avis ?",
@@ -730,7 +730,7 @@
   },
   {
     "id": 31,
-    "date": "2026-07-13",
+    "date": "2026-07-12",
     "heure": "07:00",
     "format": "trahison",
     "hook": "Ton choix te trahit un peu",
@@ -755,7 +755,7 @@
   },
   {
     "id": 32,
-    "date": "2026-07-13",
+    "date": "2026-07-12",
     "heure": "11:30",
     "format": "test_perso",
     "hook": "Choisis sans réfléchir. Ton choix va parler.",
@@ -780,7 +780,7 @@
   },
   {
     "id": 33,
-    "date": "2026-07-13",
+    "date": "2026-07-12",
     "heure": "15:00",
     "format": "trahison",
     "hook": "Ton choix te trahit",
@@ -805,7 +805,7 @@
   },
   {
     "id": 34,
-    "date": "2026-07-13",
+    "date": "2026-07-12",
     "heure": "17:00",
     "format": "test_perso",
     "hook": "Test rapide. Choisis une montre.",
@@ -830,7 +830,7 @@
   },
   {
     "id": 35,
-    "date": "2026-07-13",
+    "date": "2026-07-12",
     "heure": "21:00",
     "format": "trahison",
     "hook": "Tu crois choisir au hasard ?",
@@ -855,7 +855,7 @@
   },
   {
     "id": 36,
-    "date": "2026-07-14",
+    "date": "2026-07-13",
     "heure": "07:00",
     "format": "revelation_psy",
     "hook": "Ton choix parle avant toi",
@@ -880,7 +880,7 @@
   },
   {
     "id": 37,
-    "date": "2026-07-14",
+    "date": "2026-07-13",
     "heure": "11:30",
     "format": "devine_prix",
     "hook": "Tu paierais combien ?",
@@ -897,7 +897,7 @@
   },
   {
     "id": 38,
-    "date": "2026-07-14",
+    "date": "2026-07-13",
     "heure": "15:00",
     "format": "choix_4",
     "hook": "Tu prends laquelle ?",
@@ -923,7 +923,7 @@
   },
   {
     "id": 39,
-    "date": "2026-07-14",
+    "date": "2026-07-13",
     "heure": "17:00",
     "format": "devine_prix",
     "hook": "Devine le prix de cette montre",
@@ -940,7 +940,7 @@
   },
   {
     "id": 40,
-    "date": "2026-07-14",
+    "date": "2026-07-13",
     "heure": "21:00",
     "format": "perception",
     "hook": "Les gens remarquent plus que tu crois",
@@ -965,7 +965,7 @@
   },
   {
     "id": 41,
-    "date": "2026-07-15",
+    "date": "2026-07-14",
     "heure": "07:00",
     "format": "revelation_psy",
     "hook": "Ton choix n'est pas innocent",
@@ -990,7 +990,7 @@
   },
   {
     "id": 42,
-    "date": "2026-07-15",
+    "date": "2026-07-14",
     "heure": "11:30",
     "format": "test",
     "hook": "La montre que tu préfères te décrit",
@@ -1015,7 +1015,7 @@
   },
   {
     "id": 43,
-    "date": "2026-07-15",
+    "date": "2026-07-14",
     "heure": "15:00",
     "format": "trahison",
     "hook": "Tu vas te trahir en 3 secondes",
@@ -1040,7 +1040,7 @@
   },
   {
     "id": 44,
-    "date": "2026-07-15",
+    "date": "2026-07-14",
     "heure": "17:00",
     "format": "test",
     "hook": "Choisis. Je te décris.",
@@ -1065,7 +1065,7 @@
   },
   {
     "id": 45,
-    "date": "2026-07-15",
+    "date": "2026-07-14",
     "heure": "21:00",
     "format": "choix_4",
     "hook": "Laquelle au poignet ?",
@@ -1091,7 +1091,7 @@
   },
   {
     "id": 46,
-    "date": "2026-07-16",
+    "date": "2026-07-15",
     "heure": "07:00",
     "format": "revelation_psy",
     "hook": "Elle dit ce que tu tais",
@@ -1116,7 +1116,7 @@
   },
   {
     "id": 47,
-    "date": "2026-07-16",
+    "date": "2026-07-15",
     "heure": "11:30",
     "format": "devine_prix",
     "hook": "Ça coûte combien à ton avis ?",
@@ -1133,7 +1133,7 @@
   },
   {
     "id": 48,
-    "date": "2026-07-16",
+    "date": "2026-07-15",
     "heure": "15:00",
     "format": "revelation_psy",
     "hook": "Tu choisis une image",
@@ -1158,7 +1158,7 @@
   },
   {
     "id": 49,
-    "date": "2026-07-16",
+    "date": "2026-07-15",
     "heure": "17:00",
     "format": "devine_prix",
     "hook": "Devine le prix de cette montre",
@@ -1175,7 +1175,7 @@
   },
   {
     "id": 50,
-    "date": "2026-07-16",
+    "date": "2026-07-15",
     "heure": "21:00",
     "format": "choix_4",
     "hook": "Laquelle au poignet ?",
@@ -1201,7 +1201,7 @@
   },
   {
     "id": 51,
-    "date": "2026-07-17",
+    "date": "2026-07-16",
     "heure": "07:00",
     "format": "test",
     "hook": "Ce que tu choisis dit de toi",
@@ -1226,7 +1226,7 @@
   },
   {
     "id": 52,
-    "date": "2026-07-17",
+    "date": "2026-07-16",
     "heure": "11:30",
     "format": "revelation_psy",
     "hook": "Ton choix révèle quelque chose",
@@ -1251,7 +1251,7 @@
   },
   {
     "id": 53,
-    "date": "2026-07-17",
+    "date": "2026-07-16",
     "heure": "15:00",
     "format": "devine_prix",
     "hook": "Tu paierais combien ?",
@@ -1268,7 +1268,7 @@
   },
   {
     "id": 54,
-    "date": "2026-07-17",
+    "date": "2026-07-16",
     "heure": "17:00",
     "format": "trahison",
     "hook": "Tu vas choisir avec ton ego",
@@ -1293,7 +1293,7 @@
   },
   {
     "id": 55,
-    "date": "2026-07-17",
+    "date": "2026-07-16",
     "heure": "21:00",
     "format": "devine_prix",
     "hook": "Ça coûte combien à ton avis ?",
@@ -1310,7 +1310,7 @@
   },
   {
     "id": 56,
-    "date": "2026-07-18",
+    "date": "2026-07-17",
     "heure": "07:00",
     "format": "revelation_psy",
     "hook": "Ton choix parle avant toi",
@@ -1335,7 +1335,7 @@
   },
   {
     "id": 57,
-    "date": "2026-07-18",
+    "date": "2026-07-17",
     "heure": "11:30",
     "format": "test",
     "hook": "Ton choix de montre parle pour toi",
@@ -1360,7 +1360,7 @@
   },
   {
     "id": 58,
-    "date": "2026-07-18",
+    "date": "2026-07-17",
     "heure": "15:00",
     "format": "test_perso",
     "hook": "3 secondes pour choisir",
@@ -1385,7 +1385,7 @@
   },
   {
     "id": 59,
-    "date": "2026-07-18",
+    "date": "2026-07-17",
     "heure": "17:00",
     "format": "choix_4",
     "hook": "Tu choisis laquelle ?",
@@ -1411,7 +1411,7 @@
   },
   {
     "id": 60,
-    "date": "2026-07-18",
+    "date": "2026-07-17",
     "heure": "21:00",
     "format": "revelation_psy",
     "hook": "Ton choix n'est pas innocent",
@@ -1436,7 +1436,7 @@
   },
   {
     "id": 61,
-    "date": "2026-07-19",
+    "date": "2026-07-18",
     "heure": "07:00",
     "format": "test",
     "hook": "Dis-moi ta montre, je te dis ton énergie",
@@ -1461,7 +1461,7 @@
   },
   {
     "id": 62,
-    "date": "2026-07-19",
+    "date": "2026-07-18",
     "heure": "11:30",
     "format": "trahison",
     "hook": "Ta montre préférée dit trop de choses",
@@ -1486,7 +1486,7 @@
   },
   {
     "id": 63,
-    "date": "2026-07-19",
+    "date": "2026-07-18",
     "heure": "15:00",
     "format": "devine_prix",
     "hook": "Tu paierais combien ?",
@@ -1503,7 +1503,7 @@
   },
   {
     "id": 64,
-    "date": "2026-07-19",
+    "date": "2026-07-18",
     "heure": "17:00",
     "format": "test_perso",
     "hook": "Ton choix va parler pour toi",
@@ -1528,7 +1528,7 @@
   },
   {
     "id": 65,
-    "date": "2026-07-19",
+    "date": "2026-07-18",
     "heure": "21:00",
     "format": "test",
     "hook": "Choisis vite. Pas de réflexion.",
@@ -1553,7 +1553,7 @@
   },
   {
     "id": 66,
-    "date": "2026-07-20",
+    "date": "2026-07-19",
     "heure": "07:00",
     "format": "trahison",
     "hook": "Ton choix te trahit un peu",
@@ -1578,7 +1578,7 @@
   },
   {
     "id": 67,
-    "date": "2026-07-20",
+    "date": "2026-07-19",
     "heure": "11:30",
     "format": "test",
     "hook": "La montre que tu préfères te décrit",
@@ -1603,7 +1603,7 @@
   },
   {
     "id": 68,
-    "date": "2026-07-20",
+    "date": "2026-07-19",
     "heure": "15:00",
     "format": "revelation_psy",
     "hook": "Ce choix en dit long",
@@ -1628,7 +1628,7 @@
   },
   {
     "id": 69,
-    "date": "2026-07-20",
+    "date": "2026-07-19",
     "heure": "17:00",
     "format": "choix_4",
     "hook": "Tu choisis laquelle ?",
@@ -1654,7 +1654,7 @@
   },
   {
     "id": 70,
-    "date": "2026-07-20",
+    "date": "2026-07-19",
     "heure": "21:00",
     "format": "test",
     "hook": "Choisis. Je te décris.",
