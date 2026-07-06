@@ -15,6 +15,20 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from backend.silent import policy, render
 from backend.silent.strategy import ContentStrategy
 from backend.silent import special_render as sr
+from backend.config import BASE_HASHTAGS
+
+# CTA texte ajouté à la caption selon le type logué (engagement)
+_CTA_TEXT = {"comment": "Dis-le en commentaire 👇", "question": "Réponds en commentaire 👇",
+             "dm": "Écris « MONTRE » en DM"}
+
+
+def _caption(hook, cta_type=None):
+    """Caption robuste (sans Gemini) : hook + CTA + hashtags de base."""
+    parts = [hook]
+    if cta_type and _CTA_TEXT.get(cta_type):
+        parts.append(_CTA_TEXT[cta_type])
+    tags = " ".join(BASE_HASHTAGS)
+    return "\n".join(parts) + "\n\n" + tags
 
 # import du générateur de formats spéciaux (banques + builders)
 _SP = os.path.join(os.path.dirname(os.path.abspath(__file__)), "generate_special_formats.py")
@@ -23,7 +37,7 @@ special = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(special)
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUT = os.path.join(ROOT, "output", "stock")
+OUT = os.path.join(ROOT, "stock")   # dossier VERSIONNÉ (poussé sur GitHub pour Actions)
 SLOTS = [(7, 0), (11, 30), (15, 0), (17, 0), (21, 0)]   # 5 reels/jour (cf scheduler)
 PLATFORMS = ["instagram", "tiktok"]
 
@@ -109,6 +123,7 @@ def main(days=1, start=None, seed=1):
         planning.append({
             "id": i, "date": slot["date"], "heure": slot["heure"],
             "format": fmt, "hook": hook, "fichier": name,
+            "caption": _caption(hook, extra.get("cta")),
             "platforms": PLATFORMS, "posted": False, **extra,
         })
         print(f"[{i:03d}] {slot['date']} {slot['heure']} | {fmt:14s} | {hook}", flush=True)

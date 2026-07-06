@@ -1,0 +1,45 @@
+name: post-stock
+
+# Poste automatiquement les reels du stock (stock/planning.json) à leur créneau.
+# Cron toutes les 30 min (UTC ; best-effort GitHub, léger retard possible).
+# Nécessite 2 secrets repo (Settings > Secrets and variables > Actions) :
+#   UPLOAD_POST_TOKEN, UPLOAD_POST_USER
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-stock
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - run: pip install requests
+
+      - name: Poster les reels dus
+        env:
+          UPLOAD_POST_TOKEN: ${{ secrets.UPLOAD_POST_TOKEN }}
+          UPLOAD_POST_USER: ${{ secrets.UPLOAD_POST_USER }}
+          MAX_PER_RUN: "2"
+        run: python deploy/post_from_planning.py
+
+      - name: Sauver l'avancement (posted)
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add stock/planning.json
+          git diff --staged --quiet || git commit -m "chore(stock): marque reels postés [skip ci]"
+          git push
