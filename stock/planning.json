@@ -11,8 +11,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 1
+    "posted": true,
+    "id": 1,
+    "posted_at": "2026-07-06T14:06:22.226315+02:00"
   },
   {
     "id": 2,
@@ -27,7 +28,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "Rainbow silver",
       "Rainbow Or rose",
@@ -39,7 +40,8 @@
       "tu veux qu'on sente ton goût"
     ],
     "cta": "comment",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-06T14:06:22.226315+02:00"
   },
   {
     "kind": "carrousel",
