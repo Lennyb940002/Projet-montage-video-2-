@@ -61,8 +61,9 @@
       "facebook"
     ],
     "topic": "Saphir ou minéral : pourquoi ça change tout",
-    "posted": false,
-    "id": 3
+    "posted": true,
+    "id": 3,
+    "posted_at": "2026-07-06T15:37:42.142670+02:00"
   },
   {
     "kind": "story",
@@ -76,8 +77,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 4
+    "posted": true,
+    "id": 4,
+    "posted_at": "2026-07-06T15:37:42.142670+02:00"
   },
   {
     "kind": "story",
