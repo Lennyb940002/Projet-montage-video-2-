@@ -211,8 +211,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 11
+    "posted": true,
+    "id": 11,
+    "posted_at": "2026-07-07T00:05:40.416350+02:00"
   },
   {
     "id": 12,
@@ -227,7 +228,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "Rainbow saphire",
       "Rainbow Or rose",
@@ -239,7 +240,8 @@
       "tu veux du classique qui monte d'un cran"
     ],
     "cta": "comment",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T00:05:40.416350+02:00"
   },
   {
     "id": 13,
