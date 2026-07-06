@@ -1,0 +1,7 @@
+[
+  {"text": "Laquelle pour un mariage ?", "angle": "occasion_wedding"},
+  {"text": "Laquelle pour l'été ?", "angle": "occasion_summer"},
+  {"text": "Laquelle pour partir en vacances ?", "angle": "occasion_vacation"},
+  {"text": "Laquelle pour un premier rendez-vous ?", "angle": "occasion_date"},
+  {"text": "Laquelle au bureau ?", "angle": "occasion_office"}
+]

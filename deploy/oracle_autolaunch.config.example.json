@@ -1,0 +1,11 @@
+{
+  "_comment": "Copie ce fichier en 'oracle_autolaunch.config.json' et renseigne ssh_public_key_path.",
+  "compartment_id": "",
+  "ssh_public_key_path": "C:\\Users\\User\\Downloads\\ssh-key-2026-XX-XX.key.pub",
+  "display_name": "automontage",
+  "retry_seconds": 180,
+  "attempts": [
+    { "shape": "VM.Standard.A1.Flex", "ocpus": 1, "memory_gb": 6, "os": "Canonical Ubuntu", "os_version": "22.04" },
+    { "shape": "VM.Standard.E2.1.Micro", "os": "Canonical Ubuntu", "os_version": "22.04" }
+  ]
+}

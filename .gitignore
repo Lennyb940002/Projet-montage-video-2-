@@ -26,3 +26,11 @@ settings.json
 
 # Sous-titres temporaires du renderer
 *.ass
+
+# Gros assets — copies locales, jamais versionnees (a recopier a la main)
+content5/
+SFX/
+assets/
+backend/Photo réel/
+Vidéo montage fond/
+backend/posts/catalogue/

@@ -1,4 +1,12 @@
 [
   {"text": "Ce que ton choix dit de toi", "angle": "what_choice_says"},
-  {"text": "Choisis une montre, je te dis qui tu es", "angle": "choose_who"}
+  {"text": "Choisis une montre, je te dis quel homme tu es", "angle": "which_man"},
+  {"text": "Ton style selon ton choix", "angle": "style_by_choice"},
+  {"text": "Quel homme es-tu ?", "angle": "which_man_short"},
+  {"text": "Ton niveau d'élégance selon ta montre", "angle": "elegance_level"},
+  {"text": "Ta personnalité horlogère", "angle": "watch_personality"},
+  {"text": "La montre que tu choisis révèle quelque chose", "angle": "choice_reveals"},
+  {"text": "Ce que tu recherches dans la vie", "angle": "what_you_seek"},
+  {"text": "Ton alter ego horloger", "angle": "alter_ego"},
+  {"text": "Choisis sans réfléchir", "angle": "choose_no_think"}
 ]

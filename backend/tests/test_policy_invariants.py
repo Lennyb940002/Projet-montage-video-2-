@@ -3,6 +3,7 @@ Vérifie sur TOUTES les mécaniques que les contrats tiennent ensemble."""
 import dataclasses
 from collections import Counter
 import pytest
+from backend.config import SILENT
 from backend.silent import registry, hooks, policy
 from backend.silent.strategy import ContentStrategy
 from backend.silent.recipe import VideoRecipe, validate
@@ -51,8 +52,9 @@ def test_P1_every_goal_maps_to_mechanic():
         assert registry.mechanics_for_goal(goal)
 
 
-def test_S1_selection_is_weighted_not_argmax():
-    # Sans contrainte de mécanique, les 2 mécaniques engagement apparaissent.
+def test_S1_selection_is_weighted_not_argmax(monkeypatch):
+    # Mécanisme pur (sans biais stratégique) : les 2 mécaniques apparaissent.
+    monkeypatch.setitem(SILENT, "mechanic_bias", {})
     counts = Counter()
     for seed in range(80):
         r = policy.decide(ContentStrategy(goal="engagement", count=1,
@@ -67,15 +69,21 @@ def test_S3_seed_determinism_across_mechanics():
         assert policy.decide(s, [], seed=99) == policy.decide(s, [], seed=99)
 
 
-def test_D1_D3_no_hard_exclusion_but_biased():
+def test_D1_D3_no_hard_exclusion_but_biased(monkeypatch):
     # Historique saturé d'une mécanique : elle reste possible (pas d'exclusion dure)
-    # mais minoritaire (biais).
+    # mais minoritaire (biais). Mécanisme pur, sans biais stratégique. Robuste au
+    # roster : 'comparison' est tirée MOINS avec historique saturé que sans.
+    monkeypatch.setitem(SILENT, "mechanic_bias", {})
+
+    def picks(hist, n=100):
+        c = Counter()
+        for seed in range(n):
+            r = policy.decide(ContentStrategy(goal="engagement", count=1,
+                                              assets=("a.mp4", "b.mp4")), hist, seed=seed)
+            c[r.mechanic] += 1
+        return c
     hist = [{"mechanic": "comparison", "content_angle": "a_or_b",
              "layout": "split_2"}] * 5
-    counts = Counter()
-    for seed in range(80):
-        r = policy.decide(ContentStrategy(goal="engagement", count=1,
-                                          assets=("a.mp4", "b.mp4")), hist, seed=seed)
-        counts[r.mechanic] += 1
-    assert counts["comparison"] > 0                       # jamais 0 (soft)
-    assert counts["vote"] > counts["comparison"]          # biais vers diversité
+    penalized, baseline = picks(hist), picks([])
+    assert penalized["comparison"] > 0                    # jamais 0 (soft)
+    assert penalized["comparison"] < baseline["comparison"]   # biais vers diversité

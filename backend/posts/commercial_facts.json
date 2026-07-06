@@ -1,0 +1,14 @@
+{
+  "_comment": "Source UNIQUE des faits commerciaux. Aucun texte publiable ne peut être généré depuis un champ non 'verified'. Remplir value + passer status à 'verified' UNIQUEMENT avec une information réelle confirmée par le propriétaire.",
+  "free_advice":        {"value": null, "status": "requires_confirmation"},
+  "shipping_zones":     {"value": null, "status": "requires_confirmation"},
+  "preparation_delay":  {"value": null, "status": "requires_confirmation"},
+  "shipping_delay":     {"value": null, "status": "requires_confirmation"},
+  "carrier":            {"value": null, "status": "requires_confirmation"},
+  "delivery_tracking":  {"value": null, "status": "requires_confirmation"},
+  "return_policy":      {"value": null, "status": "requires_confirmation"},
+  "payment_methods":    {"value": [],   "status": "requires_confirmation"},
+  "after_sales_process":{"value": null, "status": "requires_confirmation"},
+  "quality_control_process": {"value": null, "status": "requires_confirmation"},
+  "verified_stock":     {"value": null, "status": "requires_confirmation"}
+}

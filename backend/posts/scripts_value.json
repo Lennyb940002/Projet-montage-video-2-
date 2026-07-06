@@ -1,0 +1,133 @@
+[
+  {
+    "id": "val_qualite",
+    "topic": "Comment reconnaître une montre de qualité ?",
+    "content": {
+      "kicker_hook": "la plupart regardent le logo",
+      "hook_title": "Comment reconnaître<br>une montre<br>de qualité ?",
+      "hook_sub": "— les passionnés regardent ces 3 détails —",
+      "points": [
+        {"label": "— 01 · le verre —", "title": "Le verre.",
+         "body": ["Une montre de qualité protège son cadran durablement."],
+         "vs": {"them": "Verre minéral<br>se raye plus vite",
+                "us": "Verre saphir<br>anti-rayures · premium"},
+         "body2": ["Le verre est souvent le premier indice."]},
+        {"label": "— 02 · le mouvement —", "title": "Le mouvement.",
+         "body": ["C'est le cœur de la montre. Une montre peut être belle dehors… et décevoir dedans."],
+         "bullets": ["Fiabilité", "Précision", "Longévité"]},
+        {"label": "— 03 · les finitions —", "title": "Les finitions.",
+         "small_title": true,
+         "body": ["Regarde les détails :"],
+         "bullets": ["Alignement des index", "Finition du bracelet", "Qualité du cadran", "Travail des aiguilles"],
+         "highlight": "C'est souvent là que la différence se voit."}
+      ],
+      "outro_tagline": "Une belle montre ne se résume pas à son prix.<br><br>Les <strong>détails</strong> font toute la différence.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour les modèles dispo"
+    },
+    "caption": "On pense souvent qu'une montre de qualité se reconnaît à son prix. En réalité, les passionnés regardent surtout le verre, le mouvement et les finitions. Ce sont ces détails qui influencent l'expérience au quotidien et la durabilité dans le temps.\n\nChez Flowers Chrome®, nous privilégions la transparence : chaque modèle est présenté avec ses caractéristiques et son histoire.\n\n📩 DM \"MONTRE\" pour découvrir les modèles actuellement disponibles.\n\n#montre #horlogerie #seikomod #watchlover #montrestyle #flowerschrome",
+    "hashtags": ["#montre", "#horlogerie", "#seikomod", "#watchlover", "#flowerschrome"]
+  },
+  {
+    "id": "val_auto_quartz",
+    "topic": "Automatique ou quartz : laquelle choisir ?",
+    "content": {
+      "kicker_hook": "— le grand débat —",
+      "big": "VS",
+      "hook_title": "Automatique<br>ou quartz ?",
+      "hook_sub": "— ce que personne ne t'explique —",
+      "points": [
+        {"label": "— 01 · l'énergie —", "title": "D'où vient<br>le mouvement ?",
+         "body": ["Le quartz avance grâce à une <strong>pile</strong>. L'automatique se remonte avec <strong>les mouvements de ton poignet</strong>. Aucune pile."],
+         "vs": {"them": "Quartz<br>pile à changer", "us": "Automatique<br>remontée au poignet"},
+         "body2": ["Tant que tu la portes, elle vit. <em>Sans rien faire.</em>"]},
+        {"label": "— 02 · le ressenti —", "title": "La trotteuse<br>qui glisse.",
+         "body": ["Le quartz fait <strong>tic… tac…</strong> saccadé. L'automatique <strong>balaie</strong> le cadran d'un geste continu."],
+         "vs": {"them": "Quartz<br>secousse sèche", "us": "Automatique<br>balayage fluide"}},
+        {"label": "— 03 · la durée —", "title": "Faite pour<br>te survivre.",
+         "small_title": true,
+         "body": ["Une pile meurt. Un mouvement automatique se <strong>répare</strong> et se <strong>transmet</strong>."],
+         "highlight": "Une pile, ça se jette. Un mouvement, ça se transmet."}
+      ],
+      "outro_tagline": "Le quartz donne l'heure.<br><br>L'<strong>automatique</strong> raconte quelque chose.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour les modèles"
+    },
+    "caption": "Automatique ou quartz : le débat qui revient tout le temps. La vraie différence n'est pas le prix, c'est ce qu'il se passe à l'intérieur. Le quartz fonctionne à la pile : pratique, mais jetable. L'automatique se remonte au poignet : pas de pile, une trotteuse fluide, un mécanisme qui se répare et se transmet.\n\nChez Flowers Chrome, chaque pièce embarque un mouvement automatique japonais reconnu.\n\n📩 DM \"MONTRE\" pour découvrir les modèles disponibles.\n\n#seikomod #montreautomatique #montrehomme #horlogerie #flowerschrome",
+    "hashtags": ["#seikomod", "#montreautomatique", "#montrehomme", "#horlogerie", "#flowerschrome"]
+  },
+  {
+    "id": "val_saphir",
+    "topic": "Saphir ou minéral : pourquoi ça change tout",
+    "content": {
+      "kicker_hook": "le détail qu'on néglige",
+      "hook_title": "Saphir ou<br>minéral ?",
+      "hook_sub": "— pourquoi ça change tout —",
+      "points": [
+        {"label": "— le minéral —", "title": "Le verre minéral.",
+         "body": ["Correct… mais il se raye au moindre contact."]},
+        {"label": "— le saphir —", "title": "Le verre saphir.",
+         "body": ["Quasi inrayable. Et un aspect nettement plus premium."]},
+        {"label": "— au quotidien —", "title": "Ce que tu vois.",
+         "small_title": true,
+         "body": ["Tous les jours, sous tes yeux :"],
+         "bullets": ["Moins de micro-rayures", "Une montre qui reste nette", "Une revente plus facile"],
+         "highlight": "Le verre, c'est ce que tu regardes toute la journée."}
+      ],
+      "outro_tagline": "Le saphir n'est pas un luxe.<br><br>C'est un <strong>choix de bon sens</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour les modèles"
+    },
+    "caption": "Verre minéral ou saphir ? Le minéral fait le travail, mais se raye vite. Le saphir, lui, est quasi inrayable et donne un aspect premium. Et comme le verre est ce que tu regardes toute la journée, ce détail change vraiment l'expérience au quotidien.\n\n📩 DM \"MONTRE\" pour découvrir les modèles disponibles.\n\n#seikomod #montre #horlogerie #sapphirecrystal #flowerschrome",
+    "hashtags": ["#seikomod", "#montre", "#horlogerie", "#sapphirecrystal", "#flowerschrome"]
+  },
+  {
+    "id": "val_seiko_mod",
+    "topic": "Qu'est-ce qu'une Seiko Mod ?",
+    "content": {
+      "kicker_hook": "en 30 secondes",
+      "hook_title": "Qu'est-ce qu'une<br>Seiko Mod ?",
+      "hook_sub": "— la transparence totale —",
+      "points": [
+        {"label": "— la base —", "title": "Une vraie Seiko.",
+         "body": ["On part d'une montre Seiko japonaise authentique."]},
+        {"label": "— la touche —", "title": "Personnalisée.",
+         "body": ["Cadran, lunette, aiguilles : retravaillés à la main."]},
+        {"label": "— la légalité —", "title": "Assumée.",
+         "small_title": true,
+         "body": ["Aucun logo emprunté. Aucune contrefaçon."],
+         "highlight": "Une base reconnue, un style unique."}
+      ],
+      "outro_tagline": "Une Seiko Mod,<br><br>c'est de l'horlogerie <strong>honnête</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « INFO » pour comprendre"
+    },
+    "caption": "Une Seiko Mod, c'est simple : on part d'une vraie Seiko japonaise, et on la personnalise à la main — cadran, lunette, aiguilles. Une base reconnue, un style unique, aucun logo emprunté. De l'horlogerie assumée, pas une contrefaçon.\n\n📩 DM \"INFO\" pour tout comprendre.\n\n#seikomod #seikomods #horlogerie #watchcommunity #flowerschrome",
+    "hashtags": ["#seikomod", "#seikomods", "#horlogerie", "#watchcommunity", "#flowerschrome"]
+  },
+  {
+    "id": "val_premiere_montre",
+    "topic": "Comment choisir sa première montre ?",
+    "content": {
+      "kicker_hook": "sans te tromper",
+      "hook_title": "Comment choisir<br>ta première montre ?",
+      "hook_sub": "— 3 repères simples —",
+      "points": [
+        {"label": "— le style —", "title": "Commence par toi.",
+         "body": ["Habillée ou sportive ? Pars de ce que tu portes déjà."]},
+        {"label": "— la taille —", "title": "Le bon diamètre.",
+         "body": ["36-40 mm passe sur la plupart des poignets."]},
+        {"label": "— la qualité —", "title": "Ce qui ne se voit pas.",
+         "small_title": true,
+         "body": ["Au-delà du look, vérifie :"],
+         "bullets": ["Verre saphir", "Mouvement fiable", "Finitions soignées"],
+         "highlight": "Une première montre se garde longtemps. Choisis-la bien."}
+      ],
+      "outro_tagline": "Ta première montre<br><br>doit te <strong>ressembler</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » et je t'aide"
+    },
+    "caption": "Choisir sa première montre sans se tromper, c'est 3 repères : pars de ton style (habillée ou sportive), vise la bonne taille (36-40 mm pour la plupart), et regarde la qualité qui ne se voit pas — verre saphir, mouvement fiable, finitions. Une première montre se garde longtemps.\n\n📩 DM \"CHOIX\" et je t'aide à trouver la tienne.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome",
+    "hashtags": ["#montre", "#horlogerie", "#seikomod", "#montrehomme", "#flowerschrome"]
+  }
+]

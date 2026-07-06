@@ -1,10 +1,14 @@
 """Bot Telegram : envoie la vidéo pour validation (boutons ✅/❌/🔄), gère les
 callbacks et le timeout 30 min. Long-polling (OK sur VM always-on)."""
 import asyncio
+import logging
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telegram.error import NetworkError, TimedOut
 from telegram.ext import Application, CallbackQueryHandler
 from backend import settings
 from backend.distribution import orchestrator
+
+_log = logging.getLogger("automontage.telegram")
 
 APPROVAL_TIMEOUT_S = 30 * 60
 
@@ -62,8 +66,19 @@ async def _on_callback(update, context):
         caption="✅ Publié" if decision == "approve" else "❌ Skippé")
 
 
+async def _on_error(update, context):
+    """Erreurs réseau (ReadError/TimedOut) = transitoires : PTB relance le polling
+    tout seul. On loggue une ligne discrète au lieu du pavé de stacktrace."""
+    err = context.error
+    if isinstance(err, (NetworkError, TimedOut)):
+        _log.warning("Telegram réseau (transitoire, reprise auto) : %s", err)
+    else:
+        _log.exception("Erreur Telegram non gérée", exc_info=err)
+
+
 def build_app():
     token, _ = _cfg()
     app = Application.builder().token(token).build()
     app.add_handler(CallbackQueryHandler(_on_callback))
+    app.add_error_handler(_on_error)
     return app

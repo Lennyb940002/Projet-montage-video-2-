@@ -1,5 +1,8 @@
 [
   {"text": "Vous devez en supprimer 2", "angle": "remove_2"},
-  {"text": "Gardez-en une seule", "angle": "keep_one"},
-  {"text": "Vous ne pouvez sauver qu'une montre", "angle": "save_one"}
+  {"text": "Une seule survit", "angle": "one_survives"},
+  {"text": "Tu ne peux en garder qu'une", "angle": "keep_one"},
+  {"text": "Choix impossible : sauve-en une", "angle": "impossible_choice"},
+  {"text": "Ton choix final", "angle": "final_choice"},
+  {"text": "Si je devais faire le ménage aujourd'hui", "angle": "cleanup_today"}
 ]

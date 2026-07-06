@@ -1,0 +1,8 @@
+{
+  "_comment": "Sélection EXPLICITE du meilleur visuel héros par modèle (lisible, centré, peu encombré, compatible Cadre Nocturne). Choisi sur planche le 2026-07-03. Traçable via resolved_asset_id du manifeste.",
+  "aurora":   {"preferred_asset_id": "or_rose_04"},
+  "nocturne": {"preferred_asset_id": "saphir_01"},
+  "braise":   {"preferred_asset_id": "ruby_01"},
+  "eclipse":  {"preferred_asset_id": "silver_02"},
+  "meridien": {"preferred_asset_id": "gmt_02"}
+}

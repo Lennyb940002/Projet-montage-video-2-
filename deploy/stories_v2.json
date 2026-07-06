@@ -1,0 +1,607 @@
+{
+  "_comment": "Banque Stories V2 — source unique. Highlights (séquences ordonnées) + familles quotidiennes. claim_dependencies -> backend/posts/commercial_facts.json ; toute dépendance non 'verified' bloque la frame (blocked_unverified_claim). render_mode requires_real_asset sans asset -> blocked_missing_asset (brief interne seulement, JAMAIS de faux template).",
+  "highlights": {
+    "models": {
+      "title": "MODÈLES",
+      "objective": "désir et découverte de la gamme",
+      "frames": [
+        {
+          "frame_id": "mod_01",
+          "template_id": "hero_model",
+          "objective": "désir Aurora",
+          "on_screen_text": "FC Aurora",
+          "subtext": "La lumière chaude",
+          "model_id": "aurora",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "mod_02",
+          "template_id": "hero_model",
+          "objective": "désir Nocturne",
+          "on_screen_text": "FC Nocturne",
+          "subtext": "Le bleu profond",
+          "model_id": "nocturne",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "mod_03",
+          "template_id": "hero_model",
+          "objective": "désir Braise",
+          "on_screen_text": "FC Braise",
+          "subtext": "L'intensité",
+          "model_id": "braise",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "mod_04",
+          "template_id": "hero_model",
+          "objective": "désir Éclipse",
+          "on_screen_text": "FC Éclipse",
+          "subtext": "La sobriété",
+          "model_id": "eclipse",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "mod_05",
+          "template_id": "hero_model",
+          "objective": "désir Méridien",
+          "on_screen_text": "FC Méridien",
+          "subtext": "L'appel du voyage",
+          "model_id": "meridien",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "mod_06",
+          "template_id": "minimal_text",
+          "objective": "sortie vers le choix",
+          "on_screen_text": "Laquelle est la tienne ?",
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Écris « CHOIX » en DM",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        }
+      ]
+    },
+    "choose": {
+      "title": "CHOISIR",
+      "objective": "conduire naturellement au DM CHOIX",
+      "frames": [
+        {
+          "frame_id": "cho_01",
+          "template_id": "hero_model",
+          "objective": "lever l'hésitation",
+          "on_screen_text": "Pas sûr du modèle qui te va ?",
+          "subtext": "",
+          "model_id": "nocturne",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "cho_02",
+          "template_id": "minimal_text",
+          "objective": "expliquer la méthode",
+          "on_screen_text": "Ton poignet · tes couleurs · ton usage",
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "cho_03",
+          "template_id": "minimal_text",
+          "objective": "rassurer sans promesse non confirmée",
+          "on_screen_text": "Je t'aide à trouver celle qui te va.",
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "cho_04",
+          "template_id": "minimal_text",
+          "objective": "déclencher le DM",
+          "on_screen_text": "Envoie « CHOIX » en DM",
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Envoie « CHOIX » en DM",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        }
+      ]
+    },
+    "reviews": {
+      "title": "AVIS",
+      "objective": "preuve sociale réelle uniquement",
+      "frames": [
+        {
+          "frame_id": "avi_01",
+          "template_id": "proof_real",
+          "objective": "wrist-shot client réel",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Wrist-shot client RÉEL + autorisation d'utilisation + référence commande/client.",
+          "presentation_mode": null
+        },
+        {
+          "frame_id": "avi_02",
+          "template_id": "proof_real",
+          "objective": "message client réel",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Capture d'un message client RÉEL + accord écrit du client + référence interne.",
+          "presentation_mode": null
+        },
+        {
+          "frame_id": "avi_03",
+          "template_id": "proof_real",
+          "objective": "seconde preuve réelle",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Second wrist-shot ou avis réel (autre client) + autorisation + référence.",
+          "presentation_mode": null
+        },
+        {
+          "frame_id": "avi_04",
+          "template_id": "minimal_text",
+          "objective": "invitation après preuves",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Écris « CHOIX » en DM",
+          "claim_dependencies": [],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Écran de clôture — ne se rédige qu'une fois avi_01..03 réels en place."
+        }
+      ]
+    },
+    "quality": {
+      "title": "QUALITÉ",
+      "objective": "confiance par le soin, pas cours technique",
+      "frames": [
+        {
+          "frame_id": "qua_01",
+          "template_id": "proof_real",
+          "objective": "inspection réelle",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "quality_control_process"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Vidéo/photos RÉELLES d'inspection (mains + montre). Claim « Chaque pièce passe entre mes mains » interdit tant que non filmé + confirmé.",
+          "presentation_mode": null
+        },
+        {
+          "frame_id": "qua_02",
+          "template_id": "detail_macro",
+          "objective": "détail observable (pas une preuve de contrôle)",
+          "on_screen_text": "Le détail, de près.",
+          "subtext": "",
+          "model_id": "aurora",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        },
+        {
+          "frame_id": "qua_03",
+          "template_id": "proof_real",
+          "objective": "vérification avant envoi",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "quality_control_process"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Vidéo réelle contrôle/nettoyage avant expédition. Claim « Vérifiée avant de partir » interdit sans cette matière.",
+          "presentation_mode": null
+        },
+        {
+          "frame_id": "qua_04",
+          "template_id": "proof_real",
+          "objective": "pièce prête",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "profile_visit",
+          "cta_text": "La collection est sur le profil",
+          "claim_dependencies": [
+            "quality_control_process"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Photo réelle pièce prête/écrin. Claim « Prête pour son propriétaire » interdit sans matière.",
+          "presentation_mode": null
+        }
+      ]
+    },
+    "shipping": {
+      "title": "LIVRAISON",
+      "objective": "réduire le risque perçu — informations vérifiées uniquement",
+      "frames": [
+        {
+          "frame_id": "liv_01",
+          "template_id": "faq",
+          "objective": "zones livrées",
+          "on_screen_text": "Où est-ce que je livre ?",
+          "subtext": "{shipping_zones}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "shipping_zones"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "liv_02",
+          "template_id": "faq",
+          "objective": "préparation + délai",
+          "on_screen_text": "Combien de temps ?",
+          "subtext": "{preparation_delay} {shipping_delay}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "preparation_delay",
+            "shipping_delay"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "liv_03",
+          "template_id": "faq",
+          "objective": "suivi",
+          "on_screen_text": "Je peux suivre ma commande ?",
+          "subtext": "{delivery_tracking}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "delivery_tracking",
+            "carrier"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "liv_04",
+          "template_id": "faq",
+          "objective": "problème / retour",
+          "on_screen_text": "Et si j'ai un souci ?",
+          "subtext": "{after_sales_process}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "after_sales_process",
+            "return_policy"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        }
+      ]
+    },
+    "faq": {
+      "title": "FAQ",
+      "objective": "lever les dernières peurs, réponses courtes",
+      "frames": [
+        {
+          "frame_id": "faq_01",
+          "template_id": "faq",
+          "objective": "taille au poignet",
+          "on_screen_text": "Elle ira à mon poignet ?",
+          "subtext": "Envoie « CHOIX » avec une photo de ton poignet.",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Envoie « CHOIX » en DM",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "faq_02",
+          "template_id": "faq",
+          "objective": "fonctionnement automatique",
+          "on_screen_text": "Comment fonctionne une montre automatique ?",
+          "subtext": "Elle fonctionne sans pile, grâce aux mouvements du poignet.",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "faq_03",
+          "template_id": "faq",
+          "objective": "entretien",
+          "on_screen_text": "Comment en prendre soin ?",
+          "subtext": "Évite les chocs et nettoie-la avec un chiffon doux.",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "faq_04",
+          "template_id": "faq",
+          "objective": "paiement",
+          "on_screen_text": "Quels paiements sont acceptés ?",
+          "subtext": "{payment_methods}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "payment_methods"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        },
+        {
+          "frame_id": "faq_05",
+          "template_id": "faq",
+          "objective": "SAV",
+          "on_screen_text": "Que faire en cas de problème ?",
+          "subtext": "{after_sales_process}",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [
+            "after_sales_process"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "automatic",
+          "manual_instagram_action": null
+        }
+      ]
+    }
+  },
+  "daily_families": {
+    "model_of_day": {
+      "function": "désir",
+      "frequency": "3x/semaine",
+      "automation": "full",
+      "frames": [
+        {
+          "frame_id": "day_model",
+          "template_id": "hero_model",
+          "objective": "désir du jour",
+          "on_screen_text": "{model_name}",
+          "subtext": "{model_trait}",
+          "model_id": "{rotation}",
+          "asset_id": null,
+          "cta_type": "profile_visit",
+          "cta_text": "Collection sur le profil",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        }
+      ]
+    },
+    "help_me_choose": {
+      "function": "interaction",
+      "frequency": "2x/semaine",
+      "automation": "render auto + sticker manuel",
+      "frames": [
+        {
+          "frame_id": "day_choose",
+          "template_id": "choice",
+          "objective": "faire voter",
+          "on_screen_text": "Laquelle tu portes ce soir ?",
+          "subtext": "",
+          "model_id": "{pair}",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": "poll_sticker",
+          "presentation_mode": null
+        }
+      ]
+    },
+    "real_detail": {
+      "function": "produit/confiance",
+      "frequency": "2x/semaine",
+      "automation": "full",
+      "frames": [
+        {
+          "frame_id": "day_detail",
+          "template_id": "detail_macro",
+          "objective": "détail observable",
+          "on_screen_text": "Le détail, de près.",
+          "subtext": "",
+          "model_id": "{rotation}",
+          "asset_id": null,
+          "cta_type": "none",
+          "cta_text": "",
+          "claim_dependencies": [],
+          "claim_status": "verified",
+          "render_mode": "automatic",
+          "manual_instagram_action": null,
+          "presentation_mode": "nocturne_frame"
+        }
+      ]
+    },
+    "on_wrist": {
+      "function": "projection/preuve réelle",
+      "frequency": "quand asset réel disponible",
+      "automation": "matière réelle requise",
+      "frames": [
+        {
+          "frame_id": "day_wrist",
+          "template_id": "proof_real",
+          "objective": "vraie montre au poignet",
+          "on_screen_text": null,
+          "subtext": "",
+          "model_id": null,
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Écris « CHOIX » en DM",
+          "claim_dependencies": [],
+          "claim_status": "blocked",
+          "render_mode": "requires_real_asset",
+          "manual_instagram_action": null,
+          "internal_brief": "Wrist-shot réel (toi ou client avec accord), lumière naturelle.",
+          "presentation_mode": null
+        }
+      ]
+    },
+    "availability": {
+      "function": "conversion",
+      "frequency": "uniquement sur déclenchement manuel",
+      "automation": "manuel + stock vérifié",
+      "frames": [
+        {
+          "frame_id": "day_avail",
+          "template_id": "availability_verified",
+          "objective": "annoncer une dispo réelle",
+          "on_screen_text": "{model_name} — disponible",
+          "subtext": "{verified_stock}",
+          "model_id": "{manual}",
+          "asset_id": null,
+          "cta_type": "dm_choix",
+          "cta_text": "Écris « CHOIX » en DM",
+          "claim_dependencies": [
+            "verified_stock"
+          ],
+          "claim_status": "blocked",
+          "render_mode": "manual",
+          "manual_instagram_action": null,
+          "presentation_mode": null
+        }
+      ]
+    }
+  }
+}

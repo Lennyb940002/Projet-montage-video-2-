@@ -1,0 +1,242 @@
+[
+  {
+    "id": "obj_prix",
+    "topic": "Pourquoi seulement 194,50 € ?",
+    "content": {
+      "kicker_hook": "l'objection n°1",
+      "hook_title": "Pourquoi seulement<br>194,50 € ?",
+      "hook_sub": "— la vraie raison —",
+      "points": [
+        {"label": "— la question —", "title": "« Trop peu ? »",
+         "body": ["C'est une question légitime.", "Un bon prix peut inquiéter."]},
+        {"label": "— la raison —", "title": "Moins<br>d'intermédiaires.",
+         "body": ["On vend en direct.", "Pas de boutique. Pas de marges empilées."]},
+        {"label": "— ce que tu paies —", "title": "La montre.<br>Pas le marketing.",
+         "small_title": true,
+         "body": ["Tu paies l'acier, le verre saphir, le mouvement."],
+         "highlight": "Un prix juste n'est pas un prix suspect."}
+      ],
+      "outro_tagline": "Le bon prix, c'est de la <strong>transparence</strong>.<br><br>Pas un compromis sur la qualité.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour voir les modèles"
+    },
+    "caption": "« 194,50 €, ce n'est pas trop peu ? » La question revient souvent, et elle est légitime. La réponse tient en un mot : les intermédiaires. En vendant en direct, sans boutique ni marges empilées, le prix reflète la montre — acier, verre saphir, mouvement japonais — pas le marketing.\n\n📩 DM « MONTRE » pour découvrir les modèles disponibles.\n\n#seikomod #montre #horlogerie #watchlover #flowerschrome",
+    "hashtags": ["#seikomod", "#montre", "#horlogerie", "#watchlover", "#flowerschrome"]
+  },
+  {
+    "id": "obj_fausse_rolex",
+    "topic": "Est-ce une fausse Rolex ?",
+    "content": {
+      "kicker_hook": "la vraie question",
+      "hook_title": "Est-ce une<br>fausse Rolex ?",
+      "hook_sub": "— réponse honnête —",
+      "points": [
+        {"label": "— non —", "title": "Non.<br>Et c'est assumé.",
+         "body": ["Aucun logo emprunté.", "On ne prétend pas être autre chose."]},
+        {"label": "— c'est quoi —", "title": "Une Seiko Mod.",
+         "body": ["Une base Seiko japonaise, personnalisée.", "Un vrai mouvement. Une vraie montre."]},
+        {"label": "— l'esprit —", "title": "Le style.<br>Pas le mensonge.",
+         "small_title": true,
+         "body": ["On s'inspire des codes horlogers.", "Sans tromper personne."],
+         "highlight": "La transparence est notre seul argument."}
+      ],
+      "outro_tagline": "Pas une copie.<br><br>Une montre <strong>honnête</strong>, à son juste prix.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « INFO » pour comprendre"
+    },
+    "caption": "« C'est une fausse Rolex ? » Non — et on l'assume pleinement. Nos pièces sont des Seiko Mod : une base Seiko japonaise, personnalisée, avec un vrai mouvement. Aucun logo emprunté, aucune tromperie. On s'inspire des codes de l'horlogerie, on ne copie personne.\n\n📩 DM « INFO » pour tout comprendre.\n\n#seikomod #seikomods #horlogerie #watchcommunity #flowerschrome",
+    "hashtags": ["#seikomod", "#seikomods", "#horlogerie", "#watchcommunity", "#flowerschrome"]
+  },
+  {
+    "id": "obj_durabilite",
+    "topic": "Est-ce que ça va durer ?",
+    "content": {
+      "kicker_hook": "la peur n°2",
+      "hook_title": "Est-ce que<br>ça va durer ?",
+      "hook_sub": "— ce qui fait la différence —",
+      "points": [
+        {"label": "— le verre —", "title": "Saphir.",
+         "body": ["Il encaisse les rayures du quotidien."]},
+        {"label": "— le moteur —", "title": "Mouvement<br>japonais.",
+         "body": ["Reconnu, fiable, réparable."]},
+        {"label": "— dans le temps —", "title": "Fait pour durer.",
+         "small_title": true,
+         "body": ["Entretenue, elle te suit des années."],
+         "highlight": "Une montre qu'on garde, pas qu'on jette."}
+      ],
+      "outro_tagline": "La durabilité n'est pas un hasard.<br><br>C'est un <strong>choix de pièces</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour les modèles"
+    },
+    "caption": "« Est-ce que ça va durer ? » Oui, et ce n'est pas un hasard. Verre saphir qui résiste aux rayures, mouvement japonais fiable et réparable : ce sont des choix de pièces, pas du marketing. Entretenue, une de nos montres se garde des années.\n\n📩 DM « MONTRE » pour découvrir les modèles disponibles.\n\n#seikomod #montrehomme #horlogerie #watchaddict #flowerschrome",
+    "hashtags": ["#seikomod", "#montrehomme", "#horlogerie", "#watchaddict", "#flowerschrome"]
+  },
+  {
+    "id": "obj_sav",
+    "topic": "Et si elle tombe en panne ?",
+    "content": {
+      "kicker_hook": "la peur de l'après-achat",
+      "hook_title": "Et si elle<br>tombe en panne ?",
+      "hook_sub": "— ce que personne ne dit —",
+      "points": [
+        {"label": "— bonne nouvelle —", "title": "Ça se répare.",
+         "body": ["Le mouvement est un standard japonais."]},
+        {"label": "— les pièces —", "title": "Disponibles<br>partout.",
+         "body": ["N'importe quel horloger peut intervenir.", "Pas de pièce introuvable."]},
+        {"label": "— et nous —", "title": "On reste<br>joignables.",
+         "small_title": true,
+         "body": ["Une question après l'achat ? On répond."],
+         "highlight": "Acheter ici, ce n'est pas rester seul ensuite."}
+      ],
+      "outro_tagline": "Une montre réparable,<br><br>c'est une montre qu'on <strong>garde</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » si tu hésites"
+    },
+    "caption": "« Et si elle tombe en panne ? » Bonne nouvelle : nos montres reposent sur un mouvement japonais standard. Les pièces sont disponibles, un horloger peut intervenir, rien n'est introuvable. Et après l'achat, on reste joignables pour tes questions.\n\n📩 DM « CHOIX » si tu hésites encore.\n\n#seikomod #horlogerie #montre #watchrepair #flowerschrome",
+    "hashtags": ["#seikomod", "#horlogerie", "#montre", "#watchrepair", "#flowerschrome"]
+  },
+  {
+    "id": "obj_taille",
+    "topic": "Quelle taille pour ton poignet ?",
+    "content": {
+      "kicker_hook": "l'erreur d'achat n°1",
+      "hook_title": "Quelle taille<br>pour ton poignet ?",
+      "hook_sub": "— avant d'acheter —",
+      "points": [
+        {"label": "— le repère —", "title": "Mesure ton<br>poignet.",
+         "body": ["Un mètre ruban suffit. 10 secondes."]},
+        {"label": "— le bon diamètre —", "title": "36-40 mm :<br>polyvalent.",
+         "body": ["La taille passe-partout pour la plupart des poignets."]},
+        {"label": "— le doute —", "title": "On t'aide.",
+         "small_title": true,
+         "body": ["Envoie ta mesure, on te dit ce qui ira."],
+         "highlight": "Mieux vaut demander que se tromper."}
+      ],
+      "outro_tagline": "La bonne taille change <strong>tout</strong>.<br><br>Au moindre doute, écris-nous.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » avec ton tour de poignet"
+    },
+    "caption": "La taille, c'est l'erreur d'achat n°1. Mesure ton poignet (un mètre ruban suffit) : entre 36 et 40 mm, tu es sur une taille polyvalente qui passe sur la plupart des poignets. Un doute ? Envoie ta mesure, on te guide.\n\n📩 DM « CHOIX » avec ton tour de poignet.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome",
+    "hashtags": ["#montre", "#horlogerie", "#seikomod", "#montrehomme", "#flowerschrome"]
+  },
+  {
+    "id": "obj_auto_quartz",
+    "topic": "Automatique ou quartz, laquelle pour toi ?",
+    "content": {
+      "kicker_hook": "le choix qui bloque",
+      "hook_title": "Automatique<br>ou quartz ?",
+      "hook_sub": "— laquelle pour toi —",
+      "points": [
+        {"label": "— le quartz —", "title": "Simple<br>et précis.",
+         "body": ["Une pile, zéro entretien. Pratique au quotidien."]},
+        {"label": "— l'automatique —", "title": "Vivante<br>et durable.",
+         "body": ["Pas de pile. Se remonte à ton poignet. Se transmet."]},
+        {"label": "— notre choix —", "title": "L'automatique<br>japonais.",
+         "small_title": true,
+         "body": ["Pour une montre qui te survit."],
+         "highlight": "Le quartz donne l'heure. L'automatique raconte une histoire."}
+      ],
+      "outro_tagline": "Il n'y a pas de mauvais choix.<br><br>Juste le <strong>tien</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » et je t'oriente"
+    },
+    "caption": "Automatique ou quartz ? Le quartz : une pile, précis, zéro entretien. L'automatique : pas de pile, se remonte à ton poignet, se répare et se transmet. Chez Flowers Chrome on a choisi l'automatique japonais — pour une montre qui te survit. Mais le bon choix, c'est le tien.\n\n📩 DM « CHOIX » et je t'oriente.\n\n#montreautomatique #seikomod #horlogerie #watchlover #flowerschrome",
+    "hashtags": ["#montreautomatique", "#seikomod", "#horlogerie", "#watchlover", "#flowerschrome"]
+  },
+  {
+    "id": "obj_etanche",
+    "topic": "Je peux nager avec ?",
+    "content": {
+      "kicker_hook": "la question qu'on oublie",
+      "hook_title": "Je peux<br>nager avec ?",
+      "hook_sub": "— ce que veut dire l'étanchéité —",
+      "points": [
+        {"label": "— le mythe —", "title": "« Étanche »<br>≠ tout.",
+         "body": ["Un chiffre ne dit pas tout. Il faut le lire."]},
+        {"label": "— le repère —", "title": "Le quotidien<br>d'abord.",
+         "body": ["Pluie, mains lavées, éclaboussures : aucun souci."]},
+        {"label": "— pour l'eau —", "title": "On te précise<br>par modèle.",
+         "small_title": true,
+         "body": ["Baignade ou non : on te dit exactement quoi attendre."],
+         "highlight": "On préfère être clairs que vendre du flou."}
+      ],
+      "outro_tagline": "L'étanchéité se <strong>comprend</strong>,<br><br>elle ne se devine pas.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « INFO » pour ton modèle"
+    },
+    "caption": "« Je peux nager avec ? » L'étanchéité ne se devine pas, elle se lit. Pour le quotidien — pluie, mains lavées, éclaboussures — aucun souci. Pour la baignade, on te précise exactement ce que chaque modèle supporte. On préfère être clairs plutôt que vendre du flou.\n\n📩 DM « INFO » pour connaître ton modèle.\n\n#montre #horlogerie #seikomod #diverwatch #flowerschrome",
+    "hashtags": ["#montre", "#horlogerie", "#seikomod", "#diverwatch", "#flowerschrome"]
+  },
+  {
+    "id": "obj_cadeau",
+    "topic": "Est-ce un bon cadeau ?",
+    "content": {
+      "kicker_hook": "avant d'offrir",
+      "hook_title": "Un bon<br>cadeau ?",
+      "hook_sub": "— pourquoi ça marque —",
+      "points": [
+        {"label": "— l'objet —", "title": "Une pièce<br>qui dure.",
+         "body": ["Une montre se garde. Elle se remarque."]},
+        {"label": "— l'effet —", "title": "Premium,<br>sans se ruiner.",
+         "body": ["L'allure d'une belle montre, à un prix juste."]},
+        {"label": "— l'aide —", "title": "On t'accompagne.",
+         "small_title": true,
+         "body": ["Pas sûr du modèle ? On t'aide à viser juste."],
+         "highlight": "Un cadeau réussi, c'est un cadeau qu'on porte."}
+      ],
+      "outro_tagline": "Offrir une montre,<br><br>c'est offrir quelque chose qui <strong>reste</strong>.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » pour un cadeau"
+    },
+    "caption": "Une montre, c'est un cadeau qui dure et qui se remarque — l'allure d'une belle pièce, sans se ruiner. Pas sûr du modèle à offrir ? On t'aide à viser juste, du style à la taille.\n\n📩 DM « CHOIX » pour trouver le bon cadeau.\n\n#cadeau #montre #horlogerie #seikomod #flowerschrome",
+    "hashtags": ["#cadeau", "#montre", "#horlogerie", "#seikomod", "#flowerschrome"]
+  },
+  {
+    "id": "obj_debutant",
+    "topic": "Tu n'y connais rien ?",
+    "content": {
+      "kicker_hook": "pour les débutants",
+      "hook_title": "Tu n'y connais<br>rien ?",
+      "hook_sub": "— c'est normal —",
+      "points": [
+        {"label": "— rassure-toi —", "title": "Personne<br>ne naît expert.",
+         "body": ["On a tous commencé par une première montre."]},
+        {"label": "— l'essentiel —", "title": "3 choses<br>suffisent.",
+         "body": ["Le verre, le mouvement, la taille. C'est tout."]},
+        {"label": "— le raccourci —", "title": "On te guide.",
+         "small_title": true,
+         "body": ["Dis-nous ton style, on s'occupe du reste."],
+         "highlight": "Pas besoin d'être connaisseur pour bien choisir."}
+      ],
+      "outro_tagline": "Bien choisir,<br><br>ce n'est pas une question de <strong>savoir</strong>. C'est une question d'aide.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « CHOIX » et je te guide"
+    },
+    "caption": "Tu n'y connais rien en montres ? C'est normal — personne ne naît expert. Trois choses suffisent pour bien choisir : le verre, le mouvement, la taille. Et si tu veux un raccourci, dis-nous juste ton style, on s'occupe du reste.\n\n📩 DM « CHOIX » et je te guide pas à pas.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome",
+    "hashtags": ["#montre", "#horlogerie", "#seikomod", "#montrehomme", "#flowerschrome"]
+  },
+  {
+    "id": "obj_piece_unique",
+    "topic": "Pourquoi une seule pièce ?",
+    "content": {
+      "kicker_hook": "ce qui rend ta montre rare",
+      "hook_title": "Pourquoi<br>une seule pièce ?",
+      "hook_sub": "— premier arrivé, premier servi —",
+      "points": [
+        {"label": "— la rareté —", "title": "Chaque modèle<br>est limité.",
+         "body": ["Souvent une seule pièce disponible."]},
+        {"label": "— l'effet —", "title": "Tu ne croiseras<br>personne.",
+         "body": ["Pas trois poignets avec la même au resto."]},
+        {"label": "— le revers —", "title": "Quand c'est parti,<br>c'est parti.",
+         "small_title": true,
+         "body": ["Pas de réassort. La pièce est unique."],
+         "highlight": "La rareté n'est pas un argument. C'est un fait."}
+      ],
+      "outro_tagline": "Une pièce unique,<br><br>c'est une montre qui te <strong>ressemble</strong> vraiment.",
+      "outro_signature": "Flowers Chrome",
+      "outro_cta": "DM « MONTRE » pour les dispos"
+    },
+    "caption": "Chaque modèle Flowers Chrome existe en quantité très limitée — souvent une seule pièce. Le revers : quand c'est parti, c'est parti, pas de réassort. L'avantage : tu ne croiseras pas trois personnes avec la même au poignet.\n\n📩 DM « MONTRE » pour connaître les disponibilités.\n\n#seikomod #montre #horlogerie #pieceunique #flowerschrome",
+    "hashtags": ["#seikomod", "#montre", "#horlogerie", "#pieceunique", "#flowerschrome"]
+  }
+]
