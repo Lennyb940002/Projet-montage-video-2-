@@ -256,7 +256,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "GMT",
       "Rainbow saphire",
@@ -268,7 +268,8 @@
       "il assume"
     ],
     "cta": "question",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T08:27:55.315818+02:00"
   },
   {
     "kind": "story",
