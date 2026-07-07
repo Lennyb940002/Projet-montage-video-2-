@@ -333,8 +333,9 @@
       "facebook"
     ],
     "topic": "Comment choisir sa première montre ?",
-    "posted": false,
-    "id": 16
+    "posted": true,
+    "id": 16,
+    "posted_at": "2026-07-07T14:41:25.808547+02:00"
   },
   {
     "kind": "story",
@@ -348,8 +349,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 17
+    "posted": true,
+    "id": 17,
+    "posted_at": "2026-07-07T14:41:25.808547+02:00"
   },
   {
     "kind": "story",
