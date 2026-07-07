@@ -283,8 +283,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 14
+    "posted": true,
+    "id": 14,
+    "posted_at": "2026-07-07T12:05:53.713667+02:00"
   },
   {
     "id": 15,
@@ -299,7 +300,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "Rainbow Or rose",
       "GMT",
@@ -311,7 +312,8 @@
       "tu veux frapper fort mais juste"
     ],
     "cta": "dm",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T12:05:53.713667+02:00"
   },
   {
     "kind": "carrousel",
