@@ -459,8 +459,9 @@
       "facebook"
     ],
     "topic": "Pourquoi seulement 194,50 € ?",
-    "posted": false,
-    "id": 22
+    "posted": true,
+    "id": 22,
+    "posted_at": "2026-07-07T21:40:24.386042+02:00"
   },
   {
     "kind": "story",
@@ -474,8 +475,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 23
+    "posted": true,
+    "id": 23,
+    "posted_at": "2026-07-07T21:40:24.386042+02:00"
   },
   {
     "kind": "story",
