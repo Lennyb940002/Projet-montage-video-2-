@@ -491,8 +491,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 24
+    "posted": true,
+    "id": 24,
+    "posted_at": "2026-07-07T23:14:48.027103+02:00"
   },
   {
     "id": 25,
@@ -507,7 +508,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "GMT",
       "Rainbow silver",
@@ -519,7 +520,8 @@
       "tu veux qu'on te remarque"
     ],
     "cta": "dm",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T23:14:48.027103+02:00"
   },
   {
     "id": 26,
