@@ -398,7 +398,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "GMT",
       "Rainbow saphire",
@@ -410,7 +410,8 @@
       "propre"
     ],
     "cta": "dm",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T19:51:25.118348+02:00"
   },
   {
     "id": 21,
@@ -425,7 +426,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "GMT",
       "Rainbow silver",
@@ -437,7 +438,8 @@
       "il a de l'ambition"
     ],
     "cta": "comment",
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-07T19:51:25.118348+02:00"
   },
   {
     "kind": "carrousel",
