@@ -536,7 +536,7 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
+    "posted": true,
     "montres": [
       "Seiko GMT",
       "Royal OAK",
@@ -549,7 +549,8 @@
       "COMMENTE = 3",
       "ENREGISTRE = 4"
     ],
-    "kind": "video"
+    "kind": "video",
+    "posted_at": "2026-07-08T09:29:29.608276+02:00"
   },
   {
     "kind": "story",
@@ -563,8 +564,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 27
+    "posted": true,
+    "id": 27,
+    "posted_at": "2026-07-08T09:29:29.608276+02:00"
   },
   {
     "id": 28,
