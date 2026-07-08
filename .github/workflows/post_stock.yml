@@ -6,8 +6,10 @@ name: post-stock
 #   UPLOAD_POST_TOKEN, UPLOAD_POST_USER
 
 on:
-  schedule:
-    - cron: "*/30 * * * *"
+  # ⏸️ PAUSE (2026-07-08) : post automatique désactivé pendant les tests.
+  #    Pour RÉACTIVER : décommenter les 2 lignes ci-dessous, puis commit + push.
+  # schedule:
+  #   - cron: "*/30 * * * *"
   workflow_dispatch: {}
 
 permissions:
