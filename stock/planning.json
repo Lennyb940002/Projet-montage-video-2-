@@ -611,8 +611,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 30
+    "posted": true,
+    "id": 30,
+    "posted_at": "2026-07-09T18:58:44.584926+02:00"
   },
   {
     "kind": "story",
