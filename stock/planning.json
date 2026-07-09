@@ -569,36 +569,115 @@
     "posted_at": "2026-07-08T09:29:29.608276+02:00"
   },
   {
-    "id": 28,
-    "date": "2026-07-08",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Choisis vite. Pas de réflexion.",
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-09",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-08_1300.png",
+    "media_type": "STORIES",
+    "caption": "Acier ou or ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 28
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-09",
+    "heure": "15:00",
     "fichier": "stock_011_test.mp4",
     "caption": "Choisis vite. Pas de réflexion.\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Choisis vite. Pas de réflexion.",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 29
+  },
+  {
+    "kind": "story",
+    "type": "partage",
+    "date": "2026-07-09",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-08_1230.png",
+    "media_type": "STORIES",
+    "caption": "Nouveau post 👇 va voir en profil.",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 30
+  },
+  {
+    "kind": "story",
+    "type": "cta_vente",
+    "date": "2026-07-09",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-08_1400.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 31
+  },
+  {
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-09",
+    "heure": "21:00",
+    "fichier": "stock_012_trahison.mp4",
+    "caption": "Tu vas te trahir en 3 secondes\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu vas te trahir en 3 secondes",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "GMT",
-      "Rainbow saphire"
+    "id": 32
+  },
+  {
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-10",
+    "heure": "07:00",
+    "fichier": "stock_013_test.mp4",
+    "caption": "Ton choix de montre parle pour toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix de montre parle pour toi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
     ],
-    "labels": [
-      "ambitieux",
-      "mature",
-      "frais"
+    "posted": false,
+    "id": 33
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-10",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-08_2000.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "cta": "dm",
-    "kind": "video"
+    "posted": false,
+    "id": 34
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-08",
+    "date": "2026-07-10",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-08_1200_dark_01.png",
@@ -612,16 +691,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Comment reconnaître une montre de qualité ?",
     "posted": false,
-    "id": 29
+    "id": 35
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-10",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-09_1300.png",
+    "media_type": "STORIES",
+    "caption": "Discrète ou qui se remarque ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 36
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-10",
+    "heure": "15:00",
+    "fichier": "stock_014_choix_4.mp4",
+    "caption": "1, 2, 3 ou 4 ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "1, 2, 3 ou 4 ?",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 37
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-08",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-08_1230.png",
+    "date": "2026-07-10",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-08_1830.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -629,29 +736,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 30
+    "id": 38
   },
   {
     "kind": "story",
-    "type": "question",
-    "date": "2026-07-08",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-08_1300.png",
-    "media_type": "STORIES",
-    "caption": "Acier ou or ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 31
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-08",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-08_1400.png",
+    "type": "cta_vente",
+    "date": "2026-07-10",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-09_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -659,67 +751,60 @@
       "facebook"
     ],
     "posted": false,
-    "id": 32
+    "id": 39
   },
   {
-    "id": 33,
-    "date": "2026-07-08",
-    "heure": "15:00",
-    "format": "trahison",
-    "hook": "Tu vas te trahir en 3 secondes",
-    "fichier": "stock_012_trahison.mp4",
-    "caption": "Tu vas te trahir en 3 secondes\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-10",
+    "heure": "21:00",
+    "fichier": "stock_015_perception.mp4",
+    "caption": "Ta montre donne une première impression\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ta montre donne une première impression",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "GMT",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "tu veux te démarquer clairement",
-      "tu veux rester discret mais respecté",
-      "tu veux paraître sérieux"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 40
   },
   {
-    "id": 34,
-    "date": "2026-07-08",
-    "heure": "17:00",
-    "format": "test",
-    "hook": "Ton choix de montre parle pour toi",
-    "fichier": "stock_013_test.mp4",
-    "caption": "Ton choix de montre parle pour toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-11",
+    "heure": "07:00",
+    "fichier": "stock_016_test.mp4",
+    "caption": "Choisis. Je te décris.\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Choisis. Je te décris.",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow ruby",
-      "Rainbow saphire"
+    "id": 41
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-11",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-09_1400.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "labels": [
-      "polyvalent",
-      "assumé maîtrisé",
-      "élégant"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "posted": false,
+    "id": 42
   },
   {
     "kind": "carrousel",
     "type": "objection",
-    "date": "2026-07-08",
-    "heure": "18:00",
+    "date": "2026-07-11",
+    "heure": "12:00",
     "fichiers": [
       "c_2026-07-08_1800_light_01.png",
       "c_2026-07-08_1800_light_02.png",
@@ -732,16 +817,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Et si elle tombe en panne ?",
     "posted": false,
-    "id": 35
+    "id": 43
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-11",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-10_1300.png",
+    "media_type": "STORIES",
+    "caption": "C'est quoi ta montre de rêve ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 44
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-11",
+    "heure": "15:00",
+    "fichier": "stock_017_devine_prix.mp4",
+    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu paierais combien ?",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 45
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-08",
+    "date": "2026-07-11",
     "heure": "18:30",
-    "fichier": "story_partage_2026-07-08_1830.png",
+    "fichier": "story_partage_2026-07-09_1230.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -749,14 +862,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 36
+    "id": 46
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-08",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-08_2000.png",
+    "type": "cta_vente",
+    "date": "2026-07-11",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-09_2000.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -764,69 +877,46 @@
       "facebook"
     ],
     "posted": false,
-    "id": 37
+    "id": 47
   },
   {
-    "id": 38,
-    "date": "2026-07-08",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-11",
     "heure": "21:00",
-    "format": "choix_4",
-    "hook": "1, 2, 3 ou 4 ?",
-    "fichier": "stock_014_choix_4.mp4",
+    "fichier": "stock_018_choix_4.mp4",
     "caption": "1, 2, 3 ou 4 ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "1, 2, 3 ou 4 ?",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Datejust",
-      "Seiko GMT",
-      "Santos",
-      "Daytona"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
+    "id": 48
   },
   {
-    "id": 39,
-    "date": "2026-07-09",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-12",
     "heure": "07:00",
-    "format": "perception",
-    "hook": "Ta montre donne une première impression",
-    "fichier": "stock_015_perception.mp4",
-    "caption": "Ta montre donne une première impression\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_019_perception.mp4",
+    "caption": "Ce que ta montre dit aux autres\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ce que ta montre dit aux autres",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow Or rose",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "il est carré",
-      "il a de l'ambition",
-      "il assume"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 49
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-09",
+    "type": "preuve",
+    "date": "2026-07-12",
     "heure": "09:00",
-    "fichier": "story_promo_2026-07-09_0900.png",
+    "fichier": "story_promo_2026-07-10_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -834,39 +924,12 @@
       "facebook"
     ],
     "posted": false,
-    "id": 40
-  },
-  {
-    "id": 41,
-    "date": "2026-07-09",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Choisis. Je te décris.",
-    "fichier": "stock_016_test.mp4",
-    "caption": "Choisis. Je te décris.\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow silver",
-      "Rainbow Or rose"
-    ],
-    "labels": [
-      "carré",
-      "élégant",
-      "voyant"
-    ],
-    "cta": "dm",
-    "kind": "video"
+    "id": 50
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-09",
+    "date": "2026-07-12",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-09_1200_dark_01.png",
@@ -880,16 +943,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Qu'est-ce qu'une Seiko Mod ?",
     "posted": false,
-    "id": 42
+    "id": 51
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-12",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-11_1300.png",
+    "media_type": "STORIES",
+    "caption": "Tu mettrais combien dans une montre ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 52
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-12",
+    "heure": "15:00",
+    "fichier": "stock_020_test_perso.mp4",
+    "caption": "Test rapide : t'es lequel ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Test rapide : t'es lequel ?",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 53
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-09",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-09_1230.png",
+    "date": "2026-07-12",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-09_1830.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -897,29 +988,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 43
+    "id": 54
   },
   {
     "kind": "story",
-    "type": "question",
-    "date": "2026-07-09",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-09_1300.png",
-    "media_type": "STORIES",
-    "caption": "Discrète ou qui se remarque ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 44
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-09",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-09_1400.png",
+    "type": "cta_vente",
+    "date": "2026-07-12",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-10_1400.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -927,60 +1003,60 @@
       "facebook"
     ],
     "posted": false,
-    "id": 45
+    "id": 55
   },
   {
-    "id": 46,
-    "date": "2026-07-09",
-    "heure": "15:00",
-    "format": "devine_prix",
-    "hook": "Tu paierais combien ?",
-    "fichier": "stock_017_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-12",
+    "heure": "21:00",
+    "fichier": "stock_021_test.mp4",
+    "caption": "Ce que tu choisis dit de toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ce que tu choisis dit de toi",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montre": "GMT",
-    "prix": "194,90 €",
-    "cta": "T'aurais dit combien ?",
-    "kind": "video"
+    "id": 56
   },
   {
-    "id": 47,
-    "date": "2026-07-09",
-    "heure": "17:00",
-    "format": "choix_4",
-    "hook": "1, 2, 3 ou 4 ?",
-    "fichier": "stock_018_choix_4.mp4",
-    "caption": "1, 2, 3 ou 4 ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-13",
+    "heure": "07:00",
+    "fichier": "stock_022_revelation_psy.mp4",
+    "caption": "Ton choix parle pour toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix parle pour toi",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Daydate",
-      "Santos",
-      "Seiko GMT",
-      "Royal OAK"
+    "id": 57
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-13",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-10_2000.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
+    "posted": false,
+    "id": 58
   },
   {
     "kind": "carrousel",
     "type": "objection",
-    "date": "2026-07-09",
-    "heure": "18:00",
+    "date": "2026-07-13",
+    "heure": "12:00",
     "fichiers": [
       "c_2026-07-09_1800_light_01.png",
       "c_2026-07-09_1800_light_02.png",
@@ -993,16 +1069,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Est-ce un bon cadeau ?",
     "posted": false,
-    "id": 48
+    "id": 59
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-13",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-12_1300.png",
+    "media_type": "STORIES",
+    "caption": "Une montre pour un premier rendez-vous ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 60
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-13",
+    "heure": "15:00",
+    "fichier": "stock_023_perception.mp4",
+    "caption": "Ton poignet parle avant toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton poignet parle avant toi",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 61
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-09",
+    "date": "2026-07-13",
     "heure": "18:30",
-    "fichier": "story_partage_2026-07-09_1830.png",
+    "fichier": "story_partage_2026-07-10_1230.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1010,14 +1114,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 49
+    "id": 62
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-09",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-09_2000.png",
+    "type": "cta_vente",
+    "date": "2026-07-13",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-11_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1025,68 +1129,46 @@
       "facebook"
     ],
     "posted": false,
-    "id": 50
+    "id": 63
   },
   {
-    "id": 51,
-    "date": "2026-07-09",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-13",
     "heure": "21:00",
-    "format": "perception",
-    "hook": "Ce que ta montre dit aux autres",
-    "fichier": "stock_019_perception.mp4",
-    "caption": "Ce que ta montre dit aux autres\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_024_test.mp4",
+    "caption": "Une montre. Une personnalité.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Une montre. Une personnalité.",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "GMT",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "il est propre sur lui",
-      "il a une énergie froide",
-      "il n'a pas peur du regard"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 64
   },
   {
-    "id": 52,
-    "date": "2026-07-10",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-14",
     "heure": "07:00",
-    "format": "test_perso",
-    "hook": "Test rapide : t'es lequel ?",
-    "fichier": "stock_020_test_perso.mp4",
-    "caption": "Test rapide : t'es lequel ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_025_revelation_psy.mp4",
+    "caption": "Tu choisis une image\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu choisis une image",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow Or rose",
-      "GMT"
-    ],
-    "labels": [
-      "tu veux marquer sans en faire trop",
-      "tu veux réussir fort et que ça se voie",
-      "tu contrôles ton image"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 65
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-10",
+    "type": "preuve",
+    "date": "2026-07-14",
     "heure": "09:00",
-    "fichier": "story_promo_2026-07-10_0900.png",
+    "fichier": "story_promo_2026-07-11_1400.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1094,39 +1176,12 @@
       "facebook"
     ],
     "posted": false,
-    "id": 53
-  },
-  {
-    "id": 54,
-    "date": "2026-07-10",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Ce que tu choisis dit de toi",
-    "fichier": "stock_021_test.mp4",
-    "caption": "Ce que tu choisis dit de toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow silver",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "stratégique",
-      "élégant",
-      "élégant"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 66
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-10",
+    "date": "2026-07-14",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-10_1200_dark_01.png",
@@ -1140,16 +1195,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Automatique ou quartz : laquelle choisir ?",
     "posted": false,
-    "id": 55
+    "id": 67
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-14",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-13_1300.png",
+    "media_type": "STORIES",
+    "caption": "Tu regardes l'heure ou le style ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 68
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-14",
+    "heure": "15:00",
+    "fichier": "stock_026_test.mp4",
+    "caption": "Choisis vite. Pas de réflexion.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Choisis vite. Pas de réflexion.",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 69
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-10",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-10_1230.png",
+    "date": "2026-07-14",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-10_1830.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1157,29 +1240,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 56
+    "id": 70
   },
   {
     "kind": "story",
-    "type": "question",
-    "date": "2026-07-10",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-10_1300.png",
-    "media_type": "STORIES",
-    "caption": "C'est quoi ta montre de rêve ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 57
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-10",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-10_1400.png",
+    "type": "cta_vente",
+    "date": "2026-07-14",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-11_2000.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1187,67 +1255,60 @@
       "facebook"
     ],
     "posted": false,
-    "id": 58
+    "id": 71
   },
   {
-    "id": 59,
-    "date": "2026-07-10",
-    "heure": "15:00",
-    "format": "revelation_psy",
-    "hook": "Ton choix parle pour toi",
-    "fichier": "stock_022_revelation_psy.mp4",
-    "caption": "Ton choix parle pour toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-14",
+    "heure": "21:00",
+    "fichier": "stock_027_revelation_psy.mp4",
+    "caption": "Ce choix en dit long\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ce choix en dit long",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "GMT",
-      "Rainbow Or rose"
-    ],
-    "labels": [
-      "tu assumes ton intensité",
-      "tu contrôles ton image",
-      "tu veux être vu"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 72
   },
   {
-    "id": 60,
-    "date": "2026-07-10",
-    "heure": "17:00",
-    "format": "perception",
-    "hook": "Ton poignet parle avant toi",
-    "fichier": "stock_023_perception.mp4",
-    "caption": "Ton poignet parle avant toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-15",
+    "heure": "07:00",
+    "fichier": "stock_028_perception.mp4",
+    "caption": "Ce détail change la perception\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ce détail change la perception",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow saphire",
-      "Rainbow Or rose"
+    "id": 73
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-15",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-12_0900.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "labels": [
-      "il a une présence forte",
-      "il est différent sans forcer",
-      "il aime qu'on le remarque"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "posted": false,
+    "id": 74
   },
   {
     "kind": "carrousel",
     "type": "objection",
-    "date": "2026-07-10",
-    "heure": "18:00",
+    "date": "2026-07-15",
+    "heure": "12:00",
     "fichiers": [
       "c_2026-07-10_1800_light_01.png",
       "c_2026-07-10_1800_light_02.png",
@@ -1260,16 +1321,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Tu n'y connais rien ?",
     "posted": false,
-    "id": 61
+    "id": 75
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-15",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-14_1300.png",
+    "media_type": "STORIES",
+    "caption": "GMT, Daytona ou Nautilus ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 76
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-15",
+    "heure": "15:00",
+    "fichier": "stock_029_trahison.mp4",
+    "caption": "Ta montre préférée dit trop de choses\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ta montre préférée dit trop de choses",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 77
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-10",
+    "date": "2026-07-15",
     "heure": "18:30",
-    "fichier": "story_partage_2026-07-10_1830.png",
+    "fichier": "story_partage_2026-07-11_1230.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1277,14 +1366,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 62
+    "id": 78
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-10",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-10_2000.png",
+    "type": "cta_vente",
+    "date": "2026-07-15",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-12_1400.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1292,68 +1381,46 @@
       "facebook"
     ],
     "posted": false,
-    "id": 63
+    "id": 79
   },
   {
-    "id": 64,
-    "date": "2026-07-10",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-15",
     "heure": "21:00",
-    "format": "test",
-    "hook": "Une montre. Une personnalité.",
-    "fichier": "stock_024_test.mp4",
-    "caption": "Une montre. Une personnalité.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_030_devine_prix.mp4",
+    "caption": "Ça coûte combien à ton avis ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ça coûte combien à ton avis ?",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow Or rose",
-      "GMT"
-    ],
-    "labels": [
-      "subtil",
-      "voyant",
-      "froid"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 80
   },
   {
-    "id": 65,
-    "date": "2026-07-11",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-16",
     "heure": "07:00",
-    "format": "revelation_psy",
-    "hook": "Tu choisis une image",
-    "fichier": "stock_025_revelation_psy.mp4",
-    "caption": "Tu choisis une image\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_031_trahison.mp4",
+    "caption": "Ton choix te trahit un peu\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix te trahit un peu",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow silver",
-      "GMT"
-    ],
-    "labels": [
-      "tu veux être différent et qu'on le voie",
-      "tu préfères le propre au bruit",
-      "tu caches un côté compétiteur"
-    ],
-    "cta": "dm",
-    "kind": "video"
+    "id": 81
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-11",
+    "type": "preuve",
+    "date": "2026-07-16",
     "heure": "09:00",
-    "fichier": "story_promo_2026-07-11_0900.png",
+    "fichier": "story_promo_2026-07-12_2000.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1361,39 +1428,12 @@
       "facebook"
     ],
     "posted": false,
-    "id": 66
-  },
-  {
-    "id": 67,
-    "date": "2026-07-11",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Choisis vite. Pas de réflexion.",
-    "fichier": "stock_026_test.mp4",
-    "caption": "Choisis vite. Pas de réflexion.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow silver",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "mature",
-      "mature",
-      "provocateur"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 82
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-11",
+    "date": "2026-07-16",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-11_1200_dark_01.png",
@@ -1407,16 +1447,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Automatique ou quartz : laquelle choisir ?",
     "posted": false,
-    "id": 68
+    "id": 83
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-16",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-15_1300.png",
+    "media_type": "STORIES",
+    "caption": "Ta montre, tu la portes tous les jours ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 84
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-16",
+    "heure": "15:00",
+    "fichier": "stock_032_test_perso.mp4",
+    "caption": "Choisis sans réfléchir. Ton choix va parler.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Choisis sans réfléchir. Ton choix va parler.",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 85
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-11",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-11_1230.png",
+    "date": "2026-07-16",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-11_1830.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1424,29 +1492,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 69
+    "id": 86
   },
   {
     "kind": "story",
-    "type": "question",
-    "date": "2026-07-11",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-11_1300.png",
-    "media_type": "STORIES",
-    "caption": "Tu mettrais combien dans une montre ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 70
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-11",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-11_1400.png",
+    "type": "cta_vente",
+    "date": "2026-07-16",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-13_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1454,67 +1507,60 @@
       "facebook"
     ],
     "posted": false,
-    "id": 71
+    "id": 87
   },
   {
-    "id": 72,
-    "date": "2026-07-11",
-    "heure": "15:00",
-    "format": "revelation_psy",
-    "hook": "Ce choix en dit long",
-    "fichier": "stock_027_revelation_psy.mp4",
-    "caption": "Ce choix en dit long\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-16",
+    "heure": "21:00",
+    "fichier": "stock_033_trahison.mp4",
+    "caption": "Ton choix te trahit\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix te trahit",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow ruby",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "tu veux être vu",
-      "tu assumes ton intensité",
-      "tu veux du classique avec du caractère"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 88
   },
   {
-    "id": 73,
-    "date": "2026-07-11",
-    "heure": "17:00",
-    "format": "perception",
-    "hook": "Ce détail change la perception",
-    "fichier": "stock_028_perception.mp4",
-    "caption": "Ce détail change la perception\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-17",
+    "heure": "07:00",
+    "fichier": "stock_034_test_perso.mp4",
+    "caption": "Test rapide. Choisis une montre.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Test rapide. Choisis une montre.",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow ruby",
-      "Rainbow Or rose"
+    "id": 89
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-17",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-13_1400.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "labels": [
-      "il est carré",
-      "il a une présence forte",
-      "il est confiant mais posé"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "posted": false,
+    "id": 90
   },
   {
     "kind": "carrousel",
     "type": "objection",
-    "date": "2026-07-11",
-    "heure": "18:00",
+    "date": "2026-07-17",
+    "heure": "12:00",
     "fichiers": [
       "c_2026-07-11_1800_light_01.png",
       "c_2026-07-11_1800_light_02.png",
@@ -1527,16 +1573,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Est-ce une fausse Rolex ?",
     "posted": false,
-    "id": 74
+    "id": 91
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-17",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-16_1300.png",
+    "media_type": "STORIES",
+    "caption": "Or rose : classe ou trop voyant ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 92
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-17",
+    "heure": "15:00",
+    "fichier": "stock_035_trahison.mp4",
+    "caption": "Tu crois choisir au hasard ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu crois choisir au hasard ?",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 93
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-11",
+    "date": "2026-07-17",
     "heure": "18:30",
-    "fichier": "story_partage_2026-07-11_1830.png",
+    "fichier": "story_partage_2026-07-12_1230.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1544,14 +1618,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 75
+    "id": 94
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-11",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-11_2000.png",
+    "type": "cta_vente",
+    "date": "2026-07-17",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-13_2000.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1559,60 +1633,46 @@
       "facebook"
     ],
     "posted": false,
-    "id": 76
+    "id": 95
   },
   {
-    "id": 77,
-    "date": "2026-07-11",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-17",
     "heure": "21:00",
-    "format": "trahison",
-    "hook": "Ta montre préférée dit trop de choses",
-    "fichier": "stock_029_trahison.mp4",
-    "caption": "Ta montre préférée dit trop de choses\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_036_revelation_psy.mp4",
+    "caption": "Ton choix parle avant toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix parle avant toi",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "GMT",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "tu veux qu'on sente ta présence",
-      "tu veux montrer que tu montes d'un cran",
-      "tu veux te démarquer clairement"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 96
   },
   {
-    "id": 78,
-    "date": "2026-07-12",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-18",
     "heure": "07:00",
-    "format": "devine_prix",
-    "hook": "Ça coûte combien à ton avis ?",
-    "fichier": "stock_030_devine_prix.mp4",
-    "caption": "Ça coûte combien à ton avis ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_037_devine_prix.mp4",
+    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu paierais combien ?",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montre": "Rainbow silver",
-    "prix": "194,90 €",
-    "cta": "T'aurais dit combien ?",
-    "kind": "video"
+    "id": 97
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-12",
+    "type": "preuve",
+    "date": "2026-07-18",
     "heure": "09:00",
-    "fichier": "story_promo_2026-07-12_0900.png",
+    "fichier": "story_promo_2026-07-14_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1620,39 +1680,12 @@
       "facebook"
     ],
     "posted": false,
-    "id": 79
-  },
-  {
-    "id": 80,
-    "date": "2026-07-12",
-    "heure": "11:30",
-    "format": "trahison",
-    "hook": "Ton choix te trahit un peu",
-    "fichier": "stock_031_trahison.mp4",
-    "caption": "Ton choix te trahit un peu\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow saphire",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu veux paraître sérieux",
-      "tu veux qu'on sente ton goût",
-      "tu veux être remarqué"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 98
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-12",
+    "date": "2026-07-18",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-12_1200_dark_01.png",
@@ -1666,16 +1699,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Comment reconnaître une montre de qualité ?",
     "posted": false,
-    "id": 81
+    "id": 99
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-18",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-17_1300.png",
+    "media_type": "STORIES",
+    "caption": "Quelle couleur au poignet cet été ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 100
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-18",
+    "heure": "15:00",
+    "fichier": "stock_038_choix_4.mp4",
+    "caption": "Tu prends laquelle ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu prends laquelle ?",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 101
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-12",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-12_1230.png",
+    "date": "2026-07-18",
+    "heure": "18:30",
+    "fichier": "story_partage_2026-07-12_1830.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1683,29 +1744,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 82
+    "id": 102
   },
   {
     "kind": "story",
-    "type": "question",
-    "date": "2026-07-12",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-12_1300.png",
-    "media_type": "STORIES",
-    "caption": "Une montre pour un premier rendez-vous ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 83
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-12",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-12_1400.png",
+    "type": "cta_vente",
+    "date": "2026-07-18",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-14_1400.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1713,67 +1759,60 @@
       "facebook"
     ],
     "posted": false,
-    "id": 84
+    "id": 103
   },
   {
-    "id": 85,
-    "date": "2026-07-12",
-    "heure": "15:00",
-    "format": "test_perso",
-    "hook": "Choisis sans réfléchir. Ton choix va parler.",
-    "fichier": "stock_032_test_perso.mp4",
-    "caption": "Choisis sans réfléchir. Ton choix va parler.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-18",
+    "heure": "21:00",
+    "fichier": "stock_039_devine_prix.mp4",
+    "caption": "Devine le prix de cette montre\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Devine le prix de cette montre",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow Or rose",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu préfères le style propre au bruit",
-      "tu veux réussir fort et que ça se voie",
-      "tu assumes ton côté fort"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 104
   },
   {
-    "id": 86,
-    "date": "2026-07-12",
-    "heure": "17:00",
-    "format": "trahison",
-    "hook": "Ton choix te trahit",
-    "fichier": "stock_033_trahison.mp4",
-    "caption": "Ton choix te trahit\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-19",
+    "heure": "07:00",
+    "fichier": "stock_040_perception.mp4",
+    "caption": "Les gens remarquent plus que tu crois\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Les gens remarquent plus que tu crois",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow ruby",
-      "GMT"
+    "id": 105
+  },
+  {
+    "kind": "story",
+    "type": "preuve",
+    "date": "2026-07-19",
+    "heure": "09:00",
+    "fichier": "story_promo_2026-07-14_2000.png",
+    "media_type": "STORIES",
+    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
+    "platforms": [
+      "instagram",
+      "facebook"
     ],
-    "labels": [
-      "tu veux impressionner sans le dire",
-      "tu veux qu'on sente ta présence",
-      "tu veux paraître calme mais puissant"
-    ],
-    "cta": "dm",
-    "kind": "video"
+    "posted": false,
+    "id": 106
   },
   {
     "kind": "carrousel",
     "type": "objection",
-    "date": "2026-07-12",
-    "heure": "18:00",
+    "date": "2026-07-19",
+    "heure": "12:00",
     "fichiers": [
       "c_2026-07-12_1800_light_01.png",
       "c_2026-07-12_1800_light_02.png",
@@ -1786,16 +1825,44 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Pourquoi une seule pièce ?",
     "posted": false,
-    "id": 87
+    "id": 107
+  },
+  {
+    "kind": "story",
+    "type": "question",
+    "date": "2026-07-19",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-18_1300.png",
+    "media_type": "STORIES",
+    "caption": "Automatique ou ça t'est égal ?",
+    "platforms": [
+      "instagram",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 108
+  },
+  {
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-19",
+    "heure": "15:00",
+    "fichier": "stock_041_revelation_psy.mp4",
+    "caption": "Ton choix n'est pas innocent\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Ton choix n'est pas innocent",
+    "platforms": [
+      "tiktok"
+    ],
+    "posted": false,
+    "id": 109
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-12",
+    "date": "2026-07-19",
     "heure": "18:30",
-    "fichier": "story_partage_2026-07-12_1830.png",
+    "fichier": "story_partage_2026-07-13_1230.png",
     "media_type": "STORIES",
     "caption": "Nouveau post 👇 va voir en profil.",
     "platforms": [
@@ -1803,14 +1870,14 @@
       "facebook"
     ],
     "posted": false,
-    "id": 88
+    "id": 110
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-12",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-12_2000.png",
+    "type": "cta_vente",
+    "date": "2026-07-19",
+    "heure": "20:30",
+    "fichier": "story_promo_2026-07-15_0900.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1818,68 +1885,46 @@
       "facebook"
     ],
     "posted": false,
-    "id": 89
+    "id": 111
   },
   {
-    "id": 90,
-    "date": "2026-07-12",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-19",
     "heure": "21:00",
-    "format": "test_perso",
-    "hook": "Test rapide. Choisis une montre.",
-    "fichier": "stock_034_test_perso.mp4",
-    "caption": "Test rapide. Choisis une montre.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_042_test.mp4",
+    "caption": "La montre que tu préfères te décrit\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "La montre que tu préfères te décrit",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow silver",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "tu contrôles ton image",
-      "tu préfères le style propre au bruit",
-      "tu préfères le style propre au bruit"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 112
   },
   {
-    "id": 91,
-    "date": "2026-07-13",
+    "kind": "video",
+    "type": "concept_fort",
+    "date": "2026-07-20",
     "heure": "07:00",
-    "format": "trahison",
-    "hook": "Tu crois choisir au hasard ?",
-    "fichier": "stock_035_trahison.mp4",
-    "caption": "Tu crois choisir au hasard ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_043_trahison.mp4",
+    "caption": "Tu vas te trahir en 3 secondes\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Tu vas te trahir en 3 secondes",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow saphire",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "tu veux impressionner sans le dire",
-      "tu veux être différent sans être ridicule",
-      "tu veux du classique qui monte d'un cran"
-    ],
-    "cta": "comment",
-    "kind": "video"
+    "id": 113
   },
   {
     "kind": "story",
-    "type": "promo",
-    "date": "2026-07-13",
+    "type": "preuve",
+    "date": "2026-07-20",
     "heure": "09:00",
-    "fichier": "story_promo_2026-07-13_0900.png",
+    "fichier": "story_promo_2026-07-15_1400.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
     "platforms": [
@@ -1887,39 +1932,12 @@
       "facebook"
     ],
     "posted": false,
-    "id": 92
-  },
-  {
-    "id": 93,
-    "date": "2026-07-13",
-    "heure": "11:30",
-    "format": "revelation_psy",
-    "hook": "Ton choix parle avant toi",
-    "fichier": "stock_036_revelation_psy.mp4",
-    "caption": "Ton choix parle avant toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow Or rose",
-      "GMT"
-    ],
-    "labels": [
-      "tu préfères le propre au bruit",
-      "tu assumes ton image",
-      "tu veux qu'on te respecte sans parler"
-    ],
-    "cta": "question",
-    "kind": "video"
+    "id": 114
   },
   {
     "kind": "carrousel",
     "type": "value",
-    "date": "2026-07-13",
+    "date": "2026-07-20",
     "heure": "12:00",
     "fichiers": [
       "c_2026-07-13_1200_dark_01.png",
@@ -1933,127 +1951,42 @@
       "instagram",
       "facebook"
     ],
-    "topic": "Qu'est-ce qu'une Seiko Mod ?",
     "posted": false,
-    "id": 94
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-13",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-13_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 95
+    "id": 115
   },
   {
     "kind": "story",
     "type": "question",
-    "date": "2026-07-13",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-13_1300.png",
+    "date": "2026-07-20",
+    "heure": "13:30",
+    "fichier": "story_q_2026-07-19_1300.png",
     "media_type": "STORIES",
-    "caption": "Tu regardes l'heure ou le style ?",
+    "caption": "La montre fait-elle l'homme ?",
     "platforms": [
       "instagram",
       "facebook"
     ],
     "posted": false,
-    "id": 96
+    "id": 116
   },
   {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-13",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-13_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 97
-  },
-  {
-    "id": 98,
-    "date": "2026-07-13",
+    "kind": "video",
+    "type": "test_secondaire",
+    "date": "2026-07-20",
     "heure": "15:00",
-    "format": "devine_prix",
-    "hook": "Tu paierais combien ?",
-    "fichier": "stock_037_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "fichier": "stock_044_test.mp4",
+    "caption": "Choisis. Je te décris.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Choisis. Je te décris.",
     "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
+      "tiktok"
     ],
     "posted": false,
-    "montre": "GMT",
-    "prix": "194,90 €",
-    "cta": "Tu pensais à combien ?",
-    "kind": "video"
-  },
-  {
-    "id": 99,
-    "date": "2026-07-13",
-    "heure": "17:00",
-    "format": "choix_4",
-    "hook": "Tu prends laquelle ?",
-    "fichier": "stock_038_choix_4.mp4",
-    "caption": "Tu prends laquelle ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Seiko GMT",
-      "Royal OAK",
-      "Daydate",
-      "Nautilus"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-13",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-13_1800_light_01.png",
-      "c_2026-07-13_1800_light_02.png",
-      "c_2026-07-13_1800_light_03.png",
-      "c_2026-07-13_1800_light_04.png",
-      "c_2026-07-13_1800_light_05.png"
-    ],
-    "caption": "La taille, c'est l'erreur d'achat n°1. Mesure ton poignet (un mètre ruban suffit) : entre 36 et 40 mm, tu es sur une taille polyvalente qui passe sur la plupart des poignets. Un doute ? Envoie ta mesure, on te guide.\n\n📩 DM « CHOIX » avec ton tour de poignet.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Quelle taille pour ton poignet ?",
-    "posted": false,
-    "id": 100
+    "id": 117
   },
   {
     "kind": "story",
     "type": "partage",
-    "date": "2026-07-13",
+    "date": "2026-07-20",
     "heure": "18:30",
     "fichier": "story_partage_2026-07-13_1830.png",
     "media_type": "STORIES",
@@ -2063,532 +1996,13 @@
       "facebook"
     ],
     "posted": false,
-    "id": 101
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-13",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-13_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 102
-  },
-  {
-    "id": 103,
-    "date": "2026-07-13",
-    "heure": "21:00",
-    "format": "devine_prix",
-    "hook": "Devine le prix de cette montre",
-    "fichier": "stock_039_devine_prix.mp4",
-    "caption": "Devine le prix de cette montre\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "Rainbow ruby",
-    "prix": "194,90 €",
-    "cta": "Tu pensais à combien ?",
-    "kind": "video"
-  },
-  {
-    "id": 104,
-    "date": "2026-07-14",
-    "heure": "07:00",
-    "format": "perception",
-    "hook": "Les gens remarquent plus que tu crois",
-    "fichier": "stock_040_perception.mp4",
-    "caption": "Les gens remarquent plus que tu crois\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow ruby",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "il est propre sur lui",
-      "il n'a pas peur du regard",
-      "il est posé"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-14",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-14_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 105
-  },
-  {
-    "id": 106,
-    "date": "2026-07-14",
-    "heure": "11:30",
-    "format": "revelation_psy",
-    "hook": "Ton choix n'est pas innocent",
-    "fichier": "stock_041_revelation_psy.mp4",
-    "caption": "Ton choix n'est pas innocent\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow saphire",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu veux du classique avec du caractère",
-      "tu veux paraître posé",
-      "tu veux impressionner avec classe"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-14",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-14_1200_dark_01.png",
-      "c_2026-07-14_1200_dark_02.png",
-      "c_2026-07-14_1200_dark_03.png",
-      "c_2026-07-14_1200_dark_04.png",
-      "c_2026-07-14_1200_dark_05.png"
-    ],
-    "caption": "Automatique ou quartz : le débat qui revient tout le temps. La vraie différence n'est pas le prix, c'est ce qu'il se passe à l'intérieur. Le quartz fonctionne à la pile : pratique, mais jetable. L'automatique se remonte au poignet : pas de pile, une trotteuse fluide, un mécanisme qui se répare et se transmet.\n\nChez Flowers Chrome, chaque pièce embarque un mouvement automatique japonais reconnu.\n\n📩 DM \"MONTRE\" pour découvrir les modèles disponibles.\n\n#seikomod #montreautomatique #montrehomme #horlogerie #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Automatique ou quartz : laquelle choisir ?",
-    "posted": false,
-    "id": 107
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-14",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-14_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 108
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-14",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-14_1300.png",
-    "media_type": "STORIES",
-    "caption": "GMT, Daytona ou Nautilus ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 109
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-14",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-14_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 110
-  },
-  {
-    "id": 111,
-    "date": "2026-07-14",
-    "heure": "15:00",
-    "format": "test",
-    "hook": "La montre que tu préfères te décrit",
-    "fichier": "stock_042_test.mp4",
-    "caption": "La montre que tu préfères te décrit\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow silver",
-      "Rainbow Or rose"
-    ],
-    "labels": [
-      "magnétique",
-      "mature assumé",
-      "ambitieux calme"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "id": 112,
-    "date": "2026-07-14",
-    "heure": "17:00",
-    "format": "trahison",
-    "hook": "Tu vas te trahir en 3 secondes",
-    "fichier": "stock_043_trahison.mp4",
-    "caption": "Tu vas te trahir en 3 secondes\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow saphire",
-      "GMT"
-    ],
-    "labels": [
-      "tu veux qu'on te remarque",
-      "tu veux être différent sans être ridicule",
-      "tu veux rester discret mais respecté"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-14",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-14_1800_light_01.png",
-      "c_2026-07-14_1800_light_02.png",
-      "c_2026-07-14_1800_light_03.png",
-      "c_2026-07-14_1800_light_04.png",
-      "c_2026-07-14_1800_light_05.png"
-    ],
-    "caption": "Automatique ou quartz ? Le quartz : une pile, précis, zéro entretien. L'automatique : pas de pile, se remonte à ton poignet, se répare et se transmet. Chez Flowers Chrome on a choisi l'automatique japonais — pour une montre qui te survit. Mais le bon choix, c'est le tien.\n\n📩 DM « CHOIX » et je t'oriente.\n\n#montreautomatique #seikomod #horlogerie #watchlover #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Automatique ou quartz, laquelle pour toi ?",
-    "posted": false,
-    "id": 113
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-14",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-14_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 114
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-14",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-14_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 115
-  },
-  {
-    "id": 116,
-    "date": "2026-07-14",
-    "heure": "21:00",
-    "format": "test",
-    "hook": "Choisis. Je te décris.",
-    "fichier": "stock_044_test.mp4",
-    "caption": "Choisis. Je te décris.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow silver",
-      "GMT"
-    ],
-    "labels": [
-      "assumé",
-      "simple",
-      "stratégique"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "id": 117,
-    "date": "2026-07-15",
-    "heure": "07:00",
-    "format": "choix_4",
-    "hook": "Laquelle au poignet ?",
-    "fichier": "stock_045_choix_4.mp4",
-    "caption": "Laquelle au poignet ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Nautilus",
-      "Datejust",
-      "Santos",
-      "Royal OAK"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-15",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-15_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
     "id": 118
   },
   {
-    "id": 119,
-    "date": "2026-07-15",
-    "heure": "11:30",
-    "format": "revelation_psy",
-    "hook": "Elle dit ce que tu tais",
-    "fichier": "stock_046_revelation_psy.mp4",
-    "caption": "Elle dit ce que tu tais\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow Or rose",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "tu veux marquer les esprits",
-      "tu veux être vu",
-      "tu veux paraître posé"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-15",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-15_1200_dark_01.png",
-      "c_2026-07-15_1200_dark_02.png",
-      "c_2026-07-15_1200_dark_03.png",
-      "c_2026-07-15_1200_dark_04.png",
-      "c_2026-07-15_1200_dark_05.png"
-    ],
-    "caption": "Choisir sa première montre sans se tromper, c'est 3 repères : pars de ton style (habillée ou sportive), vise la bonne taille (36-40 mm pour la plupart), et regarde la qualité qui ne se voit pas — verre saphir, mouvement fiable, finitions. Une première montre se garde longtemps.\n\n📩 DM \"CHOIX\" et je t'aide à trouver la tienne.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Comment choisir sa première montre ?",
-    "posted": false,
-    "id": 120
-  },
-  {
     "kind": "story",
-    "type": "partage",
-    "date": "2026-07-15",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-15_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 121
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-15",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-15_1300.png",
-    "media_type": "STORIES",
-    "caption": "Ta montre, tu la portes tous les jours ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 122
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-15",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-15_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 123
-  },
-  {
-    "id": 124,
-    "date": "2026-07-15",
-    "heure": "15:00",
-    "format": "devine_prix",
-    "hook": "Ça coûte combien à ton avis ?",
-    "fichier": "stock_047_devine_prix.mp4",
-    "caption": "Ça coûte combien à ton avis ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "Rainbow saphire",
-    "prix": "194,90 €",
-    "cta": "Tu pensais à combien ?",
-    "kind": "video"
-  },
-  {
-    "id": 125,
-    "date": "2026-07-15",
-    "heure": "17:00",
-    "format": "revelation_psy",
-    "hook": "Tu choisis une image",
-    "fichier": "stock_048_revelation_psy.mp4",
-    "caption": "Tu choisis une image\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow saphire",
-      "GMT"
-    ],
-    "labels": [
-      "tu préfères le propre au bruit",
-      "tu aimes la subtilité",
-      "tu contrôles ton image"
-    ],
-    "cta": "dm",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-15",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-15_1800_light_01.png",
-      "c_2026-07-15_1800_light_02.png",
-      "c_2026-07-15_1800_light_03.png",
-      "c_2026-07-15_1800_light_04.png",
-      "c_2026-07-15_1800_light_05.png"
-    ],
-    "caption": "« Je peux nager avec ? » L'étanchéité ne se devine pas, elle se lit. Pour le quotidien — pluie, mains lavées, éclaboussures — aucun souci. Pour la baignade, on te précise exactement ce que chaque modèle supporte. On préfère être clairs plutôt que vendre du flou.\n\n📩 DM « INFO » pour connaître ton modèle.\n\n#montre #horlogerie #seikomod #diverwatch #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Je peux nager avec ?",
-    "posted": false,
-    "id": 126
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-15",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-15_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 127
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-15",
-    "heure": "20:00",
+    "type": "cta_vente",
+    "date": "2026-07-20",
+    "heure": "20:30",
     "fichier": "story_promo_2026-07-15_2000.png",
     "media_type": "STORIES",
     "caption": "Dispo maintenant — écris « MONTRE » en DM.",
@@ -2597,1231 +2011,22 @@
       "facebook"
     ],
     "posted": false,
-    "id": 128
+    "id": 119
   },
   {
-    "id": 129,
-    "date": "2026-07-15",
+    "kind": "video",
+    "type": "concept_du_jour",
+    "date": "2026-07-20",
     "heure": "21:00",
-    "format": "devine_prix",
-    "hook": "Devine le prix de cette montre",
-    "fichier": "stock_049_devine_prix.mp4",
-    "caption": "Devine le prix de cette montre\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "Rainbow Or rose",
-    "prix": "194,90 €",
-    "cta": "T'aurais dit combien ?",
-    "kind": "video"
-  },
-  {
-    "id": 130,
-    "date": "2026-07-16",
-    "heure": "07:00",
-    "format": "choix_4",
-    "hook": "Laquelle au poignet ?",
-    "fichier": "stock_050_choix_4.mp4",
+    "fichier": "stock_045_choix_4.mp4",
     "caption": "Laquelle au poignet ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
+    "hook": "Laquelle au poignet ?",
     "platforms": [
       "instagram",
       "tiktok",
       "facebook"
     ],
     "posted": false,
-    "montres": [
-      "Datejust",
-      "Daydate",
-      "Santos",
-      "Nautilus"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-16",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-16_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 131
-  },
-  {
-    "id": 132,
-    "date": "2026-07-16",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Ce que tu choisis dit de toi",
-    "fichier": "stock_051_test.mp4",
-    "caption": "Ce que tu choisis dit de toi\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow ruby",
-      "GMT"
-    ],
-    "labels": [
-      "subtil",
-      "intense",
-      "discret"
-    ],
-    "cta": "dm",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-16",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-16_1200_dark_01.png",
-      "c_2026-07-16_1200_dark_02.png",
-      "c_2026-07-16_1200_dark_03.png",
-      "c_2026-07-16_1200_dark_04.png",
-      "c_2026-07-16_1200_dark_05.png"
-    ],
-    "caption": "On pense souvent qu'une montre de qualité se reconnaît à son prix. En réalité, les passionnés regardent surtout le verre, le mouvement et les finitions. Ce sont ces détails qui influencent l'expérience au quotidien et la durabilité dans le temps.\n\nChez Flowers Chrome®, nous privilégions la transparence : chaque modèle est présenté avec ses caractéristiques et son histoire.\n\n📩 DM \"MONTRE\" pour découvrir les modèles actuellement disponibles.\n\n#montre #horlogerie #seikomod #watchlover #montrestyle #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Comment reconnaître une montre de qualité ?",
-    "posted": false,
-    "id": 133
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-16",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-16_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 134
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-16",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-16_1300.png",
-    "media_type": "STORIES",
-    "caption": "Or rose : classe ou trop voyant ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 135
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-16",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-16_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 136
-  },
-  {
-    "id": 137,
-    "date": "2026-07-16",
-    "heure": "15:00",
-    "format": "revelation_psy",
-    "hook": "Ton choix révèle quelque chose",
-    "fichier": "stock_052_revelation_psy.mp4",
-    "caption": "Ton choix révèle quelque chose\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow saphire",
-      "Rainbow Or rose"
-    ],
-    "labels": [
-      "tu veux qu'on te respecte sans parler",
-      "tu veux te démarquer sans forcer",
-      "tu veux être vu"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "id": 138,
-    "date": "2026-07-16",
-    "heure": "17:00",
-    "format": "devine_prix",
-    "hook": "Tu paierais combien ?",
-    "fichier": "stock_053_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "GMT",
-    "prix": "194,90 €",
-    "cta": "T'aurais dit combien ?",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-16",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-16_1800_light_01.png",
-      "c_2026-07-16_1800_light_02.png",
-      "c_2026-07-16_1800_light_03.png",
-      "c_2026-07-16_1800_light_04.png",
-      "c_2026-07-16_1800_light_05.png"
-    ],
-    "caption": "Chaque modèle Flowers Chrome existe en quantité très limitée — souvent une seule pièce. Le revers : quand c'est parti, c'est parti, pas de réassort. L'avantage : tu ne croiseras pas trois personnes avec la même au poignet.\n\n📩 DM « MONTRE » pour connaître les disponibilités.\n\n#seikomod #montre #horlogerie #pieceunique #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Pourquoi une seule pièce ?",
-    "posted": false,
-    "id": 139
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-16",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-16_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 140
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-16",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-16_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 141
-  },
-  {
-    "id": 142,
-    "date": "2026-07-16",
-    "heure": "21:00",
-    "format": "trahison",
-    "hook": "Tu vas choisir avec ton ego",
-    "fichier": "stock_054_trahison.mp4",
-    "caption": "Tu vas choisir avec ton ego\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow saphire",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu veux montrer que tu montes",
-      "tu veux qu'on sente ton goût",
-      "tu veux frapper fort mais juste"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "id": 143,
-    "date": "2026-07-17",
-    "heure": "07:00",
-    "format": "devine_prix",
-    "hook": "Ça coûte combien à ton avis ?",
-    "fichier": "stock_055_devine_prix.mp4",
-    "caption": "Ça coûte combien à ton avis ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "Rainbow silver",
-    "prix": "194,90 €",
-    "cta": "Trop cher ou pas ?",
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-17",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-17_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 144
-  },
-  {
-    "id": 145,
-    "date": "2026-07-17",
-    "heure": "11:30",
-    "format": "revelation_psy",
-    "hook": "Ton choix parle avant toi",
-    "fichier": "stock_056_revelation_psy.mp4",
-    "caption": "Ton choix parle avant toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow Or rose",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "tu veux te démarquer sans forcer",
-      "tu veux être vu",
-      "tu préfères le propre au bruit"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-17",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-17_1200_dark_01.png",
-      "c_2026-07-17_1200_dark_02.png",
-      "c_2026-07-17_1200_dark_03.png",
-      "c_2026-07-17_1200_dark_04.png",
-      "c_2026-07-17_1200_dark_05.png"
-    ],
-    "caption": "On pense souvent qu'une montre de qualité se reconnaît à son prix. En réalité, les passionnés regardent surtout le verre, le mouvement et les finitions. Ce sont ces détails qui influencent l'expérience au quotidien et la durabilité dans le temps.\n\nChez Flowers Chrome®, nous privilégions la transparence : chaque modèle est présenté avec ses caractéristiques et son histoire.\n\n📩 DM \"MONTRE\" pour découvrir les modèles actuellement disponibles.\n\n#montre #horlogerie #seikomod #watchlover #montrestyle #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Comment reconnaître une montre de qualité ?",
-    "posted": false,
-    "id": 146
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-17",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-17_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 147
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-17",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-17_1300.png",
-    "media_type": "STORIES",
-    "caption": "Quelle couleur au poignet cet été ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 148
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-17",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-17_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 149
-  },
-  {
-    "id": 150,
-    "date": "2026-07-17",
-    "heure": "15:00",
-    "format": "test",
-    "hook": "Ton choix de montre parle pour toi",
-    "fichier": "stock_057_test.mp4",
-    "caption": "Ton choix de montre parle pour toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow saphire",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "précis",
-      "frais",
-      "mature"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "id": 151,
-    "date": "2026-07-17",
-    "heure": "17:00",
-    "format": "test_perso",
-    "hook": "3 secondes pour choisir",
-    "fichier": "stock_058_test_perso.mp4",
-    "caption": "3 secondes pour choisir\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "GMT",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "tu veux du classique avec une touche",
-      "tu veux dégager du sérieux",
-      "tu préfères le style propre au bruit"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-17",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-17_1800_light_01.png",
-      "c_2026-07-17_1800_light_02.png",
-      "c_2026-07-17_1800_light_03.png",
-      "c_2026-07-17_1800_light_04.png",
-      "c_2026-07-17_1800_light_05.png"
-    ],
-    "caption": "« Et si elle tombe en panne ? » Bonne nouvelle : nos montres reposent sur un mouvement japonais standard. Les pièces sont disponibles, un horloger peut intervenir, rien n'est introuvable. Et après l'achat, on reste joignables pour tes questions.\n\n📩 DM « CHOIX » si tu hésites encore.\n\n#seikomod #horlogerie #montre #watchrepair #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Et si elle tombe en panne ?",
-    "posted": false,
-    "id": 152
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-17",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-17_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 153
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-17",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-17_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 154
-  },
-  {
-    "id": 155,
-    "date": "2026-07-17",
-    "heure": "21:00",
-    "format": "choix_4",
-    "hook": "Tu choisis laquelle ?",
-    "fichier": "stock_059_choix_4.mp4",
-    "caption": "Tu choisis laquelle ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Nautilus",
-      "Seiko GMT",
-      "Daydate",
-      "Datejust"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
-  },
-  {
-    "id": 156,
-    "date": "2026-07-18",
-    "heure": "07:00",
-    "format": "revelation_psy",
-    "hook": "Ton choix n'est pas innocent",
-    "fichier": "stock_060_revelation_psy.mp4",
-    "caption": "Ton choix n'est pas innocent\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow silver",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu veux qu'on sente ton ambition",
-      "tu veux quelque chose de sûr",
-      "tu veux marquer les esprits"
-    ],
-    "cta": "dm",
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-18",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-18_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 157
-  },
-  {
-    "id": 158,
-    "date": "2026-07-18",
-    "heure": "11:30",
-    "format": "test",
-    "hook": "Dis-moi ta montre, je te dis ton énergie",
-    "fichier": "stock_061_test.mp4",
-    "caption": "Dis-moi ta montre, je te dis ton énergie\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow Or rose",
-      "Rainbow silver",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "chaud",
-      "classique",
-      "élégant intense"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-18",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-18_1200_dark_01.png",
-      "c_2026-07-18_1200_dark_02.png",
-      "c_2026-07-18_1200_dark_03.png",
-      "c_2026-07-18_1200_dark_04.png",
-      "c_2026-07-18_1200_dark_05.png"
-    ],
-    "caption": "Choisir sa première montre sans se tromper, c'est 3 repères : pars de ton style (habillée ou sportive), vise la bonne taille (36-40 mm pour la plupart), et regarde la qualité qui ne se voit pas — verre saphir, mouvement fiable, finitions. Une première montre se garde longtemps.\n\n📩 DM \"CHOIX\" et je t'aide à trouver la tienne.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Comment choisir sa première montre ?",
-    "posted": false,
-    "id": 159
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-18",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-18_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 160
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-18",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-18_1300.png",
-    "media_type": "STORIES",
-    "caption": "Automatique ou ça t'est égal ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 161
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-18",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-18_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 162
-  },
-  {
-    "id": 163,
-    "date": "2026-07-18",
-    "heure": "15:00",
-    "format": "trahison",
-    "hook": "Ta montre préférée dit trop de choses",
-    "fichier": "stock_062_trahison.mp4",
-    "caption": "Ta montre préférée dit trop de choses\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow saphire",
-      "Rainbow silver",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "tu veux qu'on sente ton goût",
-      "tu veux du classique qui monte d'un cran",
-      "tu veux qu'on sente ta présence"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "id": 164,
-    "date": "2026-07-18",
-    "heure": "17:00",
-    "format": "devine_prix",
-    "hook": "Tu paierais combien ?",
-    "fichier": "stock_063_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montre": "Rainbow Or rose",
-    "prix": "194,90 €",
-    "cta": "Trop cher ou pas ?",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-18",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-18_1800_light_01.png",
-      "c_2026-07-18_1800_light_02.png",
-      "c_2026-07-18_1800_light_03.png",
-      "c_2026-07-18_1800_light_04.png",
-      "c_2026-07-18_1800_light_05.png"
-    ],
-    "caption": "« 194,50 €, ce n'est pas trop peu ? » La question revient souvent, et elle est légitime. La réponse tient en un mot : les intermédiaires. En vendant en direct, sans boutique ni marges empilées, le prix reflète la montre — acier, verre saphir, mouvement japonais — pas le marketing.\n\n📩 DM « MONTRE » pour découvrir les modèles disponibles.\n\n#seikomod #montre #horlogerie #watchlover #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Pourquoi seulement 194,50 € ?",
-    "posted": false,
-    "id": 165
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-18",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-18_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 166
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-18",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-18_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 167
-  },
-  {
-    "id": 168,
-    "date": "2026-07-18",
-    "heure": "21:00",
-    "format": "test_perso",
-    "hook": "Ton choix va parler pour toi",
-    "fichier": "stock_064_test_perso.mp4",
-    "caption": "Ton choix va parler pour toi\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow Or rose",
-      "GMT"
-    ],
-    "labels": [
-      "tu veux du classique avec une touche",
-      "tu veux réussir fort et que ça se voie",
-      "tu veux dégager du sérieux"
-    ],
-    "cta": "dm",
-    "kind": "video"
-  },
-  {
-    "id": 169,
-    "date": "2026-07-19",
-    "heure": "07:00",
-    "format": "test",
-    "hook": "Choisis vite. Pas de réflexion.",
-    "fichier": "stock_065_test.mp4",
-    "caption": "Choisis vite. Pas de réflexion.\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow silver",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "indépendant calme",
-      "simple",
-      "calme"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-19",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-19_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 170
-  },
-  {
-    "id": 171,
-    "date": "2026-07-19",
-    "heure": "11:30",
-    "format": "trahison",
-    "hook": "Ton choix te trahit un peu",
-    "fichier": "stock_066_trahison.mp4",
-    "caption": "Ton choix te trahit un peu\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow ruby",
-      "Rainbow saphire",
-      "Rainbow silver"
-    ],
-    "labels": [
-      "tu veux frapper fort mais juste",
-      "tu veux qu'on sente ton goût",
-      "tu veux paraître sérieux"
-    ],
-    "cta": "dm",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-19",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-19_1200_dark_01.png",
-      "c_2026-07-19_1200_dark_02.png",
-      "c_2026-07-19_1200_dark_03.png",
-      "c_2026-07-19_1200_dark_04.png",
-      "c_2026-07-19_1200_dark_05.png"
-    ],
-    "caption": "Choisir sa première montre sans se tromper, c'est 3 repères : pars de ton style (habillée ou sportive), vise la bonne taille (36-40 mm pour la plupart), et regarde la qualité qui ne se voit pas — verre saphir, mouvement fiable, finitions. Une première montre se garde longtemps.\n\n📩 DM \"CHOIX\" et je t'aide à trouver la tienne.\n\n#montre #horlogerie #seikomod #montrehomme #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Comment choisir sa première montre ?",
-    "posted": false,
-    "id": 172
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-19",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-19_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 173
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-19",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-19_1300.png",
-    "media_type": "STORIES",
-    "caption": "La montre fait-elle l'homme ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 174
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-19",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-19_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 175
-  },
-  {
-    "id": 176,
-    "date": "2026-07-19",
-    "heure": "15:00",
-    "format": "test",
-    "hook": "La montre que tu préfères te décrit",
-    "fichier": "stock_067_test.mp4",
-    "caption": "La montre que tu préfères te décrit\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow ruby",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "carré",
-      "élégant intense",
-      "calme"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "id": 177,
-    "date": "2026-07-19",
-    "heure": "17:00",
-    "format": "revelation_psy",
-    "hook": "Ce choix en dit long",
-    "fichier": "stock_068_revelation_psy.mp4",
-    "caption": "Ce choix en dit long\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "GMT",
-      "Rainbow Or rose",
-      "Rainbow saphire"
-    ],
-    "labels": [
-      "tu préfères le calme au bruit",
-      "tu veux qu'on sente ton ambition",
-      "tu veux te démarquer sans forcer"
-    ],
-    "cta": "comment",
-    "kind": "video"
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-19",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-19_1800_light_01.png",
-      "c_2026-07-19_1800_light_02.png",
-      "c_2026-07-19_1800_light_03.png",
-      "c_2026-07-19_1800_light_04.png",
-      "c_2026-07-19_1800_light_05.png"
-    ],
-    "caption": "Chaque modèle Flowers Chrome existe en quantité très limitée — souvent une seule pièce. Le revers : quand c'est parti, c'est parti, pas de réassort. L'avantage : tu ne croiseras pas trois personnes avec la même au poignet.\n\n📩 DM « MONTRE » pour connaître les disponibilités.\n\n#seikomod #montre #horlogerie #pieceunique #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Pourquoi une seule pièce ?",
-    "posted": false,
-    "id": 178
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-19",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-19_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 179
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-19",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-19_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 180
-  },
-  {
-    "id": 181,
-    "date": "2026-07-19",
-    "heure": "21:00",
-    "format": "choix_4",
-    "hook": "Tu choisis laquelle ?",
-    "fichier": "stock_069_choix_4.mp4",
-    "caption": "Tu choisis laquelle ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Royal OAK",
-      "Daydate",
-      "Nautilus",
-      "Santos"
-    ],
-    "actions": [
-      "LIKE = 1",
-      "PARTAGE = 2",
-      "COMMENTE = 3",
-      "ENREGISTRE = 4"
-    ],
-    "kind": "video"
-  },
-  {
-    "id": 182,
-    "date": "2026-07-20",
-    "heure": "07:00",
-    "format": "test",
-    "hook": "Choisis. Je te décris.",
-    "fichier": "stock_070_test.mp4",
-    "caption": "Choisis. Je te décris.\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "montres": [
-      "Rainbow silver",
-      "Rainbow Or rose",
-      "Rainbow ruby"
-    ],
-    "labels": [
-      "propre",
-      "solaire",
-      "intense"
-    ],
-    "cta": "question",
-    "kind": "video"
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-20",
-    "heure": "09:00",
-    "fichier": "story_promo_2026-07-20_0900.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 183
-  },
-  {
-    "kind": "carrousel",
-    "type": "value",
-    "date": "2026-07-20",
-    "heure": "12:00",
-    "fichiers": [
-      "c_2026-07-20_1200_dark_01.png",
-      "c_2026-07-20_1200_dark_02.png",
-      "c_2026-07-20_1200_dark_03.png",
-      "c_2026-07-20_1200_dark_04.png",
-      "c_2026-07-20_1200_dark_05.png"
-    ],
-    "caption": "Une Seiko Mod, c'est simple : on part d'une vraie Seiko japonaise, et on la personnalise à la main — cadran, lunette, aiguilles. Une base reconnue, un style unique, aucun logo emprunté. De l'horlogerie assumée, pas une contrefaçon.\n\n📩 DM \"INFO\" pour tout comprendre.\n\n#seikomod #seikomods #horlogerie #watchcommunity #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Qu'est-ce qu'une Seiko Mod ?",
-    "posted": false,
-    "id": 184
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-20",
-    "heure": "12:30",
-    "fichier": "story_partage_2026-07-20_1230.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 185
-  },
-  {
-    "kind": "story",
-    "type": "question",
-    "date": "2026-07-20",
-    "heure": "13:00",
-    "fichier": "story_q_2026-07-20_1300.png",
-    "media_type": "STORIES",
-    "caption": "Ta montre en dit quoi sur toi ?",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 186
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-20",
-    "heure": "14:00",
-    "fichier": "story_promo_2026-07-20_1400.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 187
-  },
-  {
-    "kind": "carrousel",
-    "type": "objection",
-    "date": "2026-07-20",
-    "heure": "18:00",
-    "fichiers": [
-      "c_2026-07-20_1800_light_01.png",
-      "c_2026-07-20_1800_light_02.png",
-      "c_2026-07-20_1800_light_03.png",
-      "c_2026-07-20_1800_light_04.png",
-      "c_2026-07-20_1800_light_05.png"
-    ],
-    "caption": "« 194,50 €, ce n'est pas trop peu ? » La question revient souvent, et elle est légitime. La réponse tient en un mot : les intermédiaires. En vendant en direct, sans boutique ni marges empilées, le prix reflète la montre — acier, verre saphir, mouvement japonais — pas le marketing.\n\n📩 DM « MONTRE » pour découvrir les modèles disponibles.\n\n#seikomod #montre #horlogerie #watchlover #flowerschrome\n\n📩 Écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "topic": "Pourquoi seulement 194,50 € ?",
-    "posted": false,
-    "id": 188
-  },
-  {
-    "kind": "story",
-    "type": "partage",
-    "date": "2026-07-20",
-    "heure": "18:30",
-    "fichier": "story_partage_2026-07-20_1830.png",
-    "media_type": "STORIES",
-    "caption": "Nouveau post 👇 va voir en profil.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 189
-  },
-  {
-    "kind": "story",
-    "type": "promo",
-    "date": "2026-07-20",
-    "heure": "20:00",
-    "fichier": "story_promo_2026-07-20_2000.png",
-    "media_type": "STORIES",
-    "caption": "Dispo maintenant — écris « MONTRE » en DM.",
-    "platforms": [
-      "instagram",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 190
+    "id": 120
   }
 ]
