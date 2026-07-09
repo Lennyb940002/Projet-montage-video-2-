@@ -580,8 +580,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 28
+    "posted": true,
+    "id": 28,
+    "posted_at": "2026-07-09T16:01:56.742096+02:00"
   },
   {
     "kind": "video",
@@ -594,8 +595,9 @@
     "platforms": [
       "tiktok"
     ],
-    "posted": false,
-    "id": 29
+    "posted": true,
+    "id": 29,
+    "posted_at": "2026-07-09T16:01:56.742096+02:00"
   },
   {
     "kind": "story",
