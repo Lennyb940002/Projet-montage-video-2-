@@ -37,15 +37,7 @@ def main():
     music = os.path.join(ASSETS, "music", f"{MKEY}.wav")
     rec_dur = E.probe_dur(REC)
 
-    hook = [dict(c) for c in HOOK]
-    for i, c in enumerate(hook):
-        c["appear"] = round(beats[min(i, len(beats) - 1)] - b0, 3)
-    # pause ~1,2 s puis la prise entre sur un temps fort (index pair)
-    lo = hook[-1]["appear"] + 1.2
-    bi = next((i for i in range(len(beats)) if i % 2 == 0 and beats[i] - b0 >= lo), None)
-    if bi is None:
-        bi = next((i for i in range(len(beats)) if beats[i] - b0 >= lo), len(beats) - 1)
-    intro_dur = round(beats[bi] - b0, 3)
+    hook, intro_dur = E.plan_intro(HOOK, beats, a.get("drop"))   # fin d'intro sur le drop si détecté
 
     wd = tempfile.mkdtemp(prefix="choix_")
     intro = os.path.join(wd, "intro.mp4")

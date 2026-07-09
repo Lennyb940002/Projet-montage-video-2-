@@ -631,38 +631,6 @@
     "id": 31
   },
   {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-09",
-    "heure": "21:00",
-    "fichier": "stock_012_trahison.mp4",
-    "caption": "Tu vas te trahir en 3 secondes\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu vas te trahir en 3 secondes",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 32
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-10",
-    "heure": "07:00",
-    "fichier": "stock_013_test.mp4",
-    "caption": "Ton choix de montre parle pour toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix de montre parle pour toi",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 33
-  },
-  {
     "kind": "story",
     "type": "preuve",
     "date": "2026-07-10",
@@ -675,7 +643,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 34
+    "id": 32
   },
   {
     "kind": "carrousel",
@@ -695,7 +663,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 35
+    "id": 33
   },
   {
     "kind": "story",
@@ -710,21 +678,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 36
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-10",
-    "heure": "15:00",
-    "fichier": "stock_014_choix_4.mp4",
-    "caption": "1, 2, 3 ou 4 ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "1, 2, 3 ou 4 ?",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 37
+    "id": 34
   },
   {
     "kind": "story",
@@ -739,7 +693,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 38
+    "id": 35
   },
   {
     "kind": "story",
@@ -754,39 +708,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 39
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-10",
-    "heure": "21:00",
-    "fichier": "stock_015_perception.mp4",
-    "caption": "Ta montre donne une première impression\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ta montre donne une première impression",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 40
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-11",
-    "heure": "07:00",
-    "fichier": "stock_016_test.mp4",
-    "caption": "Choisis. Je te décris.\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Choisis. Je te décris.",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 41
+    "id": 36
   },
   {
     "kind": "story",
@@ -801,7 +723,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 42
+    "id": 37
   },
   {
     "kind": "carrousel",
@@ -821,7 +743,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 43
+    "id": 38
   },
   {
     "kind": "story",
@@ -836,21 +758,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 44
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-11",
-    "heure": "15:00",
-    "fichier": "stock_017_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu paierais combien ?",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 45
+    "id": 39
   },
   {
     "kind": "story",
@@ -865,7 +773,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 46
+    "id": 40
   },
   {
     "kind": "story",
@@ -880,39 +788,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 47
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-11",
-    "heure": "21:00",
-    "fichier": "stock_018_choix_4.mp4",
-    "caption": "1, 2, 3 ou 4 ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "1, 2, 3 ou 4 ?",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 48
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-12",
-    "heure": "07:00",
-    "fichier": "stock_019_perception.mp4",
-    "caption": "Ce que ta montre dit aux autres\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ce que ta montre dit aux autres",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 49
+    "id": 41
   },
   {
     "kind": "story",
@@ -927,7 +803,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 50
+    "id": 42
   },
   {
     "kind": "carrousel",
@@ -947,7 +823,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 51
+    "id": 43
   },
   {
     "kind": "story",
@@ -962,21 +838,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 52
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-12",
-    "heure": "15:00",
-    "fichier": "stock_020_test_perso.mp4",
-    "caption": "Test rapide : t'es lequel ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Test rapide : t'es lequel ?",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 53
+    "id": 44
   },
   {
     "kind": "story",
@@ -991,7 +853,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 54
+    "id": 45
   },
   {
     "kind": "story",
@@ -1006,39 +868,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 55
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-12",
-    "heure": "21:00",
-    "fichier": "stock_021_test.mp4",
-    "caption": "Ce que tu choisis dit de toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ce que tu choisis dit de toi",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 56
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-13",
-    "heure": "07:00",
-    "fichier": "stock_022_revelation_psy.mp4",
-    "caption": "Ton choix parle pour toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix parle pour toi",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 57
+    "id": 46
   },
   {
     "kind": "story",
@@ -1053,7 +883,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 58
+    "id": 47
   },
   {
     "kind": "carrousel",
@@ -1073,7 +903,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 59
+    "id": 48
   },
   {
     "kind": "story",
@@ -1088,21 +918,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 60
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-13",
-    "heure": "15:00",
-    "fichier": "stock_023_perception.mp4",
-    "caption": "Ton poignet parle avant toi\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton poignet parle avant toi",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 61
+    "id": 49
   },
   {
     "kind": "story",
@@ -1117,7 +933,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 62
+    "id": 50
   },
   {
     "kind": "story",
@@ -1132,39 +948,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 63
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-13",
-    "heure": "21:00",
-    "fichier": "stock_024_test.mp4",
-    "caption": "Une montre. Une personnalité.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Une montre. Une personnalité.",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 64
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-14",
-    "heure": "07:00",
-    "fichier": "stock_025_revelation_psy.mp4",
-    "caption": "Tu choisis une image\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu choisis une image",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 65
+    "id": 51
   },
   {
     "kind": "story",
@@ -1179,7 +963,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 66
+    "id": 52
   },
   {
     "kind": "carrousel",
@@ -1199,7 +983,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 67
+    "id": 53
   },
   {
     "kind": "story",
@@ -1214,21 +998,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 68
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-14",
-    "heure": "15:00",
-    "fichier": "stock_026_test.mp4",
-    "caption": "Choisis vite. Pas de réflexion.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Choisis vite. Pas de réflexion.",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 69
+    "id": 54
   },
   {
     "kind": "story",
@@ -1243,7 +1013,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 70
+    "id": 55
   },
   {
     "kind": "story",
@@ -1258,39 +1028,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 71
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-14",
-    "heure": "21:00",
-    "fichier": "stock_027_revelation_psy.mp4",
-    "caption": "Ce choix en dit long\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ce choix en dit long",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 72
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-15",
-    "heure": "07:00",
-    "fichier": "stock_028_perception.mp4",
-    "caption": "Ce détail change la perception\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ce détail change la perception",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 73
+    "id": 56
   },
   {
     "kind": "story",
@@ -1305,7 +1043,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 74
+    "id": 57
   },
   {
     "kind": "carrousel",
@@ -1325,7 +1063,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 75
+    "id": 58
   },
   {
     "kind": "story",
@@ -1340,21 +1078,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 76
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-15",
-    "heure": "15:00",
-    "fichier": "stock_029_trahison.mp4",
-    "caption": "Ta montre préférée dit trop de choses\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ta montre préférée dit trop de choses",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 77
+    "id": 59
   },
   {
     "kind": "story",
@@ -1369,7 +1093,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 78
+    "id": 60
   },
   {
     "kind": "story",
@@ -1384,39 +1108,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 79
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-15",
-    "heure": "21:00",
-    "fichier": "stock_030_devine_prix.mp4",
-    "caption": "Ça coûte combien à ton avis ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ça coûte combien à ton avis ?",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 80
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-16",
-    "heure": "07:00",
-    "fichier": "stock_031_trahison.mp4",
-    "caption": "Ton choix te trahit un peu\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix te trahit un peu",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 81
+    "id": 61
   },
   {
     "kind": "story",
@@ -1431,7 +1123,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 82
+    "id": 62
   },
   {
     "kind": "carrousel",
@@ -1451,7 +1143,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 83
+    "id": 63
   },
   {
     "kind": "story",
@@ -1466,21 +1158,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 84
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-16",
-    "heure": "15:00",
-    "fichier": "stock_032_test_perso.mp4",
-    "caption": "Choisis sans réfléchir. Ton choix va parler.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Choisis sans réfléchir. Ton choix va parler.",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 85
+    "id": 64
   },
   {
     "kind": "story",
@@ -1495,7 +1173,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 86
+    "id": 65
   },
   {
     "kind": "story",
@@ -1510,39 +1188,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 87
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-16",
-    "heure": "21:00",
-    "fichier": "stock_033_trahison.mp4",
-    "caption": "Ton choix te trahit\nÉcris « MONTRE » en DM\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix te trahit",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 88
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-17",
-    "heure": "07:00",
-    "fichier": "stock_034_test_perso.mp4",
-    "caption": "Test rapide. Choisis une montre.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Test rapide. Choisis une montre.",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 89
+    "id": 66
   },
   {
     "kind": "story",
@@ -1557,7 +1203,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 90
+    "id": 67
   },
   {
     "kind": "carrousel",
@@ -1577,7 +1223,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 91
+    "id": 68
   },
   {
     "kind": "story",
@@ -1592,21 +1238,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 92
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-17",
-    "heure": "15:00",
-    "fichier": "stock_035_trahison.mp4",
-    "caption": "Tu crois choisir au hasard ?\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu crois choisir au hasard ?",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 93
+    "id": 69
   },
   {
     "kind": "story",
@@ -1621,7 +1253,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 94
+    "id": 70
   },
   {
     "kind": "story",
@@ -1636,39 +1268,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 95
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-17",
-    "heure": "21:00",
-    "fichier": "stock_036_revelation_psy.mp4",
-    "caption": "Ton choix parle avant toi\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix parle avant toi",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 96
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-18",
-    "heure": "07:00",
-    "fichier": "stock_037_devine_prix.mp4",
-    "caption": "Tu paierais combien ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu paierais combien ?",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 97
+    "id": 71
   },
   {
     "kind": "story",
@@ -1683,7 +1283,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 98
+    "id": 72
   },
   {
     "kind": "carrousel",
@@ -1703,7 +1303,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 99
+    "id": 73
   },
   {
     "kind": "story",
@@ -1718,21 +1318,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 100
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-18",
-    "heure": "15:00",
-    "fichier": "stock_038_choix_4.mp4",
-    "caption": "Tu prends laquelle ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu prends laquelle ?",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 101
+    "id": 74
   },
   {
     "kind": "story",
@@ -1747,7 +1333,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 102
+    "id": 75
   },
   {
     "kind": "story",
@@ -1762,39 +1348,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 103
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-18",
-    "heure": "21:00",
-    "fichier": "stock_039_devine_prix.mp4",
-    "caption": "Devine le prix de cette montre\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Devine le prix de cette montre",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 104
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-19",
-    "heure": "07:00",
-    "fichier": "stock_040_perception.mp4",
-    "caption": "Les gens remarquent plus que tu crois\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Les gens remarquent plus que tu crois",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 105
+    "id": 76
   },
   {
     "kind": "story",
@@ -1809,7 +1363,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 106
+    "id": 77
   },
   {
     "kind": "carrousel",
@@ -1829,7 +1383,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 107
+    "id": 78
   },
   {
     "kind": "story",
@@ -1844,21 +1398,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 108
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-19",
-    "heure": "15:00",
-    "fichier": "stock_041_revelation_psy.mp4",
-    "caption": "Ton choix n'est pas innocent\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Ton choix n'est pas innocent",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 109
+    "id": 79
   },
   {
     "kind": "story",
@@ -1873,7 +1413,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 110
+    "id": 80
   },
   {
     "kind": "story",
@@ -1888,39 +1428,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 111
-  },
-  {
-    "kind": "video",
-    "type": "concept_du_jour",
-    "date": "2026-07-19",
-    "heure": "21:00",
-    "fichier": "stock_042_test.mp4",
-    "caption": "La montre que tu préfères te décrit\nRéponds en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "La montre que tu préfères te décrit",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 112
-  },
-  {
-    "kind": "video",
-    "type": "concept_fort",
-    "date": "2026-07-20",
-    "heure": "07:00",
-    "fichier": "stock_043_trahison.mp4",
-    "caption": "Tu vas te trahir en 3 secondes\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Tu vas te trahir en 3 secondes",
-    "platforms": [
-      "instagram",
-      "tiktok",
-      "facebook"
-    ],
-    "posted": false,
-    "id": 113
+    "id": 81
   },
   {
     "kind": "story",
@@ -1935,7 +1443,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 114
+    "id": 82
   },
   {
     "kind": "carrousel",
@@ -1955,7 +1463,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 115
+    "id": 83
   },
   {
     "kind": "story",
@@ -1970,21 +1478,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 116
-  },
-  {
-    "kind": "video",
-    "type": "test_secondaire",
-    "date": "2026-07-20",
-    "heure": "15:00",
-    "fichier": "stock_044_test.mp4",
-    "caption": "Choisis. Je te décris.\nDis-le en commentaire 👇\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Choisis. Je te décris.",
-    "platforms": [
-      "tiktok"
-    ],
-    "posted": false,
-    "id": 117
+    "id": 84
   },
   {
     "kind": "story",
@@ -1999,7 +1493,7 @@
       "facebook"
     ],
     "posted": false,
-    "id": 118
+    "id": 85
   },
   {
     "kind": "story",
@@ -2014,16 +1508,510 @@
       "facebook"
     ],
     "posted": false,
+    "id": 86
+  },
+  {
+    "kind": "video",
+    "type": "reveal",
+    "date": "2026-07-09",
+    "heure": "21:00",
+    "fichier": "stk_reveal_01.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 87
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-10",
+    "heure": "07:00",
+    "fichier": "reel_fb_01.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 88
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-10",
+    "heure": "15:00",
+    "fichier": "stk_devine_01.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 89
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-10",
+    "heure": "21:00",
+    "fichier": "stk_perso_01.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 90
+  },
+  {
+    "kind": "video",
+    "type": "toimoi",
+    "date": "2026-07-11",
+    "heure": "07:00",
+    "fichier": "stk_toimoi_01.mp4",
+    "caption": "« C'est du fake » — saphir, NH35 auto, acier 316L 💎 Une question ? DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 91
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-11",
+    "heure": "15:00",
+    "fichier": "stk_tot_02.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 92
+  },
+  {
+    "kind": "video",
+    "type": "pov",
+    "date": "2026-07-11",
+    "heure": "21:00",
+    "fichier": "stk_pov_01.mp4",
+    "caption": "POV 😅 elle est à 195€. Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 93
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-12",
+    "heure": "07:00",
+    "fichier": "reel_fb_02.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 94
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-12",
+    "heure": "15:00",
+    "fichier": "stk_devine_02.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 95
+  },
+  {
+    "kind": "video",
+    "type": "reveal",
+    "date": "2026-07-12",
+    "heure": "21:00",
+    "fichier": "stk_reveal_02.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 96
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-13",
+    "heure": "07:00",
+    "fichier": "stk_perso_02.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 97
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-13",
+    "heure": "15:00",
+    "fichier": "stk_tot_03.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 98
+  },
+  {
+    "kind": "video",
+    "type": "pov",
+    "date": "2026-07-13",
+    "heure": "21:00",
+    "fichier": "stk_pov_02.mp4",
+    "caption": "POV 😅 elle est à 195€. Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 99
+  },
+  {
+    "kind": "video",
+    "type": "toimoi",
+    "date": "2026-07-14",
+    "heure": "07:00",
+    "fichier": "stk_toimoi_02.mp4",
+    "caption": "« C'est du fake » — saphir, NH35 auto, acier 316L 💎 Une question ? DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 100
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-14",
+    "heure": "15:00",
+    "fichier": "stk_devine_03.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 101
+  },
+  {
+    "kind": "video",
+    "type": "reveal",
+    "date": "2026-07-14",
+    "heure": "21:00",
+    "fichier": "stk_reveal_03.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 102
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-15",
+    "heure": "07:00",
+    "fichier": "reel_fb_03.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 103
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-15",
+    "heure": "15:00",
+    "fichier": "stk_tot_04.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 104
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-15",
+    "heure": "21:00",
+    "fichier": "stk_perso_03.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 105
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-16",
+    "heure": "07:00",
+    "fichier": "reel_fb_04.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 106
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-16",
+    "heure": "15:00",
+    "fichier": "stk_tot_01.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 107
+  },
+  {
+    "kind": "video",
+    "type": "reveal",
+    "date": "2026-07-16",
+    "heure": "21:00",
+    "fichier": "stk_reveal_01.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 108
+  },
+  {
+    "kind": "video",
+    "type": "toimoi",
+    "date": "2026-07-17",
+    "heure": "07:00",
+    "fichier": "stk_toimoi_01.mp4",
+    "caption": "« C'est du fake » — saphir, NH35 auto, acier 316L 💎 Une question ? DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 109
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-17",
+    "heure": "15:00",
+    "fichier": "stk_devine_01.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 110
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-17",
+    "heure": "21:00",
+    "fichier": "stk_perso_01.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 111
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-18",
+    "heure": "07:00",
+    "fichier": "reel_fb_05.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 112
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-18",
+    "heure": "15:00",
+    "fichier": "stk_tot_05.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 113
+  },
+  {
+    "kind": "video",
+    "type": "reveal",
+    "date": "2026-07-18",
+    "heure": "21:00",
+    "fichier": "stk_reveal_04.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 114
+  },
+  {
+    "kind": "video",
+    "type": "pov",
+    "date": "2026-07-19",
+    "heure": "07:00",
+    "fichier": "stk_pov_01.mp4",
+    "caption": "POV 😅 elle est à 195€. Lien en bio #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 115
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-19",
+    "heure": "15:00",
+    "fichier": "stk_devine_04.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 116
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-19",
+    "heure": "21:00",
+    "fichier": "stk_perso_04.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 117
+  },
+  {
+    "kind": "video",
+    "type": "rafale",
+    "date": "2026-07-20",
+    "heure": "07:00",
+    "fichier": "reel_fb_06.mp4",
+    "caption": "Les montres qu'il te faut cet été 🔥 Écris MONTRE en DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 118
+  },
+  {
+    "kind": "video",
+    "type": "tot",
+    "date": "2026-07-20",
+    "heure": "15:00",
+    "fichier": "stk_tot_02.mp4",
+    "caption": "Tu prends laquelle ? Commente 1 ou 2 👇 #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
     "id": 119
   },
   {
     "kind": "video",
-    "type": "concept_du_jour",
+    "type": "reveal",
     "date": "2026-07-20",
     "heure": "21:00",
-    "fichier": "stock_045_choix_4.mp4",
-    "caption": "Laquelle au poignet ?\n\n#montre #montrehomme #seikomod #horlogerie #watch #watchlover #pourtoi #fyp #luxe #style",
-    "hook": "Laquelle au poignet ?",
+    "fichier": "stk_reveal_02.mp4",
+    "caption": "Tout le monde croit que c'est une AP à 40 000€… c'est un Seiko mod à 195€ 🤯 Lien en bio #seikomod #montre #watch #fyp #pourtoi",
     "platforms": [
       "instagram",
       "tiktok",
@@ -2031,5 +2019,50 @@
     ],
     "posted": false,
     "id": 120
+  },
+  {
+    "kind": "video",
+    "type": "toimoi",
+    "date": "2026-07-21",
+    "heure": "07:00",
+    "fichier": "stk_toimoi_03.mp4",
+    "caption": "« C'est du fake » — saphir, NH35 auto, acier 316L 💎 Une question ? DM #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 121
+  },
+  {
+    "kind": "video",
+    "type": "devine",
+    "date": "2026-07-21",
+    "heure": "15:00",
+    "fichier": "stk_devine_02.mp4",
+    "caption": "Une à 40 000€, une à 195€… devine 👀 Ton prix en commentaire #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 122
+  },
+  {
+    "kind": "video",
+    "type": "perso",
+    "date": "2026-07-21",
+    "heure": "21:00",
+    "fichier": "stk_perso_02.mp4",
+    "caption": "Ce que ta montre dit de toi 👀 Tag celui qui est comme ça #seikomod #montre #watch #fyp #pourtoi",
+    "platforms": [
+      "instagram",
+      "tiktok",
+      "facebook"
+    ],
+    "posted": false,
+    "id": 123
   }
 ]

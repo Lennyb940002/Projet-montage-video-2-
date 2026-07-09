@@ -72,19 +72,9 @@ def build(idx):
     beats = a["beats"]
     music_wav = os.path.join(MUSIC_DIR, f"{r['music']}.wav")
 
-    # ---- intro : 1 mot par beat, le 1er mot PILE sur le beat fort (t=0) ----
-    hook = [dict(c) for c in r["hook"]]
-    nb = len(hook)
+    # ---- intro : mots calés sur les beats, fin d'intro sur le DROP si détecté ----
     b0 = beats[0]
-    for i, c in enumerate(hook):
-        c["appear"] = round(beats[min(i, len(beats) - 1)] - b0, 3)
-    # pause ~1,2-1,7 s après le dernier mot, puis 1re montre sur un TEMPS FORT (le drop)
-    last_word = hook[-1]["appear"]
-    lo = last_word + 1.2
-    bi = next((i for i in range(len(beats)) if i % 2 == 0 and (beats[i] - b0) >= lo), None)
-    if bi is None:
-        bi = next((i for i in range(len(beats)) if (beats[i] - b0) >= lo), len(beats) - 1)
-    intro_dur = round(beats[bi] - b0, 3)
+    hook, intro_dur = E.plan_intro(r["hook"], beats, a.get("drop"))
 
     # ---- rafale : 2-3 montres, coupes calées sur beats, chacune longue ----
     g = [round(b - b0, 3) for b in beats]
