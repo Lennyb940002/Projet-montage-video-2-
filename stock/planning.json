@@ -643,8 +643,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 32
+    "posted": true,
+    "id": 32,
+    "posted_at": "2026-07-10T10:57:51.976733+02:00"
   },
   {
     "kind": "carrousel",
