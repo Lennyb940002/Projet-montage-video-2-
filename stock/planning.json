@@ -675,8 +675,9 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
-    "id": 34
+    "posted": true,
+    "id": 34,
+    "posted_at": "2026-07-11T08:31:44.872131+02:00"
   },
   {
     "kind": "video",
