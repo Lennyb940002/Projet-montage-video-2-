@@ -6,9 +6,10 @@ name: post-stock
 #   UPLOAD_POST_TOKEN, UPLOAD_POST_USER
 
 on:
-  # RÉACTIVÉ 2026-07-09 : nouveau planning 8 créneaux/jour, reprise à 13h30.
-  schedule:
-    - cron: "*/30 * * * *"
+  # ⏸️ STOP TOTAL (2026-07-10) : auto-post coupé — pivot vers le contenu authentique (montages).
+  #    Réactiver = décommenter les 2 lignes cron ci-dessous + push.
+  # schedule:
+  #   - cron: "*/30 * * * *"
   workflow_dispatch: {}
 
 permissions:
