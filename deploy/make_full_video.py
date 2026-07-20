@@ -62,11 +62,19 @@ def _mix_music(reel_voice, music, out):
            "-movflags", "+faststart", out])
 
 
-def make_full(vo_text, out, seed=None, cta=None):
+def _trim_silences(win, wout, keep=0.20, thr="-38dB"):
+    """Réduit les longs blancs entre phrases (garde ~keep s de souffle)."""
+    E.run([E.FF, "-y", "-i", win, "-af",
+           f"silenceremove=stop_periods=-1:stop_duration={keep}:stop_threshold={thr}", wout])
+    return wout
+
+
+def make_full(vo_text, out, seed=None, cta=None, voice=None):
     rng = random.Random(seed)
     wd = tempfile.mkdtemp(prefix="fullvid_")
-    # 1) voix
-    vo = os.path.join(wd, "vo.wav"); make_voice.synth(vo_text, vo)
+    # 1) voix (+ retrait des blancs trop longs)
+    vo_raw = os.path.join(wd, "vo_raw.wav"); make_voice.synth(vo_text, vo_raw, voice=voice)
+    vo = os.path.join(wd, "vo.wav"); _trim_silences(vo_raw, vo)
     # 2) visuel (clips banque) + voix muxée
     reel_novo = os.path.join(wd, "reel_novo.mp4")
     make_vo_reel.make(vo, reel_novo, clips=pick_clips(rng))
@@ -96,13 +104,16 @@ def make_full(vo_text, out, seed=None, cta=None):
 
 def main():
     args = sys.argv[1:]
+    voice = None
+    if "--voice" in args:
+        i = args.index("--voice"); voice = args[i + 1]; del args[i:i + 2]
     if len(args) >= 2 and args[0] == "--text":
-        make_full(args[1], args[2])
+        make_full(args[1], args[2], voice=voice)
     elif len(args) >= 2:
         sc = voice_scripts.get(args[0])
-        make_full(sc["vo"], args[1], cta=sc.get("cta"))
+        make_full(sc["vo"], args[1], cta=sc.get("cta"), voice=voice)
     else:
-        raise SystemExit('Usage: make_full_video.py <script_name> out.mp4 | --text "..." out.mp4')
+        raise SystemExit('Usage: make_full_video.py [--voice NAME] <script_name> out.mp4 | --text "..." out.mp4')
 
 
 if __name__ == "__main__":
