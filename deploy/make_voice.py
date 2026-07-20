@@ -17,7 +17,7 @@ from google.genai import types
 
 # ---- REGLAGES FIGES (ne pas changer sans raison) ---------------------------
 MODEL = "gemini-3.1-flash-tts-preview"
-VOICE = "Puck"            # VOIX OFFICIELLE validee 2026-07-19 (masculine jeune, energique). Ne pas changer.
+VOICE = "Charon"          # VOIX OFFICIELLE validee 2026-07-20 par Lenny (masculine posee, credible). Ne pas changer.
 TEMPERATURE = 1.0
 # Profil de jeu fige (director's notes) lu avant le transcript -> identite constante.
 STYLE = (
