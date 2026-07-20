@@ -30,7 +30,7 @@ from backend.config import SILENT
 DEPLOY = os.path.dirname(os.path.abspath(__file__))
 CLIPS_DIR = SILENT["clips_dir"]
 MUSIC_DIR = SILENT["music_dir"]
-MUSIC_GAIN = 0.13          # musique de fond bien sous la voix
+MUSIC_GAIN = 0.09          # musique de fond discrète, bien sous la voix
 
 
 def pick_clips(rng, n=4):
