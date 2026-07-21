@@ -6,10 +6,9 @@ name: post-stock
 #   UPLOAD_POST_TOKEN, UPLOAD_POST_USER
 
 on:
-  # ⏸️ STOP TOTAL (2026-07-10) : auto-post coupé — pivot vers le contenu authentique (montages).
-  #    Réactiver = décommenter les 2 lignes cron ci-dessous + push.
-  # schedule:
-  #   - cron: "*/30 * * * *"
+  # ▶️ RÉACTIVÉ (2026-07-20) : rythme 2 carrousels valeur + 1 reel voix-off/jour.
+  schedule:
+    - cron: "*/30 * * * *"
   workflow_dispatch: {}
 
 permissions:

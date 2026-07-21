@@ -37,3 +37,6 @@ backend/posts/catalogue/
 
 # logs de génération
 stock/*.log
+
+# manifests internes du stock VO
+stock/_*
