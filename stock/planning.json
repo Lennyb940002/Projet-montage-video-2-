@@ -96,8 +96,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 5
+    "posted": true,
+    "id": 5,
+    "posted_at": "2026-07-22T18:21:19.759422+02:00"
   },
   {
     "date": "2026-07-22",
@@ -112,8 +113,9 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
-    "id": 6
+    "posted": true,
+    "id": 6,
+    "posted_at": "2026-07-22T18:21:19.759422+02:00"
   },
   {
     "date": "2026-07-23",
