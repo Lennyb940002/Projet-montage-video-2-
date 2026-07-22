@@ -54,8 +54,9 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
-    "id": 3
+    "posted": true,
+    "id": 3,
+    "posted_at": "2026-07-22T03:01:38.826605+02:00"
   },
   {
     "date": "2026-07-22",
