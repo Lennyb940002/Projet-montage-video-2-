@@ -155,8 +155,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 8
+    "posted": true,
+    "id": 8,
+    "posted_at": "2026-07-23T17:32:06.546802+02:00"
   },
   {
     "date": "2026-07-23",
