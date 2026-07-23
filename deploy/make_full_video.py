@@ -33,16 +33,21 @@ MUSIC_DIR = SILENT["music_dir"]
 MUSIC_GAIN = 0.09          # musique de fond discrète, bien sous la voix
 
 
-def pick_clips(rng, n=4):
-    """n clips variés de la banque (modèles différents en priorité)."""
+def pick_clips(rng, n=8, per_model=2):
+    """~n clips VARIÉS (jusqu'à `per_model` par modèle, tout mélangé) pour couvrir
+    la durée sans boucler -> beaucoup moins de répétition visuelle."""
     by_model = {}
     for p in glob.glob(os.path.join(CLIPS_DIR, "*", "*.mp4")):
         by_model.setdefault(os.path.basename(os.path.dirname(p)), []).append(p)
-    models = list(by_model); rng.shuffle(models)
-    clips = [rng.choice(by_model[m]) for m in models[:n]]
-    while len(clips) < n and by_model:                 # complète si peu de modèles
-        clips.append(rng.choice(rng.choice(list(by_model.values()))))
-    return clips
+    pool = []
+    for m, cs in by_model.items():
+        cs = cs[:]; rng.shuffle(cs)
+        pool += cs[:per_model]                          # 1-2 clips par modèle
+    rng.shuffle(pool)
+    if len(pool) < n:                                   # complète si banque petite
+        extra = [p for cs in by_model.values() for p in cs if p not in pool]
+        rng.shuffle(extra); pool += extra
+    return pool[:n]
 
 
 def pick_music(rng):
