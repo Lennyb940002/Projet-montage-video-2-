@@ -74,7 +74,9 @@ def _trim_silences(win, wout, keep=0.20, thr="-38dB"):
     return wout
 
 
-def make_full(vo_text, out, seed=None, cta=None, voice=None):
+def make_full(vo_text, out, seed=None, cta=None, voice=None, clips=None):
+    """clips : liste imposée (anti-répétition inter-vidéos gérée par l'appelant) ;
+    None -> pick_clips choisit."""
     rng = random.Random(seed)
     wd = tempfile.mkdtemp(prefix="fullvid_")
     # 1) voix (+ retrait des blancs trop longs)
@@ -82,7 +84,7 @@ def make_full(vo_text, out, seed=None, cta=None, voice=None):
     vo = os.path.join(wd, "vo.wav"); _trim_silences(vo_raw, vo)
     # 2) visuel (clips banque) + voix muxée
     reel_novo = os.path.join(wd, "reel_novo.mp4")
-    make_vo_reel.make(vo, reel_novo, clips=pick_clips(rng))
+    make_vo_reel.make(vo, reel_novo, clips=clips or pick_clips(rng))
     # 3) transcription mot-à-mot (normalise Word/objets -> dicts)
     words_raw, _ = transcribe.transcribe(vo)
     def _wd(w):
