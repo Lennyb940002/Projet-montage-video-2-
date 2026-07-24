@@ -74,9 +74,27 @@ def _wav_header(data_size, bits, rate, channels=1):
                        b"data", data_size)
 
 
-def synth(text, out_path, voice=None):
+def synth(text, out_path, voice=None, _retries=4):
     """Genere la voix off de `text` et ecrit un WAV dans out_path. Retourne out_path.
-    voice : override la voix (pour tester) ; None = VOICE de marque."""
+    voice : override la voix (pour tester) ; None = VOICE de marque.
+    Reessaie automatiquement sur surcharge temporaire (503/500/UNAVAILABLE)."""
+    import time
+    for attempt in range(_retries):
+        try:
+            return _synth_once(text, out_path, voice)
+        except Exception as e:
+            msg = str(e)
+            transient = any(t in msg for t in ("503", "500", "UNAVAILABLE",
+                                               "high demand", "overloaded"))
+            if transient and attempt < _retries - 1:
+                wait = 15 * (attempt + 1)
+                print(f"[make_voice] surcharge Gemini, nouvel essai dans {wait}s "
+                      f"({attempt + 1}/{_retries - 1})…", flush=True)
+                time.sleep(wait); continue
+            raise
+
+
+def _synth_once(text, out_path, voice=None):
     voice = voice or VOICE
     client = genai.Client(api_key=_api_key())
     contents = [types.Content(role="user",
