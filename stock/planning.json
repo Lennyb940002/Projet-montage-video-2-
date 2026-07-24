@@ -193,8 +193,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 10
+    "posted": true,
+    "id": 10,
+    "posted_at": "2026-07-24T13:18:01.738003+02:00"
   },
   {
     "date": "2026-07-24",
