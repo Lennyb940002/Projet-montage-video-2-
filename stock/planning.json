@@ -332,8 +332,9 @@
       "instagram",
       "facebook"
     ],
-    "posted": false,
-    "id": 17
+    "posted": true,
+    "id": 17,
+    "posted_at": "2026-07-26T18:03:30.377472+02:00"
   },
   {
     "date": "2026-07-26",
@@ -348,8 +349,9 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
-    "id": 18
+    "posted": true,
+    "id": 18,
+    "posted_at": "2026-07-26T18:03:30.377472+02:00"
   },
   {
     "date": "2026-07-27",
