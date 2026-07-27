@@ -408,7 +408,8 @@
       "tiktok",
       "facebook"
     ],
-    "posted": false,
-    "id": 21
+    "posted": true,
+    "id": 21,
+    "posted_at": "2026-07-27T19:18:54.083915+02:00"
   }
 ]
